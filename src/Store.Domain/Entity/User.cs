@@ -1,10 +1,12 @@
-﻿namespace Store.Domain.Entity
+﻿using Store.Domain.Enum;
+
+namespace Store.Domain.Entity
 {
 	public class User : SeedWork.Entity
 	{
 		public string BusinessName { get; private set; }
 		public string CorporateName { get; private set; }
-		public string Status { get; private set; }
+		public UserStatus Status { get; private set; }
 		public string Email { get; private set; }
 		public string SiteUrl { get; private set; }
 		public string Phone {  get; private set; }
@@ -12,8 +14,8 @@
 
         public User(
 			string businessName, 
-			string corporateName, 
-			string status,
+			string corporateName,
+			UserStatus status,
 			string email,
 			string siteUrl,
 			string phone,
@@ -27,5 +29,7 @@
 			this.Phone = phone;
 			this.CompanyRegistrationNumber = companyRegistrationNumber;
         }
+
+
     }
 }
