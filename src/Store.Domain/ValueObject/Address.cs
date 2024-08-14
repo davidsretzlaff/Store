@@ -1,4 +1,6 @@
 ﻿
+using Store.Domain.Validation;
+
 namespace Store.Domain.ValueObject
 {
 	public class Address 
@@ -16,11 +18,26 @@ namespace Store.Domain.ValueObject
 			State = state;
 			Country = country;
 			ZipCode = zipcode;
+			Validate();
 		}
 
-		public Validate()
+		public void Validate()
 		{
+			DomainValidation.NotNull(Street, nameof(Street));
+			DomainValidation.MaxLength(Street, 100, nameof(Street));
+			DomainValidation.MinLength(Street, 4, nameof(Street));
 
+			DomainValidation.NotNull(City, nameof(City));
+			DomainValidation.MaxLength(City, 30, nameof(City));
+			DomainValidation.MinLength(City, 3, nameof(City));
+
+			DomainValidation.NotNull(State, nameof(State));
+			DomainValidation.MaxLength(State, 30, nameof(State));
+			DomainValidation.MinLength(State, 1, nameof(State));
+
+			DomainValidation.NotNull(Country, nameof(Country));
+			DomainValidation.MaxLength(Country, 9, nameof(Country));
+			DomainValidation.MinLength(Country, 7, nameof(Country));
 		}
 	}
 }

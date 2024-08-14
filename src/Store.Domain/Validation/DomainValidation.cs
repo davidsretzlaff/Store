@@ -10,17 +10,22 @@ namespace Store.Domain.Validation
 				throw new EntityValidationException($"{fieldName} should not be null");
 		}
 
-		public static void MaxLength(int[] target, int maxLength, string fieldName)
+		public static void NotNullOrEmpty(string? target, string fieldName)
 		{
-			for (int i = 0; i < target.Length; i++)
-			{
-				int encoded = target[i];
-				string encodedStr = encoded.ToString();
-				if (encodedStr.Length > maxLength)
-				{
-					throw new EntityValidationException($"{fieldName} should be less or equal {maxLength} characters long");
-				}
-			}
+			if (string.IsNullOrWhiteSpace(target))
+				throw new EntityValidationException($"{fieldName} should not be empty or null");
+		}
+
+		public static void MinLength(string target, int minLength, string fieldName)
+		{
+			if (target.Length < minLength)
+				throw new EntityValidationException($"{fieldName} should be at least {minLength} characters long");
+		}
+
+		public static void MaxLength(string target, int maxLength, string fieldName)
+		{
+			if (target.Length > maxLength)
+				throw new EntityValidationException($"{fieldName} should be less or equal {maxLength} characters long");
 		}
 	}
 }
