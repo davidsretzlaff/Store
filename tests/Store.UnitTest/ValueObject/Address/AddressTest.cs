@@ -69,7 +69,7 @@ namespace Store.UnitTest.ValueObject.Address
 
 			// Act
 			var action = () => new Domain.ValueObject.Address(
-				invalidStreet,
+				invalidStreet!,
 				validAddress.City,
 				validAddress.State,
 				validAddress.Country,
@@ -113,7 +113,7 @@ namespace Store.UnitTest.ValueObject.Address
 			// Act
 			var action = () => new Domain.ValueObject.Address(
 				validAddress.Street,
-				invalidCity,
+				invalidCity!,
 				validAddress.State,
 				validAddress.Country,
 				validAddress.ZipCode
@@ -135,7 +135,7 @@ namespace Store.UnitTest.ValueObject.Address
 			// Act
 			var action = () => new Domain.ValueObject.Address(
 				validAddress.Street,
-				invalidCity,
+				invalidCity!,
 				validAddress.State,
 				validAddress.Country,
 				validAddress.ZipCode
@@ -179,7 +179,7 @@ namespace Store.UnitTest.ValueObject.Address
 			var action = () => new Domain.ValueObject.Address(
 				validAddress.Street,
 				validAddress.City,
-				invalidState,
+				invalidState!,
 				validAddress.Country,
 				validAddress.ZipCode
 			 );
@@ -200,7 +200,7 @@ namespace Store.UnitTest.ValueObject.Address
 			var action = () => new Domain.ValueObject.Address(
 				validAddress.Street,
 				validAddress.City,
-				invalidState,
+				invalidState!,
 				validAddress.Country,
 				validAddress.ZipCode
 			 );
