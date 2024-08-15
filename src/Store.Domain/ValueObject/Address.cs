@@ -1,5 +1,8 @@
 ﻿
 using Store.Domain.Validation;
+using System.Runtime.ConstrainedExecution;
+using System.Text.RegularExpressions;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Store.Domain.ValueObject
 {
@@ -20,24 +23,29 @@ namespace Store.Domain.ValueObject
 			ZipCode = zipcode;
 			Validate();
 		}
-
+		private void CleanZipCode() {
+			this.ZipCode = Regex.Replace(this.ZipCode, @"\D", "");
+		}
 		public void Validate()
 		{
-			DomainValidation.NotNull(Street, nameof(Street));
+			DomainValidation.NotNullOrEmpty(Street, nameof(Street));
 			DomainValidation.MaxLength(Street, 100, nameof(Street));
 			DomainValidation.MinLength(Street, 4, nameof(Street));
 
-			DomainValidation.NotNull(City, nameof(City));
-			DomainValidation.MaxLength(City, 30, nameof(City));
+			DomainValidation.NotNullOrEmpty(City, nameof(City));
+			DomainValidation.MaxLength(City, 100, nameof(City));
 			DomainValidation.MinLength(City, 3, nameof(City));
 
-			DomainValidation.NotNull(State, nameof(State));
-			DomainValidation.MaxLength(State, 30, nameof(State));
-			DomainValidation.MinLength(State, 1, nameof(State));
+			DomainValidation.NotNullOrEmpty(State, nameof(State));
+			DomainValidation.MaxLength(State, 100, nameof(State));
 
-			DomainValidation.NotNull(Country, nameof(Country));
-			DomainValidation.MaxLength(Country, 30, nameof(Country));
-			DomainValidation.MinLength(Country, 3, nameof(Country));
+			DomainValidation.NotNullOrEmpty(Country, nameof(Country));
+			DomainValidation.MaxLength(Country, 100, nameof(Country));
+
+			DomainValidation.NotNull(ZipCode, nameof(ZipCode));
+			CleanZipCode();
+			DomainValidation.MaxLength(ZipCode, 8, nameof(ZipCode));
+			DomainValidation.MinLength(ZipCode, 8, nameof(ZipCode));
 		}
 	}
 }
