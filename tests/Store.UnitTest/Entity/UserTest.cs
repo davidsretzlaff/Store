@@ -75,9 +75,9 @@ namespace Store.UnitTest.Entity
 			user.Status.Should().Be(Domain.Enum.UserStatus.Waiting);
 		}
 
-		[Fact(DisplayName = nameof(ActiveUser_ShouldBeActive))]
+		[Fact(DisplayName = nameof(ActivateUser_ShouldBeActive))]
 		[Trait("Domain", "User - Entity")]
-		public void ActiveUser_ShouldBeActive()
+		public void ActivateUser_ShouldBeActive()
 		{
 			// Arrange
 			var validUser = _fixture.GetValidUser();
@@ -96,11 +96,39 @@ namespace Store.UnitTest.Entity
 				validUser.Address.Country,
 				validUser.Address.ZipCode
 			 );
-			user.Active();
+			user.Activate();
 
 			// Assert
 			user.Should().NotBeNull();
 			user.Status.Should().Be(Domain.Enum.UserStatus.Active);
+		}
+
+		[Fact(DisplayName = nameof(DeactiveUser_ShouldBeInactive))]
+		[Trait("Domain", "User - Entity")]
+		public void DeactiveUser_ShouldBeInactive()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var user = new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+			user.Deactivate();
+
+			// Assert
+			user.Should().NotBeNull();
+			user.Status.Should().Be(Domain.Enum.UserStatus.Inactive);
 		}
 	}
 }

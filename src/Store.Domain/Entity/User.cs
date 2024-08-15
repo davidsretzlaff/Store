@@ -63,9 +63,14 @@ namespace Store.Domain.Entity
 			DomainValidation.ValidatePhone(Phone, nameof(Phone));
 		}
 
-		public void Active()
+		public void Activate()
 		{
 			this.Status = UserStatus.Active;
+		}
+
+		public void Deactivate()
+		{
+			this.Status = UserStatus.Inactive;
 		}
 	}
 }
