@@ -23,7 +23,6 @@ namespace Store.Domain.Entity
         public User(
 			string businessName, 
 			string corporateName,
-			UserStatus status,
 			string email,
 			string siteUrl,
 			string phone,
@@ -36,7 +35,7 @@ namespace Store.Domain.Entity
         {
             this.BusinessName = businessName;
 			this.CorporateName = corporateName;
-			this.Status = status;
+			this.Status = UserStatus.Waiting;
 			this.Email = email;
 			this.SiteUrl = siteUrl;
 			this.Phone = phone;

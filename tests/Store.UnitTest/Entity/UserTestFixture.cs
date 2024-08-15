@@ -11,7 +11,6 @@ namespace Store.UnitTest.Entity
 			return new Domain.Entity.User(
 				Faker.Company.CompanyName(),
 				Faker.Company.CompanyName(),
-				Domain.Enum.UserStatus.Waiting,
 				Faker.Person.Email,
 				"www.sitecompany.com.br",
 				Faker.Person.Phone,
