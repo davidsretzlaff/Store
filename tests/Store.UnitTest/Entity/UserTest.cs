@@ -48,7 +48,7 @@ namespace Store.UnitTest.Entity
 			user.Address.ZipCode.Should().Be(validUser.Address.ZipCode);
 		}
 
-		[Fact(DisplayName = nameof(Instantiate))]
+		[Fact(DisplayName = nameof(CreateUser_ShouldStartAsWaiting))]
 		[Trait("Domain", "User - Entity")]
 		public void CreateUser_ShouldStartAsWaiting()
 		{
