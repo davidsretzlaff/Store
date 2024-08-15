@@ -13,7 +13,7 @@ namespace Store.UnitTest.Entity
 				Faker.Company.CompanyName(),
 				Faker.Person.Email,
 				"www.sitecompany.com.br",
-				Faker.Person.Phone,
+				"55 992364499",
 				Faker.Company.Cnpj(),
 				Faker.Address.StreetName(),
 				Faker.Address.City(),

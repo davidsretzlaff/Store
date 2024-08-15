@@ -35,12 +35,12 @@ namespace Store.UnitTest.ValueObject.Address
             address.ZipCode.Should().Be(validAddress.ZipCode);
         }
 
-        [Theory(DisplayName = nameof(ThrowErrorWhenStreetIsInvalid))]
+        [Theory(DisplayName = nameof(ThrowError_When_StreetIsInvalid))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
         [InlineData("   ")]
         [InlineData(null)]
-        public void ThrowErrorWhenStreetIsInvalid(string? invalidStreet)
+        public void ThrowError_When_StreetIsInvalid(string? invalidStreet)
         {
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -58,11 +58,11 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"Street should not be empty or null");
 		}
 
-		[Theory(DisplayName = nameof(InstantiateErrorWhenStreetIsLessThan4Characters))]
+		[Theory(DisplayName = nameof(ThrowError_When_StreetIsLessThan4Characters))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("ab")]
 		[InlineData("a")]
-		public void InstantiateErrorWhenStreetIsLessThan4Characters(string? invalidStreet)
+		public void ThrowError_When_StreetIsLessThan4Characters(string? invalidStreet)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -80,9 +80,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"Street should be at least 4 characters long");
 		}
 
-		[Fact(DisplayName = nameof(InstantiateErrorWhenStreetIsGreaterThan100Characters))]
+		[Fact(DisplayName = nameof(ThrowError_When_StreetIsGreaterThan100Characters))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void InstantiateErrorWhenStreetIsGreaterThan100Characters()
+		public void ThrowError_When_StreetIsGreaterThan100Characters()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -100,12 +100,12 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"Street should be less or equal 100 characters long");
 		}
 
-		[Theory(DisplayName = nameof(ThrowErrorWhenCityIsInvalid))]
+		[Theory(DisplayName = nameof(ThrowError_When_CityIsInvalid))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
 		[InlineData("   ")]
 		[InlineData(null)]
-		public void ThrowErrorWhenCityIsInvalid(string? invalidCity)
+		public void ThrowError_When_CityIsInvalid(string? invalidCity)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -123,11 +123,11 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"City should not be empty or null");
 		}
 
-		[Theory(DisplayName = nameof(InstantiateErrorWhenCityIsLessThan3Characters))]
+		[Theory(DisplayName = nameof(ThrowError_When_CityIsLessThan3Characters))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("ab")]
 		[InlineData("a")]
-		public void InstantiateErrorWhenCityIsLessThan3Characters(string? invalidCity)
+		public void ThrowError_When_CityIsLessThan3Characters(string? invalidCity)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -145,9 +145,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"City should be at least 3 characters long");
 		}
 
-		[Fact(DisplayName = nameof(InstantiateErrorWhenCityIsGreaterThan100Characters))]
+		[Fact(DisplayName = nameof(ThrowError_When_CityIsGreaterThan100Characters))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void InstantiateErrorWhenCityIsGreaterThan100Characters()
+		public void ThrowError_When_CityIsGreaterThan100Characters()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -165,12 +165,12 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"City should be less or equal 100 characters long");
 		}
 
-		[Theory(DisplayName = nameof(ThrowErrorWhenStateIsInvalid))]
+		[Theory(DisplayName = nameof(ThrowError_When_StateIsInvalid))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
 		[InlineData("   ")]
 		[InlineData(null)]
-		public void ThrowErrorWhenStateIsInvalid(string? invalidState)
+		public void ThrowError_When_StateIsInvalid(string? invalidState)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -188,10 +188,10 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"State should not be empty or null");
 		}
 
-		[Theory(DisplayName = nameof(InstantiateErrorWhenStateIsLessThan1Characters))]
+		[Theory(DisplayName = nameof(ThrowError_When_StateIsLessThan1Characters))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
-		public void InstantiateErrorWhenStateIsLessThan1Characters(string? invalidState)
+		public void ThrowError_When_StateIsLessThan1Characters(string? invalidState)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -209,9 +209,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"State should not be empty or null");
 		}
 
-		[Fact(DisplayName = nameof(InstantiateErrorWhenStateIsGreaterThan100Characters))]
+		[Fact(DisplayName = nameof(ThrowError_When_StateIsGreaterThan100Characters))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void InstantiateErrorWhenStateIsGreaterThan100Characters()
+		public void ThrowError_When_StateIsGreaterThan100Characters()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -230,12 +230,12 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"State should be less or equal 100 characters long");
 		}
 
-		[Theory(DisplayName = nameof(ThrowErrorWhenCountryIsInvalid))]
+		[Theory(DisplayName = nameof(ThrowError_When_CountryIsInvalid))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
 		[InlineData("   ")]
 		[InlineData(null)]
-		public void ThrowErrorWhenCountryIsInvalid(string? invalidCountry)
+		public void ThrowError_When_CountryIsInvalid(string? invalidCountry)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -253,9 +253,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"Country should not be empty or null");
 		}
 
-		[Fact(DisplayName = nameof(InstantiateErrorWhenCountryIsGreaterThan100Characters))]
+		[Fact(DisplayName = nameof(ThrowError_When_CountryIsGreaterThan100Characters))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void InstantiateErrorWhenCountryIsGreaterThan100Characters()
+		public void ThrowError_When_CountryIsGreaterThan100Characters()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -274,9 +274,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"Country should be less or equal 100 characters long");
 		}
 
-		[Fact(DisplayName = nameof(ThrowErrorWhenZipCodeIsInvalid))]
+		[Fact(DisplayName = nameof(ThrowError_When_ZipCodeIsInvalid))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void ThrowErrorWhenZipCodeIsInvalid()
+		public void ThrowError_When_ZipCodeIsInvalid()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -294,10 +294,10 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"ZipCode should not be null");
 		}
 
-		[Theory(DisplayName = nameof(InstantiateErrorWhenStateIsLessThan1Characters))]
+		[Theory(DisplayName = nameof(ThrowError_When_ZipCodeIsLessThan7Characters))]
 		[Trait("Domain", "Address - ValueObject")]
 		[InlineData("")]
-		public void InstantiateErrorWhenZipCodeIsLessThan7Characters(string? invalidZipCode)
+		public void ThrowError_When_ZipCodeIsLessThan7Characters(string? invalidZipCode)
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
@@ -315,9 +315,9 @@ namespace Store.UnitTest.ValueObject.Address
 			action.Should().Throw<EntityValidationException>().WithMessage($"ZipCode should be at least 8 characters long");
 		}
 
-		[Fact(DisplayName = nameof(InstantiateErrorWhenZipCodeIsGreaterThan8Characters))]
+		[Fact(DisplayName = nameof(ThrowError_When_ZipCodeIsGreaterThan8Characters))]
 		[Trait("Domain", "Address - ValueObject")]
-		public void InstantiateErrorWhenZipCodeIsGreaterThan8Characters()
+		public void ThrowError_When_ZipCodeIsGreaterThan8Characters()
 		{
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();

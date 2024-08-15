@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Store.Domain.Exceptions;
 using Store.UnitTest.ValueObject;
 
 namespace Store.UnitTest.Entity
@@ -129,6 +130,33 @@ namespace Store.UnitTest.Entity
 			// Assert
 			user.Should().NotBeNull();
 			user.Status.Should().Be(Domain.Enum.UserStatus.Inactive);
+		}
+
+
+		[Fact(DisplayName = nameof(ThrowError_When_BusinessNameIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_BusinessNameIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				null!,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"BusinessName should not be empty or null");
 		}
 	}
 }

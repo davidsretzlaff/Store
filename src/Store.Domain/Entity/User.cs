@@ -41,6 +41,7 @@ namespace Store.Domain.Entity
 			this.Phone = phone;
 			this.CompanyRegistrationNumber = companyRegistrationNumber;
 			this.Address = new Address(street, city, state, country, zipCode);
+			this.Validate();
 		}
 
 		public void Validate()
