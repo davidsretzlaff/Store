@@ -1,8 +1,5 @@
-﻿
-using Store.Domain.Validation;
-using System.Runtime.ConstrainedExecution;
+﻿using Store.Domain.Validation;
 using System.Text.RegularExpressions;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Store.Domain.ValueObject
 {
@@ -14,13 +11,13 @@ namespace Store.Domain.ValueObject
 		public string Country { get; private set; }
 		public string ZipCode { get; private set; }
 
-		public Address(string street, string city, string state, string country, string zipcode)
+		public Address(string street, string city, string state, string country, string zipCode)
 		{
 			Street = street;
 			City = city;
 			State = state;
 			Country = country;
-			ZipCode = zipcode;
+			ZipCode = zipCode;
 			Validate();
 		}
 		private void CleanZipCode() {

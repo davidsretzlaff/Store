@@ -31,7 +31,13 @@ namespace Store.Application.UseCases.User.CreateUser
 				input.Address.Country,
 				input.Address.ZipCode
 			);
-
+			//new Domain.ValueObject.Address(
+			//		input.Address.Street,
+			//		input.Address.City,
+			//		input.Address.State,
+			//		input.Address.Country,
+			//		input.Address.ZipCode
+			//	)
 			await _userRepository.Insert(user, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 

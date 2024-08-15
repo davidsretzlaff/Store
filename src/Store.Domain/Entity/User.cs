@@ -34,17 +34,17 @@ namespace Store.Domain.Entity
 			string country, 
 			string zipCode)
         {
-            this.BusinessName = businessName;
-			this.CorporateName = corporateName;
-			this.Status = UserStatus.Waiting;
-			this.Email = email;
-			this.SiteUrl = siteUrl;
-			this.Phone = phone;
-			this.CompanyRegistrationNumber = companyRegistrationNumber;
-			this.Address = new Address(street, city, state, country, zipCode);
-			this.Validate();
+            BusinessName = businessName;
+			CorporateName = corporateName;
+			Status = UserStatus.Waiting;
+			Email = email;
+			SiteUrl = siteUrl;
+			Phone = phone;
+			CompanyRegistrationNumber = companyRegistrationNumber;
+			Address = new Address(street, city, state, country, zipCode);
+			Validate();
 		}
-
+		private User() { }
 		public void Validate()
 		{
 			DomainValidation.NotNullOrEmpty(BusinessName, nameof(BusinessName));

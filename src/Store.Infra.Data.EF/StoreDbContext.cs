@@ -12,6 +12,7 @@ namespace Store.Infra.Data.EF
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			builder.ApplyConfiguration(new UserConfiguration());
+
 		}
 	}
 }

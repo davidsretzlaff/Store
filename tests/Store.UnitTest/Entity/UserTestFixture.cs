@@ -22,8 +22,8 @@ namespace Store.UnitTest.Entity
 				Faker.Address.ZipCode()
 			);
 		}
-
 	}
+
 	[CollectionDefinition(nameof(UserTestFixture))]
 	public class UserTestFixtureCollection: ICollectionFixture<UserTestFixture> { }
 }
