@@ -74,5 +74,33 @@ namespace Store.UnitTest.Entity
 			user.Should().NotBeNull();
 			user.Status.Should().Be(Domain.Enum.UserStatus.Waiting);
 		}
+
+		[Fact(DisplayName = nameof(ActiveUser_ShouldBeActive))]
+		[Trait("Domain", "User - Entity")]
+		public void ActiveUser_ShouldBeActive()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var user = new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+			user.Active();
+
+			// Assert
+			user.Should().NotBeNull();
+			user.Status.Should().Be(Domain.Enum.UserStatus.Active);
+		}
 	}
 }
