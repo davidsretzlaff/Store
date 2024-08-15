@@ -55,9 +55,6 @@ namespace Store.Domain.Entity
 			DomainValidation.MinLength(CorporateName, 3, nameof(CorporateName));
 
 			DomainValidation.NotNullOrEmpty(SiteUrl, nameof(SiteUrl));
-			DomainValidation.MaxLength(SiteUrl, 100, nameof(SiteUrl));
-			DomainValidation.MinLength(SiteUrl, 3, nameof(SiteUrl));
-
 			DomainValidation.NotNullOrEmpty(CompanyRegistrationNumber, nameof(CompanyRegistrationNumber));
 
 			DomainValidation.ValidateEmail(Email, nameof(Email));
@@ -66,12 +63,12 @@ namespace Store.Domain.Entity
 
 		public void Activate()
 		{
-			this.Status = UserStatus.Active;
+			Status = UserStatus.Active;
 		}
 
 		public void Deactivate()
 		{
-			this.Status = UserStatus.Inactive;
+			Status = UserStatus.Inactive;
 		}
 	}
 }

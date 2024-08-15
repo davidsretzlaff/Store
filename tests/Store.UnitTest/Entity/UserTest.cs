@@ -132,7 +132,6 @@ namespace Store.UnitTest.Entity
 			user.Status.Should().Be(Domain.Enum.UserStatus.Inactive);
 		}
 
-
 		[Fact(DisplayName = nameof(ThrowError_When_BusinessNameIsInvalid))]
 		[Trait("Domain", "User - Entity")]
 		public void ThrowError_When_BusinessNameIsInvalid()
@@ -157,6 +156,246 @@ namespace Store.UnitTest.Entity
 
 			// Assert
 			action.Should().Throw<EntityValidationException>().WithMessage($"BusinessName should not be empty or null");
+		}
+
+		[Theory(DisplayName = nameof(ThrowError_When_BusinessNameIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		[InlineData("ab")]
+		[InlineData("a")]
+		public void ThrowError_When_BusinessNameIsLessThan4Characters(string invalidBusinessName)
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				invalidBusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"BusinessName should be at least 4 characters long");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_BusinessNameIsGreaterThan100Characters))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_BusinessNameIsGreaterThan100Characters()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+			var invalidBusinessName = string.Join(null, Enumerable.Range(1, 101).Select(_ => "a").ToArray());
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				invalidBusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"BusinessName should be less or equal 100 characters long");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_CorporateNameIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_CorporateNameIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				null!,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"CorporateName should not be empty or null");
+		}
+
+		[Theory(DisplayName = nameof(ThrowError_When_CorporateIsLessThan3Characters))]
+		[Trait("Domain", "User - Entity")]
+		[InlineData("ab")]
+		[InlineData("a")]
+		public void ThrowError_When_CorporateIsLessThan3Characters(string invalidCorporateName)
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				invalidCorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"CorporateName should be at least 3 characters long");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_CorporateNameIsGreaterThan100Characters))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_CorporateNameIsGreaterThan100Characters()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+			var invalidCorporateName = string.Join(null, Enumerable.Range(1, 101).Select(_ => "a").ToArray());
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				invalidCorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"CorporateName should be less or equal 100 characters long");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_URLIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				"",
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"SiteUrl should not be empty or null");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_CompanyRegistrationNumberIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				null!,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"CompanyRegistrationNumber should not be empty or null");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_EmailIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				"invalid",
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Email invalid");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_PhoneIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_PhoneIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				"invalid",
+				validUser.CompanyRegistrationNumber,
+				validUser.Address.Street,
+				validUser.Address.City,
+				validUser.Address.State,
+				validUser.Address.Country,
+				validUser.Address.ZipCode
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Phone invalid");
 		}
 	}
 }

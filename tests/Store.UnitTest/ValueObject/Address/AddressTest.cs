@@ -87,6 +87,7 @@ namespace Store.UnitTest.ValueObject.Address
 			// Arrange
 			var validAddress = _fixture.GetValidAddress();
 			var invalidStreet = string.Join(null, Enumerable.Range(1, 101).Select(_ => "a").ToArray());
+
 			// Act
 			var action = () => new Domain.ValueObject.Address(
 				invalidStreet,
