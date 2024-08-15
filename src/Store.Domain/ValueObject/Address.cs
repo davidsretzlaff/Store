@@ -36,8 +36,8 @@ namespace Store.Domain.ValueObject
 			DomainValidation.MinLength(State, 1, nameof(State));
 
 			DomainValidation.NotNull(Country, nameof(Country));
-			DomainValidation.MaxLength(Country, 9, nameof(Country));
-			DomainValidation.MinLength(Country, 7, nameof(Country));
+			DomainValidation.MaxLength(Country, 30, nameof(Country));
+			DomainValidation.MinLength(Country, 3, nameof(Country));
 		}
 	}
 }
