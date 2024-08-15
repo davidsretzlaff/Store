@@ -18,26 +18,23 @@ namespace Store.Application.UseCases.User.CreateUser
 		}
 		public async Task<UserOutput> Handle(CreateUserInput input, CancellationToken cancellationToken)
 		{
-			var user = new DomainEntity.User(
-				input.BusinessName,
-				input.CorporateName,
-				input.Email,
-				input.SiteUrl,
-				input.Phone,
-				input.CompanyRegistrationNumber,
+			var email = new Domain.ValueObject.Address(
 				input.Address.Street,
 				input.Address.City,
 				input.Address.State,
 				input.Address.Country,
 				input.Address.ZipCode
 			);
-			//new Domain.ValueObject.Address(
-			//		input.Address.Street,
-			//		input.Address.City,
-			//		input.Address.State,
-			//		input.Address.Country,
-			//		input.Address.ZipCode
-			//	)
+			var user = new DomainEntity.User(
+				input.Name,
+				input.BusinessName,
+				input.CorporateName,
+				input.Email,
+				input.SiteUrl,
+				input.Phone,
+				input.CompanyRegistrationNumber,
+				email
+			);
 			await _userRepository.Insert(user, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 

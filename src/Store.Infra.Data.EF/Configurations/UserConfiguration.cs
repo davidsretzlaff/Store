@@ -10,18 +10,33 @@ namespace Store.Infra.Data.EF.Configurations
 	{
 		public void Configure(EntityTypeBuilder<User> builder)
 		{
+			builder.Property(u => u.Name).IsRequired().HasMaxLength(100);
+			builder.Property(u => u.BusinessName).IsRequired().HasMaxLength(100);
+			builder.Property(u => u.CorporateName).IsRequired().HasMaxLength(100);
+			builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
+			builder.Property(u => u.SiteUrl).HasMaxLength(100);
+			builder.Property(u => u.Phone).HasMaxLength(20);
+			builder.Property(u => u.CompanyRegistrationNumber).IsRequired().HasMaxLength(50);
+			builder.Property(u => u.Status).HasConversion<string>().IsRequired();
 
-			builder.HasKey(user => user.Id);
-			builder.OwnsOne(user => user.Address, address =>
+			builder.OwnsOne(u => u.Address, a =>
 			{
-				address.Property(p => p.Street);
-				address.Property(p => p.City);
-				address.Property(p => p.State);
-				address.Property(p => p.Country);
-				address.Property(p => p.ZipCode);
+				a.Property(ad => ad.Street)
+					.IsRequired()
+					.HasMaxLength(150);
+
+				a.Property(ad => ad.City)
+					.IsRequired()
+					.HasMaxLength(100);
+
+				a.Property(ad => ad.State)
+					.IsRequired()
+					.HasMaxLength(50);
+
+				a.Property(ad => ad.ZipCode)
+					.IsRequired()
+					.HasMaxLength(10);
 			});
-			builder.Property(user => user.BusinessName).HasMaxLength(100);
-			builder.Property(user => user.CorporateName).HasMaxLength(100);
 		}
 	}
 }

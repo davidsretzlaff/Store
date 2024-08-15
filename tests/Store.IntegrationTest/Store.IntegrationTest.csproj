@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Store.Infra.Data.EF\Store.Infra.Data.EF.csproj" />
+    <ProjectReference Include="..\Store.Tests.Shared\Store.Tests.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

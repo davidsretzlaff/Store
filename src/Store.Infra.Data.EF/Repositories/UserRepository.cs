@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Store.Application.Exceptions;
 using Store.Domain.Entity;
+using Store.Domain.Enum;
 using Store.Domain.Repository;
 using Store.Domain.SeedWork.Searchable;
 
@@ -16,25 +18,54 @@ namespace Store.Infra.Data.EF.Repositories
 			await _users.AddAsync(user, cancellationToken);
 		}
 
-		public Task Delete(User aggregate, CancellationToken cancellationToken)
+		public async Task<User> Get(Guid id, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var user = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+			NotFoundException.ThrowIfNull(user, $"User '{id}' not found");
+			return user!;
 		}
 
-		public Task<User> Get(Guid id, CancellationToken cancellationToken)
+		public Task Delete(User user, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			return Task.FromResult(_users.Remove(user));
 		}
 
-
-		public Task<SearchOutput<User>> Search(SearchInput input, CancellationToken cancellationToken)
+		public async Task<SearchOutput<User>> Search(SearchInput input, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var toSkip = (input.Page - 1) * input.PerPage;
+			var query = _users.AsNoTracking();
+			query = AddOrderToQuery(query, input.OrderBy, input.Order);
+
+			if (!string.IsNullOrWhiteSpace(input.Search))
+			{
+				query = query.Where(x =>
+					x.BusinessName.Contains(input.Search) ||
+					x.CorporateName.StartsWith(input.Search) ||
+					x.CompanyRegistrationNumber.Contains(input.Search)
+				);
+			}
+
+			var total = await query.CountAsync();
+			var items = await query
+				.Skip(toSkip)
+				.Take(input.PerPage)
+				.ToListAsync();
+
+			return new SearchOutput<User>(input.Page, input.PerPage, total, items);
 		}
 
-		public Task Update(User aggregate, CancellationToken cancellationToken)
+		private IQueryable<User> AddOrderToQuery(IQueryable<User> query, string orderProperty,SearchOrder order
+		)
 		{
-			throw new NotImplementedException();
+			var orderedQuery = (orderProperty.ToLower(), order) switch
+			{
+				("BusinessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
+				("BusinessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
+				("id", SearchOrder.Desc) => query.OrderByDescending(x => x.Id),
+				_ => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id)
+			};
+			return orderedQuery;
 		}
 	}
 }

@@ -1,17 +1,13 @@
 ﻿using Store.Domain.Enum;
-using Store.Domain.Exceptions;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
-using System.Diagnostics.Metrics;
-using System.IO;
-using System.Reflection.Emit;
-using System.Text.RegularExpressions;
 
 namespace Store.Domain.Entity
 {
 	public class User : AggregateRoot
 	{
+		public string Name {  get; set; }
 		public string BusinessName { get; private set; }
 		public string CorporateName { get; private set; }
 		public UserStatus Status { get; private set; }
@@ -21,32 +17,36 @@ namespace Store.Domain.Entity
 		public string CompanyRegistrationNumber {  get; private set; }
 		public Address Address { get; private set; }
 
-        public User(
-			string businessName, 
+		public User(
+			string name,
+			string businessName,
 			string corporateName,
 			string email,
 			string siteUrl,
 			string phone,
 			string companyRegistrationNumber,
-			string street, 
-			string city, 
-			string state, 
-			string country, 
-			string zipCode)
-        {
-            BusinessName = businessName;
+			Address address
+		   )
+		{
+			Name = name;
+			BusinessName = businessName;
 			CorporateName = corporateName;
 			Status = UserStatus.Waiting;
 			Email = email;
 			SiteUrl = siteUrl;
 			Phone = phone;
 			CompanyRegistrationNumber = companyRegistrationNumber;
-			Address = new Address(street, city, state, country, zipCode);
+			Address = address;
 			Validate();
 		}
 		private User() { }
+
 		public void Validate()
 		{
+			DomainValidation.NotNullOrEmpty(Name, nameof(Name));
+			DomainValidation.MaxLength(Name, 100, nameof(Name));
+			DomainValidation.MinLength(Name, 4, nameof(Name));
+
 			DomainValidation.NotNullOrEmpty(BusinessName, nameof(BusinessName));
 			DomainValidation.MaxLength(BusinessName, 100, nameof(BusinessName));
 			DomainValidation.MinLength(BusinessName, 4, nameof(BusinessName));

@@ -19,17 +19,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var user = new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -58,17 +55,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var user = new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -85,17 +79,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var user = new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 			user.Activate();
 
@@ -113,17 +104,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var user = new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 			user.Deactivate();
 
@@ -141,17 +129,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				null!,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -169,17 +154,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				invalidBusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -196,17 +178,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				invalidBusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -222,17 +201,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				null!,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -250,17 +226,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				invalidCorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -277,17 +250,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				invalidCorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -303,17 +273,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				"",
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -329,17 +296,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
 				null!,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -355,17 +319,14 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				"invalid",
 				validUser.SiteUrl,
 				validUser.Phone,
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
@@ -381,21 +342,90 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
+				validUser.Name,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
 				validUser.SiteUrl,
 				"invalid",
 				validUser.CompanyRegistrationNumber,
-				validUser.Address.Street,
-				validUser.Address.City,
-				validUser.Address.State,
-				validUser.Address.Country,
-				validUser.Address.ZipCode
+				validUser.Address
 			 );
 
 			// Assert
 			action.Should().Throw<EntityValidationException>().WithMessage($"Phone invalid");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_NameIsInvalid))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_NameIsInvalid()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				null!,
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Name should not be empty or null");
+		}
+
+		[Theory(DisplayName = nameof(ThrowError_When_NameIsLessThan4Characters))]
+		[Trait("Domain", "User - Entity")]
+		[InlineData("ab")]
+		[InlineData("a")]
+		public void ThrowError_When_NameIsLessThan4Characters(string invalidName)
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				invalidName,
+				validUser.Name,
+				validUser.BusinessName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Name should be at least 4 characters long");
+		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_NameIsGreaterThan100Characters))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_NameIsGreaterThan100Characters()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+			var invalidName = string.Join(null, Enumerable.Range(1, 101).Select(_ => "a").ToArray());
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				invalidName,
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Name should be less or equal 100 characters long");
 		}
 	}
 }

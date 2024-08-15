@@ -1,5 +1,6 @@
 ﻿
 using Bogus.Extensions.Brazil;
+using Store.Tests.Shared;
 
 namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 {
@@ -11,29 +12,9 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 
 	public class UserRepositoryTestFixture : BaseFixture
 	{
-		public Domain.Entity.User GetValidUser()
-		{
-			return new Domain.Entity.User(
-				Faker.Company.CompanyName(),
-				Faker.Company.CompanyName(),
-				Faker.Person.Email,
-				"www.sitecompany.com.br",
-				"55 992364499",
-				Faker.Company.Cnpj(),
-				Faker.Address.StreetName(),
-				Faker.Address.City(),
-				Faker.Address.State(),
-				Faker.Address.Country(),
-				Faker.Address.ZipCode()
-			);
-
-			//new Domain.ValueObject.Address(
-			//		Faker.Address.StreetName(),
-			//		Faker.Address.City(),
-			//		Faker.Address.State(),
-			//		Faker.Address.State(),
-			//		Faker.Address.ZipCode()
-			//	)
-		}
+		public UserDataGenerator DataGenerator { get; }
+		public UserRepositoryTestFixture() => DataGenerator = new UserDataGenerator();
+		public Domain.Entity.User GetValidUser() => DataGenerator.GetValidUser();
+		public List<Domain.Entity.User> GetUserValidList(int quantity) => DataGenerator.GetUserValidList(quantity);
 	}
 }

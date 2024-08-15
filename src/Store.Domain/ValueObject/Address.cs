@@ -20,8 +20,9 @@ namespace Store.Domain.ValueObject
 			ZipCode = zipCode;
 			Validate();
 		}
+		
 		private void CleanZipCode() {
-			this.ZipCode = Regex.Replace(this.ZipCode, @"\D", "");
+			ZipCode = Regex.Replace(ZipCode, @"\D", "");
 		}
 		public void Validate()
 		{

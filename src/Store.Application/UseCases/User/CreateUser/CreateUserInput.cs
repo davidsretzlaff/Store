@@ -5,6 +5,7 @@ using Store.Application.UseCases.User.CreateUser.Common;
 namespace Store.Application.UseCases.User.CreateUser
 {
 	public record CreateUserInput (
+		string Name,
 		string BusinessName,
 		string CorporateName,
 		string Email,

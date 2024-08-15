@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Store.Domain\Store.Domain.csproj" />
+    <ProjectReference Include="..\Store.Tests.Shared\Store.Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>

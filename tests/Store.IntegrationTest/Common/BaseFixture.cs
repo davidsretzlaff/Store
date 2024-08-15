@@ -19,8 +19,8 @@ namespace Store.IntegrationTest
 				.Options
 			);
 
-			//																												if (preserveData == false)
-				//context.Database.EnsureDeleted();
+			if (preserveData == false)
+				context.Database.EnsureDeleted();
 
 			return context;
 		}

@@ -7,6 +7,7 @@ namespace Store.Application.UseCases.User.CreateUser.Common
 	public record UserOutput
 	(
 		Guid id,
+		string name,
 		string BusinessName,
 		string CorporateName,
 		string Email,
@@ -21,6 +22,7 @@ namespace Store.Application.UseCases.User.CreateUser.Common
 		{
 			return new UserOutput(
 				   user.Id,
+				   user.Name,
 				   user.BusinessName,
 				   user.CorporateName,
 				   user.Email,
