@@ -1,5 +1,6 @@
 ﻿using Store.Domain.Enum;
 using Store.Domain.Exceptions;
+using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
 using System.Diagnostics.Metrics;
@@ -9,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Store.Domain.Entity
 {
-	public class User : SeedWork.Entity
+	public class User : AggregateRoot
 	{
 		public string BusinessName { get; private set; }
 		public string CorporateName { get; private set; }

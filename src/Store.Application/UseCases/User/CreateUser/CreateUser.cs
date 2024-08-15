@@ -1,5 +1,6 @@
 ﻿using Store.Application.Interface;
 using Store.Application.UseCases.User.CreateUser.Common;
+using Store.Domain.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
@@ -9,7 +10,7 @@ namespace Store.Application.UseCases.User.CreateUser
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
 
-		public CreateUser(IUserRepository categoryRepository, IUnitOfWork unitOfWork
+		public CreateUser(IUserRepository userRepository, IUnitOfWork unitOfWork
 		)
 		{
 			_unitOfWork = unitOfWork;
@@ -34,7 +35,7 @@ namespace Store.Application.UseCases.User.CreateUser
 			await _userRepository.Insert(user, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 
-			throw new NotImplementedException();
+			return UserOutput.FromUser(user);
 		}
 	}
 }
