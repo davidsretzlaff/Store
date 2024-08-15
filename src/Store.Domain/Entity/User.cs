@@ -1,9 +1,11 @@
 ﻿using Store.Domain.Enum;
+using Store.Domain.Exceptions;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 namespace Store.Domain.Entity
 {
@@ -34,11 +36,11 @@ namespace Store.Domain.Entity
         {
             this.BusinessName = businessName;
 			this.CorporateName = corporateName;
-			this.Status = status; // criar validador proprio
-			this.Email = email;// criar validador proprio
+			this.Status = status;
+			this.Email = email;
 			this.SiteUrl = siteUrl;
-			this.Phone = phone; // validar proprio
-			this.CompanyRegistrationNumber = companyRegistrationNumber; // validar proprio
+			this.Phone = phone;
+			this.CompanyRegistrationNumber = companyRegistrationNumber;
 			this.Address = new Address(street, city, state, country, zipCode);
 		}
 
@@ -56,6 +58,10 @@ namespace Store.Domain.Entity
 			DomainValidation.MaxLength(SiteUrl, 100, nameof(SiteUrl));
 			DomainValidation.MinLength(SiteUrl, 3, nameof(SiteUrl));
 
+			DomainValidation.NotNullOrEmpty(CompanyRegistrationNumber, nameof(CompanyRegistrationNumber));
+
+			DomainValidation.ValidateEmail(Email, nameof(Email));
+			DomainValidation.ValidatePhone(Phone, nameof(Phone));
 		}
 	}
 }
