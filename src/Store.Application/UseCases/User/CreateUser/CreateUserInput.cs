@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using Store.Application.UseCases.Authenticate.CreateAuthenticate;
 using Store.Application.UseCases.User.Common;
 
 namespace Store.Application.UseCases.User.CreateUser
 {
     public record CreateUserInput (
-		string Name,
+		string UserName,
+		string Password,
 		string BusinessName,
 		string CorporateName,
 		string Email,

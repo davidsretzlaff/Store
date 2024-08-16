@@ -7,7 +7,8 @@ namespace Store.Domain.Entity
 {
 	public class User : AggregateRoot
 	{
-		public string Name {  get; private set; }
+		public string Password { get; private set; }
+		public string UserName {  get; private set; }
 		/* Nome fantasia */
 		public string BusinessName { get; private set; }
 		/* Razão Social */
@@ -20,7 +21,8 @@ namespace Store.Domain.Entity
 		public Address Address { get; private set; }
 
 		public User(
-			string name,
+			string userName,
+			string password,
 			string businessName,
 			string corporateName,
 			string email,
@@ -30,7 +32,8 @@ namespace Store.Domain.Entity
 			Address address
 		   )
 		{
-			Name = name;
+			UserName = userName;
+			Password = password;
 			BusinessName = businessName;
 			CorporateName = corporateName;
 			Status = UserStatus.Waiting;
@@ -45,9 +48,9 @@ namespace Store.Domain.Entity
 
 		public void Validate()
 		{
-			DomainValidation.NotNullOrEmpty(Name, nameof(Name));
-			DomainValidation.MaxLength(Name, 100, nameof(Name));
-			DomainValidation.MinLength(Name, 4, nameof(Name));
+			DomainValidation.NotNullOrEmpty(UserName, nameof(UserName));
+			DomainValidation.MaxLength(UserName, 100, nameof(UserName));
+			DomainValidation.MinLength(UserName, 4, nameof(UserName));
 
 			DomainValidation.NotNullOrEmpty(BusinessName, nameof(BusinessName));
 			DomainValidation.MaxLength(BusinessName, 100, nameof(BusinessName));

@@ -5,12 +5,12 @@ using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
 {
-    public class CreateUser : ICreateUser
+    public class CreateAuthenticate : ICreateUser
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
 
-		public CreateUser(IUserRepository userRepository, IUnitOfWork unitOfWork
+		public CreateAuthenticate(IUserRepository userRepository, IUnitOfWork unitOfWork
 		)
 		{
 			_unitOfWork = unitOfWork;
@@ -19,7 +19,8 @@ namespace Store.Application.UseCases.User.CreateUser
 		public async Task<UserOutput> Handle(CreateUserInput input, CancellationToken cancellationToken)
 		{
 			var user = new DomainEntity.User(
-				input.Name,
+				input.UserName,
+				input.Password,
 				input.BusinessName,
 				input.CorporateName,
 				input.Email,
@@ -30,7 +31,6 @@ namespace Store.Application.UseCases.User.CreateUser
 			);
 			await _userRepository.Insert(user, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
-
 			return UserOutput.FromUser(user);
 		}
 	}

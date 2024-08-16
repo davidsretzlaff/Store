@@ -15,6 +15,13 @@ namespace Store.Infra.Data.EF.Repositories
 
 		public async Task Insert(User user, CancellationToken cancellationToken)
 		{
+			var userDb = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == user.UserName, cancellationToken);
+			if (userDb != null)
+			{
+				//david testar
+				UserNameException.ThrowIfUserNameExist($"'{user.UserName}' already exists.");
+			}
+				
 			await _users.AddAsync(user, cancellationToken);
 		}
 
@@ -45,7 +52,7 @@ namespace Store.Infra.Data.EF.Repositories
 			{
 				var searchToLower = input.Search.ToLower();
 				query = query.Where(x =>
-					x.Name.ToLower().Contains(searchToLower) ||
+					x.UserName.ToLower().Contains(searchToLower) ||
 					x.BusinessName.ToLower().StartsWith(searchToLower) ||
 					x.CorporateName.ToLower().Contains(searchToLower) ||
 					x.CompanyRegistrationNumber.ToLower().Contains(searchToLower)
@@ -65,8 +72,8 @@ namespace Store.Infra.Data.EF.Repositories
 		{
 			var orderedQuery = (orderProperty.ToLower(), order) switch
 			{
-				("Name", SearchOrder.Asc) => query.OrderBy(x => x.Name).ThenBy(x => x.Id),
-				("Name", SearchOrder.Desc) => query.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
+				("Name", SearchOrder.Asc) => query.OrderBy(x => x.UserName).ThenBy(x => x.Id),
+				("Name", SearchOrder.Desc) => query.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
 				("BusinessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
 				("BusinessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
 				("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
@@ -74,6 +81,14 @@ namespace Store.Infra.Data.EF.Repositories
 				_ => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id)
 			};
 			return orderedQuery;
+		}
+
+		//criar test
+		public async Task<User> GetByUserName(string userName, CancellationToken cancellationToken)
+		{
+			var user = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == userName, cancellationToken);
+			NotFoundException.ThrowIfNull(user, $"User '{userName}' not found.");
+			return user!;
 		}
 	}
 }

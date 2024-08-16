@@ -6,7 +6,7 @@ namespace Store.Application.UseCases.User.Common
     public record UserOutput
     (
         Guid Id,
-        string Name,
+        string UserName,
         string BusinessName,
         string CorporateName,
         string Email,
@@ -20,8 +20,8 @@ namespace Store.Application.UseCases.User.Common
         public static UserOutput FromUser(DomainEntity.User user)
         {
             return new UserOutput(
-                   user.Id,
-                   user.Name,
+				   user.Id,
+                   user.UserName,
                    user.BusinessName,
                    user.CorporateName,
                    user.Email,

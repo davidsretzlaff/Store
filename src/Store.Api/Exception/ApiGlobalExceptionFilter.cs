@@ -33,6 +33,20 @@ namespace Store.Api.Exception
 				details.Type = "NotFound";
 				details.Detail = exception!.Message;
 			}
+			else if (exception is UserNameException)
+			{
+				details.Title = "Username already exists";
+				details.Status = StatusCodes.Status404NotFound;
+				details.Type = "NotCreated";
+				details.Detail = exception!.Message;
+			}
+			else if (exception is UserNameException)
+			{
+				details.Title = "Password Invalid";
+				details.Status = StatusCodes.Status404NotFound;
+				details.Type = "NotAuth";
+				details.Detail = exception!.Message;
+			}
 
 			//else if (exception is RelatedAggregateException)
 			//{

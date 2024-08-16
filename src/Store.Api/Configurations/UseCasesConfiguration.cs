@@ -12,7 +12,7 @@ namespace Store.Api.Configurations
 		public static IServiceCollection AddUseCases(this IServiceCollection services)
 		{
 			services.AddHealthChecks();
-			services.AddMediatR(typeof(CreateUser));
+			services.AddMediatR(typeof(CreateAuthenticate));
 			services.AddRepositories();
 			return services;
 		}

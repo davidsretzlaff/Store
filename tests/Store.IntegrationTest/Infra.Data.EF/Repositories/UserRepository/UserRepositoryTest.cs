@@ -293,7 +293,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 				);
 				exampleItem.Should().NotBeNull();
 				outputItem.Id.Should().Be(exampleItem!.Id);
-				outputItem.Name.Should().Be(exampleItem.Name);
+				outputItem.UserName.Should().Be(exampleItem.UserName);
 				outputItem.BusinessName.Should().Be(exampleItem.BusinessName);
 				outputItem.CorporateName.Should().Be(exampleItem.CorporateName);
 				outputItem.Email.Should().Be(exampleItem.Email);
@@ -335,7 +335,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 				var outputItem = output.Items[indice];
 				expectedItem.Should().NotBeNull();
 				outputItem.Should().NotBeNull();
-				outputItem.Name.Should().Be(expectedItem!.Name);
+				outputItem.UserName.Should().Be(expectedItem!.UserName);
 				outputItem.Id.Should().Be(expectedItem.Id);
 				outputItem.BusinessName.Should().Be(expectedItem.BusinessName);
 				outputItem.CorporateName.Should().Be(expectedItem.CorporateName);

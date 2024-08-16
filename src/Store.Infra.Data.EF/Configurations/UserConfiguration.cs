@@ -10,7 +10,7 @@ namespace Store.Infra.Data.EF.Configurations
 	{
 		public void Configure(EntityTypeBuilder<User> builder)
 		{
-			builder.Property(u => u.Name).IsRequired().HasMaxLength(100);
+			builder.Property(u => u.UserName).IsRequired().HasMaxLength(100);
 			builder.Property(u => u.BusinessName).IsRequired().HasMaxLength(100);
 			builder.Property(u => u.CorporateName).IsRequired().HasMaxLength(100);
 			builder.Property(u => u.Email).IsRequired().HasMaxLength(100);

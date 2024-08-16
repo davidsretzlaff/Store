@@ -19,7 +19,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var user = new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -51,19 +52,10 @@ namespace Store.UnitTest.Entity
 		public void CreateUser_ShouldStartAsWaiting()
 		{
 			// Arrange
-			var validUser = _fixture.GetValidUser();
+			Domain.Entity.User user;
 
 			// Act
-			var user = new Domain.Entity.User(
-				validUser.Name,
-				validUser.BusinessName,
-				validUser.CorporateName,
-				validUser.Email,
-				validUser.SiteUrl,
-				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
-				validUser.Address
-			 );
+			user = _fixture.GetValidUser();
 
 			// Assert
 			user.Should().NotBeNull();
@@ -75,19 +67,9 @@ namespace Store.UnitTest.Entity
 		public void ActivateUser_ShouldBeActive()
 		{
 			// Arrange
-			var validUser = _fixture.GetValidUser();
+			var user = _fixture.GetValidUser();
 
 			// Act
-			var user = new Domain.Entity.User(
-				validUser.Name,
-				validUser.BusinessName,
-				validUser.CorporateName,
-				validUser.Email,
-				validUser.SiteUrl,
-				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
-				validUser.Address
-			 );
 			user.Activate();
 
 			// Assert
@@ -100,19 +82,9 @@ namespace Store.UnitTest.Entity
 		public void DeactiveUser_ShouldBeInactive()
 		{
 			// Arrange
-			var validUser = _fixture.GetValidUser();
+			var user = _fixture.GetValidUser();
 
 			// Act
-			var user = new Domain.Entity.User(
-				validUser.Name,
-				validUser.BusinessName,
-				validUser.CorporateName,
-				validUser.Email,
-				validUser.SiteUrl,
-				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
-				validUser.Address
-			 );
 			user.Deactivate();
 
 			// Assert
@@ -129,7 +101,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				null!,
 				validUser.CorporateName,
 				validUser.Email,
@@ -154,7 +127,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				invalidBusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -178,7 +152,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				invalidBusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -201,7 +176,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				null!,
 				validUser.Email,
@@ -226,7 +202,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				invalidCorporateName,
 				validUser.Email,
@@ -250,7 +227,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				invalidCorporateName,
 				validUser.Email,
@@ -273,7 +251,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -296,7 +275,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -319,7 +299,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				"invalid",
@@ -342,7 +323,8 @@ namespace Store.UnitTest.Entity
 
 			// Act
 			var action = () => new Domain.Entity.User(
-				validUser.Name,
+				validUser.UserName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -366,6 +348,7 @@ namespace Store.UnitTest.Entity
 			// Act
 			var action = () => new Domain.Entity.User(
 				null!,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,
@@ -391,7 +374,8 @@ namespace Store.UnitTest.Entity
 			// Act
 			var action = () => new Domain.Entity.User(
 				invalidName,
-				validUser.Name,
+				validUser.Password,
+				validUser.UserName,
 				validUser.BusinessName,
 				validUser.Email,
 				validUser.SiteUrl,
@@ -415,6 +399,7 @@ namespace Store.UnitTest.Entity
 			// Act
 			var action = () => new Domain.Entity.User(
 				invalidName,
+				validUser.Password,
 				validUser.BusinessName,
 				validUser.CorporateName,
 				validUser.Email,

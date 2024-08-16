@@ -1,5 +1,8 @@
 ﻿using Bogus;
 using Bogus.Extensions.Brazil;
+using Store.Application.UseCases.User.Common;
+using Store.Application.UseCases.User.CreateAuthenticate;
+using Store.Application.UseCases.User.CreateUser;
 using Store.Domain.Enum;
 
 namespace Store.Tests.Shared
@@ -11,10 +14,11 @@ namespace Store.Tests.Shared
 
 			return new Domain.Entity.User(
 				Faker.Person.FullName,
+				Faker.Hashids.ToString()!,
 				Faker.Company.CompanyName(),
 				Faker.Company.CompanyName(),
 				Faker.Person.Email,
-				"www.sitecompany.com.br",
+				Faker.Internet.Locale,
 				"55 992364499",
 				Faker.Company.Cnpj(),
 				GetEmail()
@@ -34,7 +38,17 @@ namespace Store.Tests.Shared
 		private Domain.Entity.User GetExampleUser(string[] inputs = null)
 		{
 			var user = GetValidUser();
-			return new Domain.Entity.User(inputs[0], inputs[1], inputs[2], user.Email, user.SiteUrl, user.Phone, user.CompanyRegistrationNumber, user.Address);
+			return new Domain.Entity.User(
+				inputs[0],
+				Faker.Hashids.ToString()!, 
+				inputs[1], 
+				inputs[2], 
+				user.Email, 
+				user.SiteUrl, 
+				user.Phone, 
+				user.CompanyRegistrationNumber, 
+				user.Address
+			);
 		}
 
 		public List<Domain.Entity.User> GetUserValidList(int quantity)
@@ -50,8 +64,8 @@ namespace Store.Tests.Shared
 			var listClone = new List<Domain.Entity.User>(userList);
 			var orderedEnumerable = (orderBy.ToLower(), order) switch
 			{
-				("Name", SearchOrder.Asc) => listClone.OrderBy(x => x.Name).ThenBy(x => x.Id),
-				("Name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
+				("Name", SearchOrder.Asc) => listClone.OrderBy(x => x.UserName).ThenBy(x => x.Id),
+				("Name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
 				("BusinessName", SearchOrder.Asc) => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
 				("BusinessName", SearchOrder.Desc) => listClone.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
 				_ => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id)
@@ -66,6 +80,41 @@ namespace Store.Tests.Shared
 			).ToList();
 			return userList;
 		}
-		
+
+		public CreateUserInput getExampleInput()
+		{
+			var user = GetValidUser();
+			return new(
+				user.UserName,
+				user.Password,
+				user.BusinessName,
+				user.CorporateName,
+				user.Email,
+				user.SiteUrl,
+				user.Phone,
+				user.CompanyRegistrationNumber,
+				AddressInput.FromDomainAddress(user.Address)
+			);
+		}
+		public CreateUserInput GetCreateUserInput()
+		{
+			var user = GetValidUser();
+			return new(
+				"1",
+				user.UserName,
+				user.BusinessName,
+				user.CorporateName,
+				user.Email,
+				user.SiteUrl,
+				user.Phone,
+				user.CompanyRegistrationNumber,
+				AddressInput.FromDomainAddress(user.Address)
+			);
+		}
+
+		public CreateAuthInput GetCreateAuthInput(Domain.Entity.User user)
+		{
+			return new CreateAuthInput(user.UserName, user.Password);
+		}
 	}
 }

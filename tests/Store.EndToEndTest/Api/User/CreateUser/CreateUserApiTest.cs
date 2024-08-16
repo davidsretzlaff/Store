@@ -29,7 +29,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				response!.StatusCode.Should().Be(HttpStatusCode.Created);
 				output.Should().NotBeNull();
 				output.Data.Should().NotBeNull();
-				output.Data.Name.Should().Be(input.Name);
+				output.Data.UserName.Should().Be(input.UserName);
 				output.Data.BusinessName.Should().Be(input.BusinessName);
 				output.Data.CorporateName.Should().Be(input.CorporateName);
 				output.Data.Id.Should().NotBeEmpty();
@@ -37,7 +37,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 
 				var dbCategory = await _fixture.Persistence.GetById(output.Data.Id);
 				dbCategory.Should().NotBeNull();
-				dbCategory!.Name.Should().Be(input.Name);
+				dbCategory!.UserName.Should().Be(input.UserName);
 				dbCategory.CorporateName.Should().Be(input.CorporateName);
 				dbCategory.CompanyRegistrationNumber.Should().Be(input.CompanyRegistrationNumber);
 			}

@@ -18,7 +18,8 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 		{
 			var user = DataGenerator.GetValidUser();
 			return new(
-				user.Name,
+				user.UserName,
+				user.Password,
 				user.BusinessName,
 				user.CorporateName,
 				user.Email,
@@ -33,6 +34,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 			var user = DataGenerator.GetValidUser();
 			return new(
 				"1",
+				user.Password,
 				user.BusinessName,
 				user.CorporateName,
 				user.Email,

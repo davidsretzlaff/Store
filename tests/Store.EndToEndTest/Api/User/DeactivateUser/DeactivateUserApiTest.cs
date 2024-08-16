@@ -39,7 +39,7 @@ namespace Store.EndToEndTest.Api.User.DeactivateUser
 
 				var dbUser = await _fixture.Persistence.GetById(output.Data.Id);
 				dbUser.Should().NotBeNull();
-				dbUser!.Name.Should().Be(exampleUser.Name);
+				dbUser!.UserName.Should().Be(exampleUser.UserName);
 				dbUser.Status.Should().Be(exampleUser.Status);
 				dbUser.Status.Should().Be(Domain.Enum.UserStatus.Inactive);
 			}

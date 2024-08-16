@@ -28,4 +28,8 @@
     <ProjectReference Include="..\Store.Tests.Shared\Store.Tests.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\User\CreateUser\" />
+  </ItemGroup>
+
 </Project>
