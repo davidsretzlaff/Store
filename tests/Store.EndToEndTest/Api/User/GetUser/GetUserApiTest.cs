@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Store.Api.ApiModels.Response;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Extensions;
@@ -41,6 +43,31 @@ namespace Store.EndToEndTest.Api.User.GetUser
 				dbUser!.Name.Should().Be(exampleUser.Name);
 				dbUser.Status.Should().Be(exampleUser.Status);
 				dbUser.Status.Should().Be(Domain.Enum.UserStatus.Waiting);
+			}
+		}
+
+		[Fact(DisplayName = nameof(Error_When_NotFound))]
+		[Trait("EndToEnd/API", "User/Get - Endpoints")]
+		public async Task Error_When_NotFound()
+		{
+			{
+				// Arrange
+				var exampleUserList = _fixture.GetExampleUserList(5);
+				await _fixture.Persistence.InsertList(exampleUserList);
+				var randomGuid = Guid.NewGuid();
+
+				// Act
+				var (response, output) = await _fixture.ApiClient.
+					Get<ProblemDetails>($"/users/{randomGuid}");
+
+				// Assert
+				response.Should().NotBeNull();
+				response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status404NotFound);
+				output.Should().NotBeNull();
+				output!.Status.Should().Be((int)StatusCodes.Status404NotFound);
+				output.Type.Should().Be("NotFound");
+				output.Title.Should().Be("Not Found");
+				output.Detail.Should().Be($"User '{randomGuid}' not found.");
 			}
 		}
 	}

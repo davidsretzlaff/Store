@@ -1,4 +1,6 @@
-﻿namespace Store.Api.Configurations
+﻿using Store.Api.Exception;
+
+namespace Store.Api.Configurations
 {
 	public static class ControllerConfiguration
 	{
@@ -9,7 +11,9 @@
 					builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 				})
 			)
-			.AddControllers();
+			.AddControllers(options
+				=> options.Filters.Add(typeof(ApiGlobalExceptionFilter))
+			);
 			return services;
 		}
 

@@ -26,7 +26,7 @@ namespace Store.Infra.Data.EF.Repositories
 		public async Task<User> Get(Guid id, CancellationToken cancellationToken)
 		{
 			var user = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-			NotFoundException.ThrowIfNull(user, $"User '{id}' not found");
+			NotFoundException.ThrowIfNull(user, $"User '{id}' not found.");
 			return user!;
 		}
 
