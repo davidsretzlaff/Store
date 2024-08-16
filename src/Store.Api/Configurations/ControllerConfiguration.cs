@@ -10,7 +10,7 @@ namespace Store.Api.Configurations
 		public static IServiceCollection AddAndConfigureControllers(this IServiceCollection services, IConfiguration configuration)
 		{
 
-			var key = Encoding.ASCII.GetBytes(configuration["SecretToken"]);
+			var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:SecretKey"]);
 
 			services.AddCors(p => p.AddPolicy("CORS", builder =>
 			{

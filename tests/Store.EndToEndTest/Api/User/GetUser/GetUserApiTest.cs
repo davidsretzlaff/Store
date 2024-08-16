@@ -10,11 +10,11 @@ using System.Net;
 namespace Store.EndToEndTest.Api.User.GetUser
 {
 
-	[Collection(nameof(DeactivateUserApiTestFixture))]
+	[Collection(nameof(GetUserApiTestFixture))]
 	public class DeactivateUserApiTest
 	{
-		private readonly DeactivateUserApiTestFixture _fixture;
-		public DeactivateUserApiTest(DeactivateUserApiTestFixture fixture) => _fixture = fixture;
+		private readonly GetUserApiTestFixture _fixture;
+		public DeactivateUserApiTest(GetUserApiTestFixture fixture) => _fixture = fixture;
 
 		[Fact(DisplayName = nameof(ActivateUser))]
 		[Trait("EndToEnd/API", "User/Get - Endpoints")]

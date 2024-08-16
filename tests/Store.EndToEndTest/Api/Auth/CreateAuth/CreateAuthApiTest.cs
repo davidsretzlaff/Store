@@ -59,7 +59,7 @@ namespace Store.EndToEndTest.Api.Auth.CreateAuth
             output!.Title.Should().Be("One or more validation errors ocurred");
             output.Type.Should().Be("UnprocessableEntity");
             output.Status.Should().Be(StatusCodes.Status422UnprocessableEntity);
-            output.Detail.Should().Be("Name should be at least 4 characters long");
+            output.Detail.Should().Be("UserName should be at least 4 characters long");
         }
     }
 }

@@ -6,15 +6,15 @@ using Store.Tests.Shared;
 
 namespace Store.EndToEndTest.Api.User.GetUser
 {
-    [CollectionDefinition(nameof(DeactivateUserApiTestFixture))]
+    [CollectionDefinition(nameof(GetUserApiTestFixture))]
     public class CreateCategoryApiTestFixtureCollection
-        : ICollectionFixture<DeactivateUserApiTestFixture>
+        : ICollectionFixture<GetUserApiTestFixture>
     { }
-    public class DeactivateUserApiTestFixture : UserBaseFixture
+    public class GetUserApiTestFixture : UserBaseFixture
     {
         public UserDataGenerator DataGenerator { get; }
 
-        public DeactivateUserApiTestFixture() => DataGenerator = new UserDataGenerator();
+        public GetUserApiTestFixture() => DataGenerator = new UserDataGenerator();
         public List<Domain.Entity.User> GetExampleUserList(int quantity = 15) => DataGenerator.GetExampleUserList(quantity);
 	}
 }
