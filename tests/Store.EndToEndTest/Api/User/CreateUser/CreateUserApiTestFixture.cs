@@ -5,10 +5,14 @@ using Store.Tests.Shared;
 
 namespace Store.EndToEndTest.Api.User.CreateUser
 {
-	public class CreateUserApiTestFixtureCollection : ICollectionFixture<CreateUserApiTestFixture> { }
+	[CollectionDefinition(nameof(CreateUserApiTestFixture))]
+	public class CreateCategoryApiTestFixtureCollection
+		: ICollectionFixture<CreateUserApiTestFixture>
+	{ }
 	public class CreateUserApiTestFixture : UserBaseFixture
 	{
 		public UserDataGenerator DataGenerator { get; }
+
 		public CreateUserApiTestFixture() => DataGenerator = new UserDataGenerator();
 		public CreateUserInput getExampleInput()
 		{

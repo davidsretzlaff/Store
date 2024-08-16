@@ -6,8 +6,8 @@ namespace Store.Application.UseCases.User.CreateUser.Common
 {
 	public record UserOutput
 	(
-		Guid id,
-		string name,
+		Guid Id,
+		string Name,
 		string BusinessName,
 		string CorporateName,
 		string Email,
