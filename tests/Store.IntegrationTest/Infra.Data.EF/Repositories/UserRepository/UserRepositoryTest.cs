@@ -99,6 +99,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
 		public async Task Search_Return_ListAndTotal()
 		{
+			// Arrange
 			var dbContext = _fixture.CreateDbContext();
 			var exampleUserList = _fixture.GetUserValidList(15);
 			await dbContext.AddRangeAsync(exampleUserList);
@@ -106,8 +107,10 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var userRepository = new Repository.UserRepository(dbContext);
 			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
 
+			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
 
+			// Assert
 			output.Should().NotBeNull();
 			output.Items.Should().NotBeNull();
 			output.CurrentPage.Should().Be(searchInput.Page);
@@ -132,12 +135,16 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
 		public async Task Search_Return_Empty_When_PersistenceIsEmpty()
 		{
+			// Arrange
 			var dbContext = _fixture.CreateDbContext();
 			var userRepository = new Repository.UserRepository(dbContext);
 			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
 
+			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
 
+
+			// Assert
 			output.Should().NotBeNull();
 			output.Items.Should().NotBeNull();
 			output.CurrentPage.Should().Be(searchInput.Page);
@@ -159,6 +166,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			int expectedQuantityItems
 		)
 		{
+			// Arrange
 			var dbContext = _fixture.CreateDbContext();
 			var exampleUserList = _fixture.GetUserValidList(quantityUserToGenerate);
 			await dbContext.AddRangeAsync(exampleUserList);
@@ -166,8 +174,10 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var userRepository = new Repository.UserRepository(dbContext);
 			var searchInput = new SearchInput(NumberOfPagesToReturn, ItemsPerPage, "", "", SearchOrder.Asc);
 
+			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
 
+			// Assert
 			output.Should().NotBeNull();
 			output.Items.Should().NotBeNull();
 			output.CurrentPage.Should().Be(searchInput.Page);
@@ -205,8 +215,8 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			int expectedQuantityTotalItems
 		)
 		{
+			// Arrange
 			var dbContext = _fixture.CreateDbContext();
-			
 			var exampleUsersList = _fixture.GetExampleListUsersByNames(new List<string[]> ()
 			{
 				new string[] { "João Silva", "Lyra", "Lyra Network " },
@@ -219,8 +229,10 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var categoryRepository = new Repository.UserRepository(dbContext);
 			var searchInput = new SearchInput(page, itemsPerPage, search, "", SearchOrder.Asc);
 
+			// Act
 			var output = await categoryRepository.Search(searchInput, CancellationToken.None);
 
+			// Assert
 			output.Should().NotBeNull();
 			output.Items.Should().NotBeNull();
 			output.CurrentPage.Should().Be(searchInput.Page);
@@ -239,6 +251,49 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 				outputItem.BusinessName.Should().Be(exampleItem.BusinessName);
 				outputItem.CorporateName.Should().Be(exampleItem.CorporateName);
 				outputItem.Email.Should().Be(exampleItem.Email);
+			}
+		}
+
+		[Theory(DisplayName = nameof(Search_Ordered))]
+		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
+		[InlineData("name", "asc")]
+		[InlineData("name", "desc")]
+		[InlineData("businessName", "asc")]
+		[InlineData("businessName", "desc")]
+		[InlineData("", "asc")]
+		public async Task Search_Ordered(string orderBy, string order)
+		{
+			// Arrange
+			var dbContext = _fixture.CreateDbContext();
+			var exampleGenresList = _fixture.GetUserValidList(10);
+			await dbContext.AddRangeAsync(exampleGenresList);
+			await dbContext.SaveChangesAsync(CancellationToken.None);
+			var repository = new Repository.UserRepository(dbContext);
+			var searchOrder = order.ToLower() == "asc" ? SearchOrder.Asc : SearchOrder.Desc;
+			var searchInput = new SearchInput(1, 20, "", orderBy, searchOrder);
+
+			// Act
+			var output = await repository.Search(searchInput, CancellationToken.None);
+
+			// Assert
+			var expectedOrderedList = _fixture.CloneUserListOrdered(exampleGenresList, orderBy, searchOrder);
+			output.Should().NotBeNull();
+			output.Items.Should().NotBeNull();
+			output.CurrentPage.Should().Be(searchInput.Page);
+			output.PerPage.Should().Be(searchInput.PerPage);
+			output.Total.Should().Be(exampleGenresList.Count);
+			output.Items.Should().HaveCount(exampleGenresList.Count);
+			for (int indice = 0; indice < expectedOrderedList.Count; indice++)
+			{
+				var expectedItem = expectedOrderedList[indice];
+				var outputItem = output.Items[indice];
+				expectedItem.Should().NotBeNull();
+				outputItem.Should().NotBeNull();
+				outputItem.Name.Should().Be(expectedItem!.Name);
+				outputItem.Id.Should().Be(expectedItem.Id);
+				outputItem.BusinessName.Should().Be(expectedItem.BusinessName);
+				outputItem.CorporateName.Should().Be(expectedItem.CorporateName);
+				outputItem.Email.Should().Be(expectedItem.Email);
 			}
 		}
 	}

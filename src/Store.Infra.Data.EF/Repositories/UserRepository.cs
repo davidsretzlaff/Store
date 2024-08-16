@@ -56,11 +56,12 @@ namespace Store.Infra.Data.EF.Repositories
 			return new SearchOutput<User>(input.Page, input.PerPage, total, items);
 		}
 
-		private IQueryable<User> AddOrderToQuery(IQueryable<User> query, string orderProperty,SearchOrder order
-		)
+		private IQueryable<User> AddOrderToQuery(IQueryable<User> query, string orderProperty,SearchOrder order)
 		{
 			var orderedQuery = (orderProperty.ToLower(), order) switch
 			{
+				("Name", SearchOrder.Asc) => query.OrderBy(x => x.Name).ThenBy(x => x.Id),
+				("Name", SearchOrder.Desc) => query.OrderByDescending(x => x.Name).ThenByDescending(x => x.Id),
 				("BusinessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
 				("BusinessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
 				("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
