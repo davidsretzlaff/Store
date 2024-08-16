@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Bogus.Extensions.Brazil;
+using Store.Application.UseCases.Auth.CreateAuth;
 using Store.Application.UseCases.User.Common;
-using Store.Application.UseCases.User.CreateAuthenticate;
 using Store.Application.UseCases.User.CreateUser;
 using Store.Domain.Enum;
 

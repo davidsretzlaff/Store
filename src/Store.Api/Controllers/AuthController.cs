@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Api.ApiModels.Response;
-using Store.Application.UseCases.Authenticate.CreateAuthenticate;
-using Store.Application.UseCases.User.CreateAuthenticate;
+using Store.Application.UseCases.Auth.CreateAuth;
 
 namespace Store.Api.Controllers
 {

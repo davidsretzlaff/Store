@@ -1,13 +1,13 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Store.Application.Exceptions;
 using Store.Application.Interface;
-using Store.Application.UseCases.Authenticate.CreateAuthenticate;
+using Store.Application.UseCases.User.Auth.CreateAuth;
 using Store.Domain.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Store.Application.UseCases.User.CreateAuthenticate
+namespace Store.Application.UseCases.Auth.CreateAuth
 {
 	public class CreateAuth : ICreateAuth
 	{
@@ -15,11 +15,11 @@ namespace Store.Application.UseCases.User.CreateAuthenticate
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly string _jwtSecretKey;
 
-		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork, string jwtSecretKey)
+		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
-			_jwtSecretKey = jwtSecretKey;
+			//_jwtSecretKey = jwtSecretKey;
 		}
 		public async Task<AuthOutput> Handle(CreateAuthInput input, CancellationToken cancellationToken)
 		{

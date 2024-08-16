@@ -1,5 +1,5 @@
 ﻿
-namespace Store.Application.UseCases.Authenticate.CreateAuthenticate
+namespace Store.Application.UseCases.Auth.CreateAuth
 {
 	public record AuthOutput(string UserName, string Token)
 	{

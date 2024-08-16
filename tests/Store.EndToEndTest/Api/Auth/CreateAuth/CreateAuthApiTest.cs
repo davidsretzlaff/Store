@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.Api.ApiModels.Response;
-using Store.Application.UseCases.User.CreateAuthenticate;
 using Repository = Store.Infra.Data.EF.Repositories;
 using System.Net;
-using Store.Application.UseCases.Authenticate.CreateAuthenticate;
+using Store.Application.UseCases.Auth.CreateAuth;
 
 namespace Store.EndToEndTest.Api.Auth.CreateAuth
 {
