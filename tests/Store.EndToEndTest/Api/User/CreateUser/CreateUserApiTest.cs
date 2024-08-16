@@ -47,10 +47,14 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 		[Trait("EndToEnd/API", "Category/Create - Endpoints")]
 		public async Task Error_When_CantInstantiateAggregate()
 		{
+			// Arrange
 			var invalidInput = _fixture.getInvalidInput();
 			
+			// Act
 			var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users", invalidInput);
 
+
+			// Assert
 			response.Should().NotBeNull();
 			response!.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
 			output.Should().NotBeNull();
