@@ -28,5 +28,19 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				AddressInput.FromDomainAddress(user.Address)
 			);
 		}
+		public CreateUserInput getInvalidInput()
+		{
+			var user = DataGenerator.GetValidUser();
+			return new(
+				"1",
+				user.BusinessName,
+				user.CorporateName,
+				user.Email,
+				user.SiteUrl,
+				user.Phone,
+				user.CompanyRegistrationNumber,
+				AddressInput.FromDomainAddress(user.Address)
+			);
+		}
 	}
 }

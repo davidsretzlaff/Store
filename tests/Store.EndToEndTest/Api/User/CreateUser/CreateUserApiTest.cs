@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Store.Api.ApiModels.Response;
 using Store.Application.UseCases.User.Common;
 using System.Net;
@@ -39,6 +41,23 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				dbCategory.CorporateName.Should().Be(input.CorporateName);
 				dbCategory.CompanyRegistrationNumber.Should().Be(input.CompanyRegistrationNumber);
 			}
+		}
+
+		[Fact(DisplayName = nameof(Error_When_CantInstantiateAggregate))]
+		[Trait("EndToEnd/API", "Category/Create - Endpoints")]
+		public async Task Error_When_CantInstantiateAggregate()
+		{
+			var invalidInput = _fixture.getInvalidInput();
+			
+			var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users", invalidInput);
+
+			response.Should().NotBeNull();
+			response!.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+			output.Should().NotBeNull();
+			output!.Title.Should().Be("One or more validation errors ocurred");
+			output.Type.Should().Be("UnprocessableEntity");
+			output.Status.Should().Be((int)StatusCodes.Status422UnprocessableEntity);
+			output.Detail.Should().Be("Name should be at least 4 characters long");
 		}
 	}
 }
