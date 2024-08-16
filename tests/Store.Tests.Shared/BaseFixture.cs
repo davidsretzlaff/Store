@@ -1,4 +1,6 @@
 ﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
+using Store.Infra.Data.EF;
 
 namespace Store.Tests.Shared
 {
