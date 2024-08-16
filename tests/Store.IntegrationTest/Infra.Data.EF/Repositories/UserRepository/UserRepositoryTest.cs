@@ -182,70 +182,64 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 				);
 				exampleItem.Should().NotBeNull();
 				outputItem.Id.Should().Be(exampleItem!.Id);
-				outputItem.Id.Should().Be(exampleItem!.Id);
 				outputItem.BusinessName.Should().Be(exampleItem.BusinessName);
 				outputItem.CorporateName.Should().Be(exampleItem.CorporateName);
 				outputItem.Email.Should().Be(exampleItem.Email);
 			}
 		}
 
-		//[Theory(DisplayName = nameof(SearchByText))]
-		//[InlineData("Action", 1, 5, 1, 1)]
-		//[InlineData("Horror", 1, 5, 3, 3)]
-		//[InlineData("Horror", 2, 5, 0, 3)]
-		//[InlineData("Sci-fi", 1, 5, 4, 4)]
-		//[InlineData("Sci-fi", 1, 2, 2, 4)]
-		//[InlineData("Sci-fi", 2, 3, 1, 4)]
-		//[InlineData("Sci-fi Other", 1, 5, 0, 0)]
-		//[InlineData("Robots", 1, 5, 2, 2)]
-		//[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
-		//public async Task Search_By_Text(
-		//	string search,
-		//	int NumberOfPagesToReturn,
-		//	int ItemsPerPage,
-		//	int expectedQuantityItemsReturned,
-		//	int expectedQuantityTotalItems
-		//)
-		//{
-		//	CatalogDbContext dbContext = _fixture.CreateDbContext();
-		//	var exampleCategoriesList = _fixture.GetExampleCategoriesListWithNames(new List<string>()
-		//	{
-		//		"Action",
-		//		"Horror",
-		//		"Horror - Robots",
-		//		"Horror - Based on Real Facts",
-		//		"Drama",
-		//		"Sci-fi IA",
-		//		"Sci-fi Space",
-		//		"Sci-fi Robots",
-		//		"Sci-fi Future"
-		//	});
-		//	await dbContext.AddRangeAsync(exampleCategoriesList);
-		//	await dbContext.SaveChangesAsync(CancellationToken.None);
-		//	var categoryRepository = new Repository.CategoryRepository(dbContext);
-		//	var searchInput = new SearchInput(page, perPage, search, "", SearchOrder.Asc);
+		[Theory(DisplayName = nameof(Search_By_Text))]
+		[InlineData("joão", 1, 10, 1, 1)]
+		[InlineData("João alfredo", 1, 10, 0, 0)]
+		[InlineData("Lyra", 1, 10, 1, 1)]
+		[InlineData("NetWork", 1, 10, 3, 3)]
+		[InlineData("NetWork", 3, 1, 1, 3)]
+		[InlineData("", 2, 1, 1, 4)]
+		[InlineData("", 1, 2, 2, 4)]
+		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
+		public async Task Search_By_Text(
+			string search,
+			int page,
+			int itemsPerPage,
+			int expectedQuantityItemsReturned,
+			int expectedQuantityTotalItems
+		)
+		{
+			var dbContext = _fixture.CreateDbContext();
+			
+			var exampleUsersList = _fixture.GetExampleListUsersByNames(new List<string[]> ()
+			{
+				new string[] { "João Silva", "Lyra", "Lyra Network " },
+				new string[] { "Kendra Reichert", "Nubank", "Nubank Network" },
+				new string[] { "Lucas Silveira", "Google", "Google Network" },
+				new string[] { "Maria Silva", "Mercado Livre", "Mercado Livre LC" },
+			});
+			await dbContext.AddRangeAsync(exampleUsersList);
+			await dbContext.SaveChangesAsync(CancellationToken.None);
+			var categoryRepository = new Repository.UserRepository(dbContext);
+			var searchInput = new SearchInput(page, itemsPerPage, search, "", SearchOrder.Asc);
 
-		//	var output = await categoryRepository.Search(searchInput, CancellationToken.None);
+			var output = await categoryRepository.Search(searchInput, CancellationToken.None);
 
-		//	output.Should().NotBeNull();
-		//	output.Items.Should().NotBeNull();
-		//	output.CurrentPage.Should().Be(searchInput.Page);
-		//	output.PerPage.Should().Be(searchInput.PerPage);
-		//	output.Total.Should().Be(expectedQuantityTotalItems);
-		//	output.Items.Should().HaveCount(expectedQuantityItemsReturned);
+			output.Should().NotBeNull();
+			output.Items.Should().NotBeNull();
+			output.CurrentPage.Should().Be(searchInput.Page);
+			output.PerPage.Should().Be(searchInput.PerPage);
+			output.Total.Should().Be(expectedQuantityTotalItems);
+			output.Items.Should().HaveCount(expectedQuantityItemsReturned);
 
-		//	foreach (Category outputItem in output.Items)
-		//	{
-		//		var exampleItem = exampleCategoriesList.Find(
-		//			category => category.Id == outputItem.Id
-		//		);
-		//		exampleItem.Should().NotBeNull();
-		//		outputItem.Id.Should().Be(exampleItem!.Id);
-		//		outputItem.Name.Should().Be(exampleItem.Name);
-		//		outputItem.Description.Should().Be(exampleItem.Description);
-		//		outputItem.IsActive.Should().Be(exampleItem.IsActive);
-		//		outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
-		//	}
-		//}
+			foreach (User outputItem in output.Items)
+			{
+				var exampleItem = exampleUsersList.Find(
+					category => category.Id == outputItem.Id
+				);
+				exampleItem.Should().NotBeNull();
+				outputItem.Id.Should().Be(exampleItem!.Id);
+				outputItem.Name.Should().Be(exampleItem.Name);
+				outputItem.BusinessName.Should().Be(exampleItem.BusinessName);
+				outputItem.CorporateName.Should().Be(exampleItem.CorporateName);
+				outputItem.Email.Should().Be(exampleItem.Email);
+			}
+		}
 	}
 }

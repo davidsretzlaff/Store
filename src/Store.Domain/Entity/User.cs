@@ -8,7 +8,9 @@ namespace Store.Domain.Entity
 	public class User : AggregateRoot
 	{
 		public string Name {  get; set; }
+		/* Nome fantasia */
 		public string BusinessName { get; private set; }
+		/* Razão Social */
 		public string CorporateName { get; private set; }
 		public UserStatus Status { get; private set; }
 		public string Email { get; private set; }

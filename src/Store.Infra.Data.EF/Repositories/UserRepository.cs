@@ -38,10 +38,12 @@ namespace Store.Infra.Data.EF.Repositories
 
 			if (!string.IsNullOrWhiteSpace(input.Search))
 			{
+				var searchToLower = input.Search.ToLower();
 				query = query.Where(x =>
-					x.BusinessName.Contains(input.Search) ||
-					x.CorporateName.StartsWith(input.Search) ||
-					x.CompanyRegistrationNumber.Contains(input.Search)
+					x.Name.ToLower().Contains(searchToLower) ||
+					x.BusinessName.ToLower().StartsWith(searchToLower) ||
+					x.CorporateName.ToLower().Contains(searchToLower) ||
+					x.CompanyRegistrationNumber.ToLower().Contains(searchToLower)
 				);
 			}
 
