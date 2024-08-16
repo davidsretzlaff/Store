@@ -10,6 +10,5 @@ namespace Store.UnitTest.Entity
 		public UserDataGenerator DataGenerator { get; }
 		public UserTestFixture() => DataGenerator = new UserDataGenerator();
 		public Domain.Entity.User GetValidUser() => DataGenerator.GetValidUser();
-		
 	}
 }
