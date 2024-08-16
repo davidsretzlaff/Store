@@ -2,12 +2,10 @@
 using Store.Application.Exceptions;
 using Store.Application.Interface;
 using Store.Application.UseCases.Authenticate.CreateAuthenticate;
-using Store.Application.UseCases.User.Common;
 using Store.Domain.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateAuthenticate
 {
@@ -15,11 +13,13 @@ namespace Store.Application.UseCases.User.CreateAuthenticate
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly string _jwtSecretKey;
 
-		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork)
+		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork, string jwtSecretKey)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
+			_jwtSecretKey = jwtSecretKey;
 		}
 		public async Task<AuthOutput> Handle(CreateAuthInput input, CancellationToken cancellationToken)
 		{
@@ -35,7 +35,7 @@ namespace Store.Application.UseCases.User.CreateAuthenticate
 		private string GenerateToken(Domain.Entity.User user)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
-			var key = Encoding.ASCII.GetBytes("4a8b21d3c5e789abf1e2cd9f34a7b2c1e89d4f5a6c3d7b8f9e1a2c3b4d5e6f7a");
+			var key = Encoding.ASCII.GetBytes(_jwtSecretKey);
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
 				Subject = new ClaimsIdentity(new Claim[]

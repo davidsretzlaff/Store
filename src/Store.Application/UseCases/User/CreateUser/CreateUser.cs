@@ -5,12 +5,12 @@ using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
 {
-    public class CreateAuthenticate : ICreateUser
+    public class CreateUser : ICreateUser
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
 
-		public CreateAuthenticate(IUserRepository userRepository, IUnitOfWork unitOfWork
+		public CreateUser(IUserRepository userRepository, IUnitOfWork unitOfWork
 		)
 		{
 			_unitOfWork = unitOfWork;

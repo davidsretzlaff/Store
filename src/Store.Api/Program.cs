@@ -1,7 +1,7 @@
 using Store.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAppConections(builder.Configuration).AddUseCases().AddAndConfigureControllers(builder.Configuration); 
+builder.Services.AddAppConections(builder.Configuration).AddUseCases(builder.Configuration).AddAndConfigureControllers(builder.Configuration); 
 
 var app = builder.Build();
 app.MapControllers();
