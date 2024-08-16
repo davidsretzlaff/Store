@@ -1,11 +1,11 @@
 ﻿using Store.Application.Interface;
-using Store.Application.UseCases.User.CreateUser.Common;
+using Store.Application.UseCases.User.Common;
 using Store.Domain.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
 {
-	public class CreateUser : ICreateUser
+    public class CreateUser : ICreateUser
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;

@@ -5,7 +5,7 @@ using Store.Tests.Shared;
 
 namespace Store.EndToEndTest.Api.User.CreateUser
 {
-	[CollectionDefinition(nameof(CreateUserApiTestFixture))]
+    [CollectionDefinition(nameof(CreateUserApiTestFixture))]
 	public class CreateCategoryApiTestFixtureCollection
 		: ICollectionFixture<CreateUserApiTestFixture>
 	{ }

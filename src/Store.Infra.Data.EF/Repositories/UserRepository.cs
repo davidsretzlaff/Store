@@ -18,6 +18,11 @@ namespace Store.Infra.Data.EF.Repositories
 			await _users.AddAsync(user, cancellationToken);
 		}
 
+		public async Task Update(User user, CancellationToken cancellationToken)
+		{
+			await Task.FromResult(_users.Update(user));
+		}
+
 		public async Task<User> Get(Guid id, CancellationToken cancellationToken)
 		{
 			var user = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);

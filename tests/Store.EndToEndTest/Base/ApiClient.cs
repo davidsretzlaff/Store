@@ -36,17 +36,16 @@ namespace Store.EndToEndTest.Base
 		}
 		public async Task<(HttpResponseMessage?, TOutput?)> Put<TOutput>(
 			string route,
-			object payload
+			object? payload = null
 		) where TOutput : class
 		{
-			var response = await _httpClient.PutAsync(
-				route,
-				new StringContent(
-					JsonSerializer.Serialize(payload, _defaultSerializeOptions),
-					Encoding.UTF8,
-					"application/json"
-				)
-			);
+			HttpContent? content = null;
+			if (payload != null)
+			{
+				var json = JsonSerializer.Serialize(payload, _defaultSerializeOptions);
+				content = new StringContent(json, Encoding.UTF8, "application/json");
+			}
+			var response = await _httpClient.PutAsync(route, content);
 
 			var output = await GetOutput<TOutput>(response);
 			return (response, output);

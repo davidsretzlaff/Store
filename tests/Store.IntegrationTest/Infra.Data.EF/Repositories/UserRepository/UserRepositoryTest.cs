@@ -47,6 +47,52 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			userFromDb.Address.ZipCode.Should().Be(user.Address.ZipCode);
 		}
 
+		[Fact(DisplayName = nameof(Activate))]
+		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
+		public async Task Activate()
+		{
+			// Arrange
+			var user = _fixture.GetValidUser();
+			var context = _fixture.CreateDbContext();
+			var repository = new Repository.UserRepository(context);
+
+			// Act
+			await repository.Insert(user, CancellationToken.None);
+			context.SaveChanges();
+			user.Activate();
+			await repository.Update(user, CancellationToken.None);
+			context.SaveChanges();
+
+			// Assert
+			var assertionContext = _fixture.CreateDbContext(true);
+			var userFromDb = await assertionContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == user.Id);
+			userFromDb.Should().NotBeNull();
+			userFromDb!.Status.Should().Be(Store.Domain.Enum.UserStatus.Active);
+		}
+
+		[Fact(DisplayName = nameof(Deactivate))]
+		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
+		public async Task Deactivate()
+		{
+			// Arrange
+			var user = _fixture.GetValidUser();
+			var context = _fixture.CreateDbContext();
+			var repository = new Repository.UserRepository(context);
+
+			// Act
+			await repository.Insert(user, CancellationToken.None);
+			context.SaveChanges();
+			user.Deactivate();
+			await repository.Update(user, CancellationToken.None);
+			context.SaveChanges();
+
+			// Assert
+			var assertionContext = _fixture.CreateDbContext(true);
+			var userFromDb = await assertionContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == user.Id);
+			userFromDb.Should().NotBeNull();
+			userFromDb!.Status.Should().Be(Store.Domain.Enum.UserStatus.Inactive);
+		}
+
 		[Fact(DisplayName = nameof(Get))]
 		[Trait("Integration/Infra.Data", "UserRepository - Repositories")]
 		public async Task Get()

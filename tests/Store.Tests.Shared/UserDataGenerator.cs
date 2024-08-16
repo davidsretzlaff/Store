@@ -58,5 +58,14 @@ namespace Store.Tests.Shared
 			};
 			return orderedEnumerable.ToList();
 		}
+
+		public List<Domain.Entity.User> GetExampleUserList(int listLength = 15)
+		{
+			var userList = Enumerable.Range(1, listLength).Select(
+				_ => GetValidUser()
+			).ToList();
+			return userList;
+		}
+		
 	}
 }

@@ -1,19 +1,19 @@
 ﻿using FluentAssertions;
 using Store.Api.ApiModels.Response;
-using Store.Application.UseCases.User.CreateUser.Common;
+using Store.Application.UseCases.User.Common;
 using System.Net;
 
 namespace Store.EndToEndTest.Api.User.CreateUser
 {
-	[Collection(nameof(CreateUserApiTestFixture))]
+    [Collection(nameof(CreateUserApiTestFixture))]
 	public class CreateUserApiTest
 	{
 		private readonly CreateUserApiTestFixture _fixture;
 		public CreateUserApiTest(CreateUserApiTestFixture fixture) => _fixture = fixture;
 
-		[Fact(DisplayName = nameof(CreateCategory))]
+		[Fact(DisplayName = nameof(CreateUser))]
 		[Trait("EndToEnd/API", "User/Create - Endpoints")]
-		public async Task CreateCategory()
+		public async Task CreateUser()
 		{
 			{
 				// Arrange
