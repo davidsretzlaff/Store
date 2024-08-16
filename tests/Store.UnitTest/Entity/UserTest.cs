@@ -359,7 +359,7 @@ namespace Store.UnitTest.Entity
 			 );
 
 			// Assert
-			action.Should().Throw<EntityValidationException>().WithMessage($"Name should not be empty or null");
+			action.Should().Throw<EntityValidationException>().WithMessage($"UserName should not be empty or null");
 		}
 
 		[Theory(DisplayName = nameof(ThrowError_When_NameIsLessThan4Characters))]
@@ -385,7 +385,7 @@ namespace Store.UnitTest.Entity
 			 );
 
 			// Assert
-			action.Should().Throw<EntityValidationException>().WithMessage($"Name should be at least 4 characters long");
+			action.Should().Throw<EntityValidationException>().WithMessage($"UserName should be at least 4 characters long");
 		}
 
 		[Fact(DisplayName = nameof(ThrowError_When_NameIsGreaterThan100Characters))]
@@ -410,7 +410,7 @@ namespace Store.UnitTest.Entity
 			 );
 
 			// Assert
-			action.Should().Throw<EntityValidationException>().WithMessage($"Name should be less or equal 100 characters long");
+			action.Should().Throw<EntityValidationException>().WithMessage($"UserName should be less or equal 100 characters long");
 		}
 	}
 }
