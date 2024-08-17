@@ -3,9 +3,7 @@ using Store.Application.Exceptions;
 using Store.Application.Interface;
 using Store.Application.UseCases.User.Auth.CreateAuth;
 using Store.Domain.Repository;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Store.Domain.SeedWork;
 
 namespace Store.Application.UseCases.Auth.CreateAuth
 {
@@ -13,13 +11,14 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IJwtUtils _jwtUtils;
 		private readonly string _jwtSecretKey;
 
-		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork)
+		public CreateAuth(IUserRepository userRepository, IUnitOfWork unitOfWork, IJwtUtils jwtUtils)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
-			//_jwtSecretKey = jwtSecretKey;
+			_jwtUtils = jwtUtils;
 		}
 		public async Task<AuthOutput> Handle(CreateAuthInput input, CancellationToken cancellationToken)
 		{
@@ -29,28 +28,8 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 				PasswordInvalidException.ThrowIfPasswordInvalid();
 			}
 
-			var token = GenerateToken(user);
+			var token = _jwtUtils.GenerateToken(user.UserName, Roles.BasicUser);
 			return AuthOutput.FromUser(user, token);
-		}
-		private string GenerateToken(Domain.Entity.User user)
-		{
-			var tokenHandler = new JwtSecurityTokenHandler();
-			var key = Encoding.ASCII.GetBytes(_jwtSecretKey);
-			var tokenDescriptor = new SecurityTokenDescriptor
-			{
-				Subject = new ClaimsIdentity(new Claim[]
-				{
-					new Claim(ClaimTypes.Name, user.UserName.ToString())
-					//new Claim(ClaimTypes.Role, user.Role.ToString()) fazer se der tempo
-				}),
-				Expires = DateTime.UtcNow.AddHours(8),
-				SigningCredentials = new SigningCredentials(
-					new SymmetricSecurityKey(key),
-					SecurityAlgorithms.HmacSha256Signature
-				)
-			};
-			var token = tokenHandler.CreateToken(tokenDescriptor);
-			return tokenHandler.WriteToken(token);
 		}
 	}
 }

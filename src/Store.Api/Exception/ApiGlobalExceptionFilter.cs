@@ -36,14 +36,13 @@ namespace Store.Api.Exception
 			else if (exception is UserNameException)
 			{
 				details.Title = "Username already exists";
-				details.Status = StatusCodes.Status404NotFound;
+				details.Status = StatusCodes.Status409Conflict;
 				details.Type = "NotCreated";
 				details.Detail = exception!.Message;
 			}
-			else if (exception is UserNameException)
-			{
+			else if (exception is PasswordInvalidException) {
 				details.Title = "Password Invalid";
-				details.Status = StatusCodes.Status404NotFound;
+				details.Status = StatusCodes.Status401Unauthorized;
 				details.Type = "NotAuth";
 				details.Detail = exception!.Message;
 			}

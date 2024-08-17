@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Api.ApiModels.Response;
 using Store.Application.UseCases.User.ActivateUser;
@@ -37,6 +38,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[Authorize]
 		public async Task<IActionResult> Activate(
 		  Guid id,
 		  CancellationToken cancellationToken
@@ -50,6 +52,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[Authorize]
 		public async Task<IActionResult> Deactivate(
 		  [FromRoute] Guid id,
 		  CancellationToken cancellationToken
@@ -63,6 +66,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[Authorize]
 		public async Task<IActionResult> GetById(
 		  [FromRoute] Guid id,
 		  CancellationToken cancellationToken

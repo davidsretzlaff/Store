@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Store.Application\Store.Application.csproj" />
+    <ProjectReference Include="..\Store.Infra.Adapters\Store.Infra.Adapters.csproj" />
     <ProjectReference Include="..\Store.Infra.Data.EF\Store.Infra.Data.EF.csproj" />
   </ItemGroup>
 

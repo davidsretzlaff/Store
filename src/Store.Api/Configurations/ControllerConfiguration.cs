@@ -7,7 +7,7 @@ namespace Store.Api.Configurations
 {
 	public static class ControllerConfiguration
 	{
-		public static IServiceCollection AddAndConfigureControllers(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection addConfigureControllers(this IServiceCollection services, IConfiguration configuration)
 		{
 
 			var key = Encoding.ASCII.GetBytes(configuration["JwtSettings:SecretKey"]);
@@ -40,26 +40,5 @@ namespace Store.Api.Configurations
 			});
 			return services;
 		}
-
-		//private static IServiceCollection AddDocumentation(
-		//	this IServiceCollection services
-		//)
-		//{
-		//	services.AddEndpointsApiExplorer();
-		//	services.AddSwaggerGen();
-		//	return services;
-		//}
-
-		//public static WebApplication UseDocumentation(
-		//	this WebApplication app
-		//)
-		//{
-		//	if (app.Environment.IsDevelopment())
-		//	{
-		//		app.UseSwagger();
-		//		app.UseSwaggerUI();
-		//	}
-		//	return app;
-		//}
 	}
 }

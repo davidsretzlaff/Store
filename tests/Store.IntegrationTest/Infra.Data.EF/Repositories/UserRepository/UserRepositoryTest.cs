@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using Store.Application.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
@@ -23,7 +24,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var user = _fixture.GetValidUser();
 			var context = _fixture.CreateDbContext();
 			var repository = new Repository.UserRepository(context);
-
+			
 			// Act
 			await repository.Insert(user, CancellationToken.None);
 			context.SaveChanges();
