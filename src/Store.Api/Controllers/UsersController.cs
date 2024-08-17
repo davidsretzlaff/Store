@@ -82,19 +82,19 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ListUsersOutput), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
 		CancellationToken cancellationToken,
-			[FromQuery] int? page = null,
-			[FromQuery(Name = "per_page")] int? perPage = null,
-			[FromQuery] string? search = null,
-			[FromQuery] string? sort = null,
-			[FromQuery] SearchOrder? dir = null
+			[FromQuery] int? Page = null,
+			[FromQuery] int? PerPage = null,
+			[FromQuery] string? Search = null,
+			[FromQuery] string? OrderBy = null,
+			[FromQuery] SearchOrder? Order = null
 		)
 		{
 			var input = new ListUsersInput();
-			if (page is not null) input.Page = page.Value;
-			if (perPage is not null) input.PerPage = perPage.Value;
-			if (!String.IsNullOrWhiteSpace(search)) input.Search = search;
-			if (!String.IsNullOrWhiteSpace(sort)) input.Sort = sort;
-			if (dir is not null) input.Dir = dir.Value;
+			if (Page is not null) input.Page = Page.Value;
+			if (PerPage is not null) input.PerPage = PerPage.Value;
+			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;
+			if (!String.IsNullOrWhiteSpace(OrderBy)) input.OrderBy = OrderBy;
+			if (Order is not null) input.Order = Order.Value;
 
 			var output = await _mediator.Send(input, cancellationToken);
 			return Ok(new ResponseList<UserOutput>(output));

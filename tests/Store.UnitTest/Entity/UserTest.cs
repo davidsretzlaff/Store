@@ -412,5 +412,29 @@ namespace Store.UnitTest.Entity
 			// Assert
 			action.Should().Throw<EntityValidationException>().WithMessage($"UserName should be less or equal 100 characters long");
 		}
+
+		[Fact(DisplayName = nameof(ThrowError_When_NameIsGreaterThan100Characters))]
+		[Trait("Domain", "User - Entity")]
+		public void ThrowError_When_UserNameHasSpaceEmpty()
+		{
+			// Arrange
+			var validUser = _fixture.GetValidUser();
+
+			// Act
+			var action = () => new Domain.Entity.User(
+				"Username With Space",
+				validUser.Password,
+				validUser.BusinessName,
+				validUser.CorporateName,
+				validUser.Email,
+				validUser.SiteUrl,
+				validUser.Phone,
+				validUser.CompanyRegistrationNumber,
+				validUser.Address
+			 );
+
+			// Assert
+			action.Should().Throw<EntityValidationException>().WithMessage($"Username should not contain spaces");
+		}
 	}
 }

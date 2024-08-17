@@ -7,8 +7,8 @@ namespace Store.Domain.Entity
 {
 	public class User : AggregateRoot
 	{
-		public string Password { get; private set; }
-		public string UserName {  get; private set; }
+		public string UserName { get; private set; }
+		public string Password { get; private set; }		
 		/* Nome fantasia */
 		public string BusinessName { get; private set; }
 		/* Razão Social */
@@ -49,6 +49,7 @@ namespace Store.Domain.Entity
 		public void Validate()
 		{
 			DomainValidation.NotNullOrEmpty(UserName, nameof(UserName));
+			DomainValidation.NotContainSpace(UserName, nameof(UserName));
 			DomainValidation.MaxLength(UserName, 100, nameof(UserName));
 			DomainValidation.MinLength(UserName, 4, nameof(UserName));
 

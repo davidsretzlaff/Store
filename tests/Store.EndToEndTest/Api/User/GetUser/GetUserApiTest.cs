@@ -23,6 +23,7 @@ namespace Store.EndToEndTest.Api.User.GetUser
 				var exampleUserList = _fixture.GetExampleUserList(5);
 				await _fixture.Persistence.InsertList(exampleUserList);
 				var exampleUser = exampleUserList[2];
+				await _fixture.ApiClient.AddAutorizationHeader(exampleUser.UserName, exampleUser.Password);
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
@@ -53,6 +54,7 @@ namespace Store.EndToEndTest.Api.User.GetUser
 				var exampleUserList = _fixture.GetExampleUserList(5);
 				await _fixture.Persistence.InsertList(exampleUserList);
 				var randomGuid = Guid.NewGuid();
+				await _fixture.ApiClient.AddAutorizationHeader(exampleUserList[1].UserName, exampleUserList[1].Password);
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.

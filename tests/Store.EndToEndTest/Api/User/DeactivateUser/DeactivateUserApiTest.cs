@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.Common;
+using Store.Domain.Enum;
 using Store.Domain.Extensions;
 using System.Net;
 
@@ -20,9 +21,9 @@ namespace Store.EndToEndTest.Api.User.DeactivateUser
 			{
 				// Arrange
 				var exampleUserList = _fixture.GetExampleUserList(5);
-				await _fixture.Persistence.InsertList(exampleUserList);
 				var exampleUser = exampleUserList[2];
-				exampleUser.Deactivate();
+				await _fixture.Persistence.InsertList(exampleUserList);
+				await _fixture.ApiClient.AddAutorizationHeader(exampleUser.UserName, exampleUser.Password);
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
@@ -34,14 +35,12 @@ namespace Store.EndToEndTest.Api.User.DeactivateUser
 				output.Should().NotBeNull();
 				output!.Data.Should().NotBeNull();
 				output.Data.Id.Should().Be(exampleUser.Id);
-				output.Data.Status.Should().Be(exampleUser.Status.ToString());
-				output.Data.Status.Should().Be(Domain.Enum.UserStatus.Inactive.ToStringStatus());
+				output.Data.Status.Should().Be(UserStatus.Inactive.ToStringStatus());
 
 				var dbUser = await _fixture.Persistence.GetById(output.Data.Id);
 				dbUser.Should().NotBeNull();
 				dbUser!.UserName.Should().Be(exampleUser.UserName);
-				dbUser.Status.Should().Be(exampleUser.Status);
-				dbUser.Status.Should().Be(Domain.Enum.UserStatus.Inactive);
+				dbUser.Status.Should().Be(UserStatus.Inactive);
 			}
 		}
 	}

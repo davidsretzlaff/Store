@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using Store.Application.Common.Models.Response;
+using Store.Application.UseCases.Auth.CreateAuth;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -93,6 +98,23 @@ namespace Store.EndToEndTest.Base
 			var parametersJson = JsonSerializer.Serialize(queryStringParametersObject, _defaultSerializeOptions);
 			var parametersDictionary = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(parametersJson);
 			return QueryHelpers.AddQueryString(route, parametersDictionary!);
+		}
+
+		public async Task AddAutorizationHeader(string userName, string password)
+		{
+			var authInput = new CreateAuthInput(userName, password); 
+			var json = JsonSerializer.Serialize(authInput, _defaultSerializeOptions);
+			HttpContent? content = new StringContent(json, Encoding.UTF8, "application/json");
+
+			var response = await _httpClient.PutAsync("/auth", content);
+			var output = await GetOutput<Response<AuthOutput>>(response);
+
+			AddAuthorizationHeader(output.Data.Token);
+		}
+
+		private void AddAuthorizationHeader(string accessToken)
+		{
+			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 		}
 	}
 }

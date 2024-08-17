@@ -36,7 +36,7 @@ namespace Store.EndToEndTest.Api.Auth.CreateAuth
                 output.Should().NotBeNull();
                 output.Data.Should().NotBeNull();
                 output.Data.UserName.Should().Be(input.UserName);
-                output.Data.Token.Should().BeNullOrEmpty();
+                output.Data.Token.Should().NotBeNullOrEmpty();
             }
         }
 

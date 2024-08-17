@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Store.Infra.Data.EF;
 using Store.Tests.Shared;
+using System.Net;
 
 namespace Store.EndToEndTest.Base
 {
@@ -21,7 +22,7 @@ namespace Store.EndToEndTest.Base
 		   .GetService(typeof(IConfiguration));
 			ArgumentNullException.ThrowIfNull(configuration);
 		}
-
+				
 		public StoreDbContext CreateDbContext(bool preserveData = false)
 		 => DataGenerator.CreateDbContext("end2end-tests-db", preserveData);
 	}

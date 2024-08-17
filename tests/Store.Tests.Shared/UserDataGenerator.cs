@@ -13,7 +13,7 @@ namespace Store.Tests.Shared
 		{
 
 			return new Domain.Entity.User(
-				Faker.Person.FullName,
+				Faker.Person.UserName,
 				Faker.Hashids.ToString()!,
 				Faker.Company.CompanyName(),
 				Faker.Company.CompanyName(),

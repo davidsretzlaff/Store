@@ -18,8 +18,8 @@ namespace Store.Application.UseCases.User.ListUsers
 						request.Page,
 						request.PerPage,
 						request.Search,
-						request.Search,
-						request.Dir
+						request.OrderBy,
+						request.Order
 					), 
 					cancellationToken
 				);

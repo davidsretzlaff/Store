@@ -6,6 +6,7 @@ using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Repository;
 using Store.Domain.SeedWork.Searchable;
+using System.Text.Json;
 using Repository = Store.Infra.Data.EF.Repositories;
 
 namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
@@ -246,8 +247,8 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 		}
 
 		[Theory(DisplayName = nameof(Search_By_Text))]
-		[InlineData("joão", 1, 10, 1, 1)]
-		[InlineData("João alfredo", 1, 10, 0, 0)]
+		[InlineData("joao", 1, 10, 1, 1)]
+		[InlineData("Joao alfredo", 1, 10, 0, 0)]
 		[InlineData("Lyra", 1, 10, 1, 1)]
 		[InlineData("NetWork", 1, 10, 3, 3)]
 		[InlineData("NetWork", 3, 1, 1, 3)]
@@ -266,16 +267,17 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var dbContext = _fixture.CreateDbContext();
 			var exampleUsersList = _fixture.GetExampleListUsersByNames(new List<string[]> ()
 			{
-				new string[] { "João Silva", "Lyra", "Lyra Network " },
-				new string[] { "Kendra Reichert", "Nubank", "Nubank Network" },
-				new string[] { "Lucas Silveira", "Google", "Google Network" },
-				new string[] { "Maria Silva", "Mercado Livre", "Mercado Livre LC" },
+				new string[] { "JoaoSilva", "Lyra", "Lyra Network " },
+				new string[] { "KendraReichert", "Nubank", "Nubank Network" },
+				new string[] { "LucasSilveira", "Google", "Google Network" },
+				new string[] { "MariaSilva", "Mercado Livre", "Mercado Livre LC" },
 			});
 			await dbContext.AddRangeAsync(exampleUsersList);
 			await dbContext.SaveChangesAsync(CancellationToken.None);
 			var categoryRepository = new Repository.UserRepository(dbContext);
 			var searchInput = new SearchInput(page, itemsPerPage, search, "", SearchOrder.Asc);
 
+			var searchInputJson = JsonSerializer.Serialize(searchInput); ;
 			// Act
 			var output = await categoryRepository.Search(searchInput, CancellationToken.None);
 

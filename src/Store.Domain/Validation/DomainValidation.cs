@@ -17,6 +17,12 @@ namespace Store.Domain.Validation
 				throw new EntityValidationException($"{fieldName} should not be empty or null");
 		}
 
+		public static void NotContainSpace(string target, string fieldName)
+		{
+			if (target.Contains(" "))
+				throw new EntityValidationException($"{fieldName} should not contain spaces");
+		}
+
 		public static void MinLength(string target, int minLength, string fieldName)
 		{
 			if (target.Length < minLength)
