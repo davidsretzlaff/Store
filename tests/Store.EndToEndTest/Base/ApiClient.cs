@@ -100,7 +100,7 @@ namespace Store.EndToEndTest.Base
 			return QueryHelpers.AddQueryString(route, parametersDictionary!);
 		}
 
-		public async Task AddAutorizationHeader(string userName, string password)
+		public async Task AddAuthorizationHeader(string userName, string password)
 		{
 			var authInput = new CreateAuthInput(userName, password); 
 			var json = JsonSerializer.Serialize(authInput, _defaultSerializeOptions);

@@ -23,7 +23,7 @@ namespace Store.EndToEndTest.Api.User.DeactivateUser
 				var exampleUserList = _fixture.GetExampleUserList(5);
 				var exampleUser = exampleUserList[2];
 				await _fixture.Persistence.InsertList(exampleUserList);
-				await _fixture.ApiClient.AddAutorizationHeader(exampleUser.UserName, exampleUser.Password);
+				await _fixture.ApiClient.AddAuthorizationHeader(exampleUser.UserName, exampleUser.Password);
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
