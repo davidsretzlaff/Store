@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Store.Api.ApiModels.Response;
 using Repository = Store.Infra.Data.EF.Repositories;
 using System.Net;
 using Store.Application.UseCases.Auth.CreateAuth;
+using Store.Application.Common.Models.Response;
 
 namespace Store.EndToEndTest.Api.Auth.CreateAuth
 {
@@ -28,7 +28,7 @@ namespace Store.EndToEndTest.Api.Auth.CreateAuth
                 var input = _fixture.DataGenerator.GetCreateAuthInput(user);
 
 				// Act
-				var (response, output) = await _fixture.ApiClient.Post<ApiResponse<AuthOutput>>("/Auth", input);
+				var (response, output) = await _fixture.ApiClient.Post<Response<AuthOutput>>("/Auth", input);
 
                 // Assert
                 response.Should().NotBeNull();

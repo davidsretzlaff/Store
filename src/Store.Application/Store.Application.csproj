@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Store.Domain\Store.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\User\ListUsers\" />
-  </ItemGroup>
-
 </Project>

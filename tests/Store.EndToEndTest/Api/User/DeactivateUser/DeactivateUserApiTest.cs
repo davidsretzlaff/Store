@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Store.Api.ApiModels.Response;
+using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Extensions;
 using System.Net;
@@ -26,7 +26,7 @@ namespace Store.EndToEndTest.Api.User.DeactivateUser
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
-					Put<ApiResponse<UserOutput>>($"/users/{exampleUser.Id}/deactivate");
+					Put<Response<UserOutput>>($"/users/{exampleUser.Id}/deactivate");
 
 				// Assert
 				response.Should().NotBeNull();

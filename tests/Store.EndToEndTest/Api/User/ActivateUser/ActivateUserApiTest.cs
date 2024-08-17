@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Store.Api.ApiModels.Response;
+using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Extensions;
 using Store.EndToEndTest.Api.User.CreateUser;
@@ -27,7 +27,7 @@ namespace Store.EndToEndTest.Api.User.ActivateUser
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
-					Put<ApiResponse<UserOutput>>($"/users/{exampleUser.Id}/activate");
+					Put<Response<UserOutput>>($"/users/{exampleUser.Id}/activate");
 
 				// Assert
 				response.Should().NotBeNull();

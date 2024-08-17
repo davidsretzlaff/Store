@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Store.Application.Common.ApiResponse.PaginatedList;
+using Store.Application.UseCases.User.Common;
 
 namespace Store.Application.UseCases.User.ListUsers
 {
-	internal class ListUsersOutput
+	public class ListUsersOutput : PaginatedListOutput<UserOutput>
 	{
+		public ListUsersOutput(int page, int perPage, int total, IReadOnlyList<UserOutput> items) 
+			: base(page, perPage, total, items)
+		{
+		}
 	}
 }

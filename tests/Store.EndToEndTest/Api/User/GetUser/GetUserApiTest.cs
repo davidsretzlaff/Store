@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Store.Api.ApiModels.Response;
+using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.Common;
-using Store.Domain.Extensions;
-using Store.EndToEndTest.Api.User.CreateUser;
 using System.Net;
 
 namespace Store.EndToEndTest.Api.User.GetUser
@@ -28,7 +26,7 @@ namespace Store.EndToEndTest.Api.User.GetUser
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.
-					Get<ApiResponse<UserOutput>>($"/users/{exampleUser.Id}");
+					Get<Response<UserOutput>>($"/users/{exampleUser.Id}");
 
 				// Assert
 				response.Should().NotBeNull();

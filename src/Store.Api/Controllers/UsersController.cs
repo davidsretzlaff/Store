@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Store.Application.Common.Models;
+using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.ActivateUser;
 using Store.Application.UseCases.User.Common;
 using Store.Application.UseCases.User.CreateUser;
 using Store.Application.UseCases.User.DeactiveUser;
 using Store.Application.UseCases.User.GetUser;
+using Store.Application.UseCases.User.ListUsers;
+using Store.Domain.Enum;
 
 namespace Store.Api.Controllers
 {
@@ -74,6 +76,28 @@ namespace Store.Api.Controllers
 		{
 			var output = await _mediator.Send(new GetUserInput(id), cancellationToken);
 			return Ok(new Response<UserOutput>(output));
+		}
+
+		[HttpGet]
+		[ProducesResponseType(typeof(ListUsersOutput), StatusCodes.Status200OK)]
+		public async Task<IActionResult> List(
+		CancellationToken cancellationToken,
+			[FromQuery] int? page = null,
+			[FromQuery(Name = "per_page")] int? perPage = null,
+			[FromQuery] string? search = null,
+			[FromQuery] string? sort = null,
+			[FromQuery] SearchOrder? dir = null
+		)
+		{
+			var input = new ListUsersInput();
+			if (page is not null) input.Page = page.Value;
+			if (perPage is not null) input.PerPage = perPage.Value;
+			if (!String.IsNullOrWhiteSpace(search)) input.Search = search;
+			if (!String.IsNullOrWhiteSpace(sort)) input.Sort = sort;
+			if (dir is not null) input.Dir = dir.Value;
+
+			var output = await _mediator.Send(input, cancellationToken);
+			return Ok(new ResponseList<UserOutput>(output));
 		}
 	}
 }

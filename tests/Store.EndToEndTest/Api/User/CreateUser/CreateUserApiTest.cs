@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Store.Api.ApiModels.Response;
+using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.User.Common;
 using System.Net;
 using System.Text.Json;
@@ -24,7 +24,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				var jsonus = JsonSerializer.Serialize(input);
 
 				// Act
-				var (response, output) = await _fixture.ApiClient.Post<ApiResponse<UserOutput>>("/users", input);
+				var (response, output) = await _fixture.ApiClient.Post<Response<UserOutput>>("/users", input);
 
 				// Assert
 				response.Should().NotBeNull();
