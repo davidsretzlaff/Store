@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Store.Application.Exceptions;
+using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Repository;
@@ -7,7 +7,7 @@ using Store.Domain.SeedWork.Searchable;
 
 namespace Store.Infra.Data.EF.Repositories
 {
-	public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
 	{
 		private readonly StoreDbContext _context;
 		private DbSet<User> _users => _context.Set<User>();

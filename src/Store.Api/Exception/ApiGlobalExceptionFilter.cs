@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Store.Application.Exceptions;
 using Store.Domain.Exceptions;
+using Store.Application.Common.Exceptions;
 
 namespace Store.Api.Exception
 {
-	public class ApiGlobalExceptionFilter : IExceptionFilter
+    public class ApiGlobalExceptionFilter : IExceptionFilter
 	{
 		private readonly IHostEnvironment _env;
 		public ApiGlobalExceptionFilter(IHostEnvironment env)

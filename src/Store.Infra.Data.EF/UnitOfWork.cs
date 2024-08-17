@@ -1,8 +1,8 @@
-﻿using Store.Application.Interface;
+﻿using Store.Application.Common.Interface;
 
 namespace Store.Infra.Data.EF
 {
-	public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
 	{
 		private readonly StoreDbContext _context;
 

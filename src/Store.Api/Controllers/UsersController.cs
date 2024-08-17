@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Store.Api.ApiModels.Response;
+using Store.Application.Common.Models;
 using Store.Application.UseCases.User.ActivateUser;
 using Store.Application.UseCases.User.Common;
 using Store.Application.UseCases.User.CreateUser;
@@ -18,7 +18,7 @@ namespace Store.Api.Controllers
 
 		public UsersController(IMediator mediator) => _mediator = mediator;
 
-		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Create(
@@ -30,12 +30,12 @@ namespace Store.Api.Controllers
 			return CreatedAtAction(
 				nameof(Create),
 				new { output.Id },
-				new ApiResponse<UserOutput>(output)
+				new Response<UserOutput>(output)
 			);
 		}
 
 		[HttpPut("{id:guid}/Activate")]
-		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[Authorize]
@@ -45,11 +45,11 @@ namespace Store.Api.Controllers
 		)
 		{
 			var output = await _mediator.Send(new ActivateUserInput(id), cancellationToken);
-			return Ok(new ApiResponse<UserOutput>(output));
+			return Ok(new Response<UserOutput>(output));
 		}
 
 		[HttpPut("{id:guid}/Deactivate")]
-		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[Authorize]
@@ -59,11 +59,11 @@ namespace Store.Api.Controllers
 		)
 		{
 			var output = await _mediator.Send(new DeactivateUserInput(id), cancellationToken);
-			return Ok(new ApiResponse<UserOutput>(output));
+			return Ok(new Response<UserOutput>(output));
 		}
 
 		[HttpGet("{id:guid}")]
-		[ProducesResponseType(typeof(ApiResponse<UserOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[Authorize]
@@ -73,7 +73,7 @@ namespace Store.Api.Controllers
 		)
 		{
 			var output = await _mediator.Send(new GetUserInput(id), cancellationToken);
-			return Ok(new ApiResponse<UserOutput>(output));
+			return Ok(new Response<UserOutput>(output));
 		}
 	}
 }

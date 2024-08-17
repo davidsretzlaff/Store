@@ -1,11 +1,11 @@
-﻿using Store.Application.Interface;
+﻿using Store.Application.Common.Interface;
 using Store.Application.UseCases.User.ActivateUser;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Repository;
 
 namespace Store.Application.UseCases.User.DeactiveUser
 {
-	internal class DeactivateUser : IDeactivateUser
+    internal class DeactivateUser : IDeactivateUser
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;

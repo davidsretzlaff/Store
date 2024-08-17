@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using Store.Application.Exceptions;
+using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Repository;
@@ -10,7 +10,7 @@ using Repository = Store.Infra.Data.EF.Repositories;
 
 namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 {
-	[Collection(nameof(UserRepositoryTestFixture))]
+    [Collection(nameof(UserRepositoryTestFixture))]
 	public class UserRepositoryTest
 	{
 		private readonly UserRepositoryTestFixture _fixture;

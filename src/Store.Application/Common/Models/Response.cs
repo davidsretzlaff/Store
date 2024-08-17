@@ -1,4 +1,4 @@
-﻿namespace Store.Api.ApiModels.Response
+﻿namespace Store.Application.Common.ApiModels.NewFolder
 {
 	public class ApiResponse<TData>
 	{
