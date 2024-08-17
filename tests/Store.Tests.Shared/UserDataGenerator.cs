@@ -4,6 +4,7 @@ using Store.Application.UseCases.Auth.CreateAuth;
 using Store.Application.UseCases.User.Common;
 using Store.Application.UseCases.User.CreateUser;
 using Store.Domain.Enum;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Store.Tests.Shared
 {
@@ -64,10 +65,14 @@ namespace Store.Tests.Shared
 			var listClone = new List<Domain.Entity.User>(userList);
 			var orderedEnumerable = (orderBy.ToLower(), order) switch
 			{
-				("Name", SearchOrder.Asc) => listClone.OrderBy(x => x.UserName).ThenBy(x => x.Id),
-				("Name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
-				("BusinessName", SearchOrder.Asc) => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
-				("BusinessName", SearchOrder.Desc) => listClone.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("username", SearchOrder.Asc) => listClone.OrderBy(x => x.UserName).ThenBy(x => x.Id),
+				("username", SearchOrder.Desc) => listClone.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
+				("businessname", SearchOrder.Asc) => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
+				("bussinesname", SearchOrder.Desc) => listClone.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("corporatename", SearchOrder.Asc) => listClone.OrderBy(x => x.CorporateName).ThenBy(x => x.Id),
+				("corporatename", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CorporateName).ThenByDescending(x => x.Id),
+				("email", SearchOrder.Asc) => listClone.OrderBy(x => x.Email).ThenBy(x => x.Id),
+				("email", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Email).ThenByDescending(x => x.Id),
 				_ => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id)
 			};
 			return orderedEnumerable.ToList();

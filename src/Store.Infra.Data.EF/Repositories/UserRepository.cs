@@ -15,13 +15,25 @@ namespace Store.Infra.Data.EF.Repositories
 
 		public async Task Insert(User user, CancellationToken cancellationToken)
 		{
-			var userDb = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == user.UserName, cancellationToken);
+			var userDb = await _users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(
+					x => x.UserName == user.UserName || 
+					x.CompanyRegistrationNumber == user.CompanyRegistrationNumber, 
+					cancellationToken);
 			if (userDb != null)
 			{
-				//david testar
-				UserNameException.ThrowIfUserNameExist($"'{user.UserName}' already exists.");
+				//david criar test 
+				if (user.UserName.Equals(userDb.UserName))
+				{
+					AggregateExistsException.ThrowIfExist($"'{user.UserName}' already exists.");
+				}
+				if (user.CompanyRegistrationNumber.Equals(userDb.CompanyRegistrationNumber))
+				{
+					AggregateExistsException.ThrowIfExist($"'{user.CompanyRegistrationNumber}' already exists.");
+				}
 			}
-				
+
 			await _users.AddAsync(user, cancellationToken);
 		}
 
@@ -72,12 +84,14 @@ namespace Store.Infra.Data.EF.Repositories
 		{
 			var orderedQuery = (orderProperty.ToLower(), order) switch
 			{
-				("Name", SearchOrder.Asc) => query.OrderBy(x => x.UserName).ThenBy(x => x.Id),
-				("Name", SearchOrder.Desc) => query.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
-				("BusinessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
-				("BusinessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
-				("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
-				("id", SearchOrder.Desc) => query.OrderByDescending(x => x.Id),
+				("username", SearchOrder.Asc) => query.OrderBy(x => x.UserName).ThenBy(x => x.Id),
+				("username", SearchOrder.Desc) => query.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
+				("businessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
+				("businessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("corporatename", SearchOrder.Asc) => query.OrderBy(x => x.CorporateName).ThenBy(x => x.Id),
+				("corporatename", SearchOrder.Desc) => query.OrderByDescending(x => x.CorporateName).ThenByDescending(x => x.Id),
+				("email", SearchOrder.Asc) => query.OrderBy(x => x.Email).ThenBy(x => x.Id),
+				("email", SearchOrder.Desc) => query.OrderByDescending(x => x.Email).ThenByDescending(x => x.Id),
 				_ => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id)
 			};
 			return orderedQuery;

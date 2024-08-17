@@ -33,7 +33,7 @@ namespace Store.Api.Exception
 				details.Type = "NotFound";
 				details.Detail = exception!.Message;
 			}
-			else if (exception is UserNameException)
+			else if (exception is AggregateExistsException)
 			{
 				details.Title = "Username already exists";
 				details.Status = StatusCodes.Status409Conflict;
