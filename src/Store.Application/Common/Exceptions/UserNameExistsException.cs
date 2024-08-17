@@ -7,7 +7,7 @@
 
 		public static void ThrowIfNull(string exceptionMessage)
 		{
-			new UserNameExistsException(exceptionMessage);
+			throw new UserNameExistsException(exceptionMessage);
 		}
 	}
 }

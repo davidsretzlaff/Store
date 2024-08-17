@@ -67,8 +67,8 @@ namespace Store.Infra.Data.EF.Repositories
 			{
 				("username", SearchOrder.Asc) => query.OrderBy(x => x.UserName).ThenBy(x => x.Id),
 				("username", SearchOrder.Desc) => query.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
-				("businessName", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
-				("businessName", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("businessname", SearchOrder.Asc) => query.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
+				("businessname", SearchOrder.Desc) => query.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
 				("corporatename", SearchOrder.Asc) => query.OrderBy(x => x.CorporateName).ThenBy(x => x.Id),
 				("corporatename", SearchOrder.Desc) => query.OrderByDescending(x => x.CorporateName).ThenByDescending(x => x.Id),
 				("email", SearchOrder.Asc) => query.OrderBy(x => x.Email).ThenBy(x => x.Id),
