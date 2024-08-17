@@ -15,25 +15,6 @@ namespace Store.Infra.Data.EF.Repositories
 
 		public async Task Insert(User user, CancellationToken cancellationToken)
 		{
-			var userDb = await _users
-				.AsNoTracking()
-				.FirstOrDefaultAsync(
-					x => x.UserName == user.UserName || 
-					x.CompanyRegistrationNumber == user.CompanyRegistrationNumber, 
-					cancellationToken);
-			if (userDb != null)
-			{
-				//david criar test 
-				if (user.UserName.Equals(userDb.UserName))
-				{
-					AggregateExistsException.ThrowIfExist($"'{user.UserName}' already exists.");
-				}
-				if (user.CompanyRegistrationNumber.Equals(userDb.CompanyRegistrationNumber))
-				{
-					AggregateExistsException.ThrowIfExist($"'{user.CompanyRegistrationNumber}' already exists.");
-				}
-			}
-
 			await _users.AddAsync(user, cancellationToken);
 		}
 
@@ -97,12 +78,21 @@ namespace Store.Infra.Data.EF.Repositories
 			return orderedQuery;
 		}
 
-		//criar test
-		public async Task<User> GetByUserName(string userName, CancellationToken cancellationToken)
+		//david criar test
+		public async Task<User?> GetByUserNameOrCompanyRegNumber(string userName, string? companyRegNumber, CancellationToken cancellationToken)
 		{
-			var user = await _users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName == userName, cancellationToken);
-			NotFoundException.ThrowIfNull(user, $"User '{userName}' not found.");
-			return user!;
+			var user = await _users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(x => x.UserName == userName || x.CompanyRegistrationNumber == companyRegNumber, cancellationToken);
+			return user;
+		}
+
+		public async Task<User?> GetByUserName(string userName, CancellationToken cancellationToken)
+		{
+			var user = await _users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(x => x.UserName == userName, cancellationToken);
+			return user;
 		}
 	}
 }
