@@ -2,7 +2,7 @@
 using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using Store.Domain.SeedWork.Searchable;
 
 namespace Store.Infra.Data.EF.Repositories

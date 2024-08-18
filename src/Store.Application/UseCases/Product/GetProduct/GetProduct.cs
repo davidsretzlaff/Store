@@ -1,11 +1,10 @@
 ﻿using Store.Application.Common.Exceptions;
-using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.Common;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 
 namespace Store.Application.UseCases.Product.GetProduct
 {
-	public class GetProduct : IGetProduct
+    public class GetProduct : IGetProduct
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;

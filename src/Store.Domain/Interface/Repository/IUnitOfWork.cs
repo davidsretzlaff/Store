@@ -1,4 +1,4 @@
-﻿namespace Store.Application.Common.Interface
+﻿namespace Store.Domain.Interface.Repository
 {
     public interface IUnitOfWork
     {

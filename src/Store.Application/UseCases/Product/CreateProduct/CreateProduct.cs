@@ -1,13 +1,12 @@
 ﻿using Store.Application.Common.Exceptions;
-using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Extensions;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Product.CreateProduct
 {
-	internal class CreateProduct : ICreateProduct
+    internal class CreateProduct : ICreateProduct
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;

@@ -1,11 +1,10 @@
-﻿using Store.Application.Common.Interface;
-using Store.Application.UseCases.Order.Common;
-using Store.Domain.Repository;
+﻿using Store.Application.UseCases.Order.Common;
+using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Order.CreateOrder
 {
-	public class CreateOrder : ICreateOrder
+    public class CreateOrder : ICreateOrder
 	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IProductRepository _productRepository;

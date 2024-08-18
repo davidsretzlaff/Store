@@ -2,7 +2,7 @@
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using Store.Domain.SeedWork.Searchable;
 using Store.Infra.Adapters.ExternalCatalog.Models;
 
@@ -16,7 +16,7 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 		private bool _allProductsCached = false;
 		private readonly TimeSpan _cacheExpiration = TimeSpan.FromHours(3);
 
-		public ProductRepository(IApiClient apiClient, ICacheService cacheService) 
+		public ProductRepository(IApiClient apiClient) 
         {
 			_apiClient = apiClient;
 			_deletedProducts = new HashSet<int>();

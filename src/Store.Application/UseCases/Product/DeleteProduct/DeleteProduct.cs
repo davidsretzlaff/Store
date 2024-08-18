@@ -1,12 +1,11 @@
-﻿using Store.Application.Common.Interface;
-using Store.Application.UseCases.Order.Common;
+﻿using Store.Application.UseCases.Order.Common;
 using Store.Domain.Extensions;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Product.DeleteProduct
 {
-	internal class DeleteProduct : IDeleteProduct
+    internal class DeleteProduct : IDeleteProduct
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;

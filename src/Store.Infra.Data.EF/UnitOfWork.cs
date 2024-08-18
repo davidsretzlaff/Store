@@ -1,4 +1,4 @@
-﻿using Store.Application.Common.Interface;
+﻿using Store.Domain.Interface.Repository;
 
 namespace Store.Infra.Data.EF
 {

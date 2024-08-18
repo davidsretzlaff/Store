@@ -1,6 +1,5 @@
-﻿using Store.Application.Common.Interface;
-using Store.Application.UseCases.User.Common;
-using Store.Domain.Repository;
+﻿using Store.Application.UseCases.User.Common;
+using Store.Domain.Interface.Repository;
 
 namespace Store.Application.UseCases.User.GetUser
 {

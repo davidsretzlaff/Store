@@ -1,11 +1,11 @@
 ﻿
 
 using Store.Application.UseCases.User.Common;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 
 namespace Store.Application.UseCases.User.ListUsers
 {
-	public class ListUsers : IListUsers
+    public class ListUsers : IListUsers
 	{
 		private readonly IUserRepository _repository;
 

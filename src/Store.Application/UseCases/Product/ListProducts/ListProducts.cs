@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using Store.Application.Common.Interface;
 using Store.Application.Common.Models.PaginatedList;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.User.Common;
 using Store.Application.UseCases.User.ListUsers;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Store.Application.UseCases.Product.ListProducts
 {
-	public class ListProducts : IListProducts
+    public class ListProducts : IListProducts
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;

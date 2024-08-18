@@ -1,5 +1,4 @@
 ﻿using Store.Application.UseCases.User.CreateUser;
-using Store.Domain.Repository;
 using Store.Infra.Data.EF;
 using Store.Infra.Data.EF.Repositories;
 using MediatR;
@@ -8,6 +7,7 @@ using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Infra.Adapters.ExternalCatalog.Repositories;
 using Store.Infra.Adapters.ExternalCatalog;
+using Store.Domain.Interface.Repository;
 
 namespace Store.Api.Configurations
 {

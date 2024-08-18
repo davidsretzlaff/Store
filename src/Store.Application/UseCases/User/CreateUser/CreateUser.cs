@@ -1,7 +1,6 @@
 ﻿using Store.Application.Common.Exceptions;
-using Store.Application.Common.Interface;
 using Store.Application.UseCases.User.Common;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser

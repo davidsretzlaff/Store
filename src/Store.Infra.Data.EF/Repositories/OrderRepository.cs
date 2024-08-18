@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Store.Domain.Entity;
-using Store.Domain.Repository;
+using Store.Domain.Interface.Repository;
 using Store.Domain.SeedWork.Searchable;
 using Store.Infra.Data.EF.Models;
 
 namespace Store.Infra.Data.EF.Repositories
 {
-	public class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
 	{
 		private readonly StoreDbContext _context;
 		private DbSet<Order> _orders => _context.Set<Order>();
