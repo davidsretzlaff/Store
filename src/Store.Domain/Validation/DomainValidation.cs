@@ -68,5 +68,11 @@ namespace Store.Domain.Validation
 
 			return cellPhoneRegex.IsMatch(phone);
 		}
+
+		public static void MaxQuantity(int target, int maxQuantity, string fieldName)
+		{
+			if (target > maxQuantity)
+				throw new EntityValidationException($"{fieldName} should be less or equal {maxQuantity} quantity");
+		}
 	}
 }
