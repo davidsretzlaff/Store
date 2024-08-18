@@ -1,6 +1,5 @@
 ﻿using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.Common;
-using Store.Domain.Entity;
 using Store.Domain.Repository;
 using DomainEntity = Store.Domain.Entity;
 
@@ -20,7 +19,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		}
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
-			List<Product> products = new List<Product>();
+			List<DomainEntity.Product> products = new List<DomainEntity.Product>();
 			foreach (var item in input.ProductIds)
 			{
 				var product = await _productRepository.Get(item, cancellationToken);

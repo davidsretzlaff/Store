@@ -21,7 +21,6 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 			{
 				// Arrange
 				var input = _fixture.getExampleInput();
-				var jsonus = JsonSerializer.Serialize(input);
 
 				// Act
 				var (response, output) = await _fixture.ApiClient.Post<Response<UserOutput>>("/users", input);

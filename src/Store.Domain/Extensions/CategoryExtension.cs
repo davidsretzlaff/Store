@@ -9,7 +9,7 @@ namespace Store.Domain.Extensions
 		{
 			"jewelery" => Category.Jewelery,
 			"electronics" => Category.Electronics,
-			_ => throw new ArgumentOutOfRangeException(nameof(category))
+			_ => Category.Invalid
 		};
 
 		public static string ToCategoryString(this Category category)

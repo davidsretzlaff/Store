@@ -11,15 +11,15 @@ namespace Store.Application.UseCases.User.ListUsers
 
 		public ListUsers(IUserRepository repository) => _repository = repository;
 
-		public async Task<ListUsersOutput> Handle(ListUsersInput request, CancellationToken cancellationToken)
+		public async Task<ListUsersOutput> Handle(ListUsersInput input, CancellationToken cancellationToken)
 		{
 			var searchOutput = await _repository.Search(
 				new Domain.SeedWork.Searchable.SearchInput(
-						request.Page,
-						request.PerPage,
-						request.Search,
-						request.OrderBy,
-						request.Order
+						input.Page,
+						input.PerPage,
+						input.Search,
+						input.OrderBy,
+						input.Order
 					), 
 					cancellationToken
 				);

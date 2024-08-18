@@ -3,6 +3,7 @@
 	public enum Category
 	{
 		Jewelery,
-		Electronics
+		Electronics,
+		Invalid
 	}
 }

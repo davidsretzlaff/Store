@@ -3,7 +3,7 @@ using DomainEntity = Store.Domain.Entity;
 using DomainEnum= Store.Domain.Enum;
 namespace Store.Infra.Adapters.ExternalCatalog.Models
 {
-	public class ProductDto
+	public class ApiProduct
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }
