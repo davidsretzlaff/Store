@@ -5,5 +5,5 @@
         public Response(TData data) => Data = data;
 
         public TData Data { get; private set; }
-    }
+	}
 }

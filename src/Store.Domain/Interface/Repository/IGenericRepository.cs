@@ -6,6 +6,5 @@ namespace Store.Domain.Interface.Repository
     {
         public Task Insert(TAggregate aggregate, CancellationToken cancellationToken);
         public Task Delete(TAggregate aggregate, CancellationToken cancellationToken);
-        public Task Update(TAggregate aggregate, CancellationToken cancellationToken);
     }
 }

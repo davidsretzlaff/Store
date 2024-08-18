@@ -1,9 +1,8 @@
 ﻿using Store.Domain.Extensions;
 using DomainEntity = Store.Domain.Entity;
-using DomainEnum= Store.Domain.Enum;
 namespace Store.Infra.Adapters.ExternalCatalog.Models
 {
-	public class ApiProduct
+	public class ProductDto
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }
@@ -23,4 +22,6 @@ namespace Store.Infra.Adapters.ExternalCatalog.Models
 		public decimal Rate { get; set; }
 		public int Count { get; set; }
 	}
+
+
 }

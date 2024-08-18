@@ -8,6 +8,8 @@ using Store.Application.UseCases.Order.CreateOrder;
 using Store.Infra.Adapters.ExternalCatalog.Repositories;
 using Store.Infra.Adapters.ExternalCatalog;
 using Store.Domain.Interface.Repository;
+using Store.Domain.Interface;
+using Store.Infra.Adapters.CacheService;
 
 namespace Store.Api.Configurations
 {
@@ -25,13 +27,12 @@ namespace Store.Api.Configurations
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
 			services.AddTransient<IApiClient, ApiClient>();
 			services.AddSingleton<IProductRepository, ProductRepository>();
-			
+			services.AddTransient<IProductService, ProductService>(); 
+			services.AddSingleton<ICacheService, CacheService>(); 
 			services.AddHttpClient<ApiClient>(client =>
 			{
 				client.BaseAddress = new Uri("https://fakestoreapi.com");
 			});
-
-			// Register ProductRepository
 
 			return services;
 		}

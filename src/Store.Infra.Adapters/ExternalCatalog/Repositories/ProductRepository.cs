@@ -1,50 +1,51 @@
 ﻿using Store.Application.Common.Interface;
+using Store.Application.Common.Models.Response;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
+using Store.Domain.Interface;
 using Store.Domain.Interface.Repository;
 using Store.Domain.SeedWork.Searchable;
 using Store.Infra.Adapters.ExternalCatalog.Models;
 
 namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 {
-    public class ProductRepository : IProductRepository
-    {
-        private readonly IApiClient _apiClient;
-		private readonly HashSet<int> _deletedProducts;
-		private readonly Dictionary<int, CachedProduct> _productCache;
-		private bool _allProductsCached = false;
-		private readonly TimeSpan _cacheExpiration = TimeSpan.FromHours(3);
+	public class ProductRepository : IProductRepository
+	{
+		private readonly IProductService _productService;
+		private readonly ICacheService _cacheService;
 
-		public ProductRepository(IApiClient apiClient) 
-        {
-			_apiClient = apiClient;
-			_deletedProducts = new HashSet<int>();
-			_productCache = new Dictionary<int, CachedProduct>();
+
+		public ProductRepository(IProductService productService, ICacheService cacheService)
+		{
+			_productService = productService;
+			_cacheService = cacheService;
 		}
 
 		public Task Insert(Product input, CancellationToken cancellationToken)
 		{
-			CacheProduct(input);
+			_cacheService.CacheProduct(input);
 			return Task.CompletedTask;
 		}
 
 		public Task Delete(Product product, CancellationToken cancellationToken)
-        {
-			_deletedProducts.Add(product.Id);
-			_productCache.Remove(product.Id);
+		{
+
+			_cacheService.MarkProductAsDeleted(product.Id);
+			_cacheService.RemoveProductFromCache(product.Id);
 			return Task.CompletedTask;
 		}
 
 		public async Task<Product?> Get(int id, CancellationToken cancellationToken)
 		{
-			if (IsProductDeleted(id))
+			if (_cacheService.IsProductDeleted(id))
 			{
 				return null;
 			}
-			if (TryGetCachedProduct(id, out var cachedProduct))
+			var cachedProduct = _cacheService.GetCachedProduct(id);
+			if (cachedProduct != null)
 			{
-				return cachedProduct.Product;
+				return cachedProduct;
 			}
 			return await FetchAndCacheProduct(id);
 		}
@@ -67,17 +68,17 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 
 		private async Task EnsureProductsCachedAsync()
 		{
-			if (!_allProductsCached)
+			if (!_cacheService.AllProductsCached)
 			{
 				await CacheProductsFromCategoryAsync("category/electronics");
 				await CacheProductsFromCategoryAsync("category/jewelery");
-				_allProductsCached = true;
+				_cacheService.MarkAllProductsAsCached();
 			}
 		}
 
 		private IQueryable<Product> BuildQueryFromCache(SearchInput input)
 		{
-			var query = _productCache.Values.Select(cp => cp.Product).AsQueryable();
+			var query = _cacheService.GetAllCachedProducts().AsQueryable();
 			return AddOrderToQuery(query, input.OrderBy, input.Order);
 		}
 
@@ -100,45 +101,42 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 		{
 			return (input.Page - 1) * input.PerPage;
 		}
-		
+
 		private async Task CacheProductsFromCategoryAsync(string category)
 		{
-			var (response, productDto) = await _apiClient.Get<List<ApiProduct>>($"/products/{category}");
-
-			if (response.IsSuccessStatusCode)
+			var products = await _productService.FetchProductsFromCategory(category);
+			if (products is not null)
 			{
-				foreach (var item in productDto)
+				foreach (var item in products)
 				{
-					CacheProduct(item.ToProduct());
+					if (AllowedCategory(item))
+					{
+						_cacheService.CacheProduct(item);
+					}
 				}
 			}
 		}
 
-		public Task Update(Product aggregate, CancellationToken cancellationToken)
-        {
-			//_productCache[aggregate.Id] = new CachedProduct(aggregate, DateTime.UtcNow);
-			//return Task.CompletedTask;
-			throw new NotImplementedException();
-        }
-
-		//david melhorar
-		public class CachedProduct
+		private async Task<Product?> FetchAndCacheProduct(int id)
 		{
-			public Product Product { get; }
-			public DateTime Timestamp { get; }
-			public CachedProduct(Product product, DateTime timestamp)
+			var product = await _productService.FetchProduct(id);
+			if (product is not null)
 			{
-				Product = product ?? throw new ArgumentNullException(nameof(product));
-				Timestamp = timestamp;
+				_cacheService.CacheProduct(product);
+				return product;
 			}
+			return null;
+		}
 
-			public bool IsExpired(TimeSpan cacheExpiration) =>
-				(DateTime.UtcNow - Timestamp) >= cacheExpiration;
+		private bool AllowedCategory(Product item)
+		{
+			var allowedCategories = new[] { Category.Electronics, Category.Jewelery };
+			return allowedCategories.Contains(item.Category);
 		}
 
 		private IQueryable<Product> AddOrderToQuery(IQueryable<Product> query, string orderProperty, SearchOrder order)
 		{
-			var orderedQuery = (orderProperty.ToLower(), order) switch
+			return (orderProperty.ToLower(), order) switch
 			{
 				("title", SearchOrder.Asc) => query.OrderBy(x => x.Title).ThenBy(x => x.Id),
 				("title", SearchOrder.Desc) => query.OrderByDescending(x => x.Title).ThenByDescending(x => x.Id),
@@ -146,62 +144,6 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 				("description", SearchOrder.Desc) => query.OrderByDescending(x => x.Description).ThenByDescending(x => x.Id),
 				_ => query.OrderBy(x => x.Title).ThenBy(x => x.Id)
 			};
-			return orderedQuery;
 		}
-
-		private bool AllowedCategory(ApiProduct item)
-		{
-			var allowedCategories = new[] { Category.Electronics, Category.Jewelery };
-			return allowedCategories.Contains(item.Category.ToCategory());
-		}
-
-		private bool IsProductInCache(int productId)
-		{
-			return _productCache.ContainsKey(productId);
-		}
-
-		private void CacheProduct(Product product)
-		{
-			if (_deletedProducts.Contains(product.Id))
-			{
-				return;
-			}
-			if (!IsProductInCache(product.Id))
-			{
-				_productCache[product.Id] = new CachedProduct(product, DateTime.UtcNow);
-			}
-		}
-
-		private bool IsProductDeleted(int id)
-		{
-			return _deletedProducts.Contains(id);
-		}
-
-		private bool TryGetCachedProduct(int id, out CachedProduct cachedProduct)
-		{
-			return _productCache.TryGetValue(id, out cachedProduct) &&
-				   !cachedProduct.IsExpired(_cacheExpiration);
-		}
-
-		private async Task<Product?> FetchAndCacheProduct(int id)
-		{
-			var (response, productDto) = await _apiClient.Get<ApiProduct>($"/products/{id}");
-
-			if (IsApiResponseValid(response, productDto))
-			{
-				var product = productDto.ToProduct();
-				CacheProduct(product);
-				return product;
-			}
-			return null;
-		}
-
-		private bool IsApiResponseValid(HttpResponseMessage? response, ApiProduct? dto)
-		{
-			return response is not null &&
-				   response.IsSuccessStatusCode &&
-				   dto is not null;
-		}
-
 	}
 }
