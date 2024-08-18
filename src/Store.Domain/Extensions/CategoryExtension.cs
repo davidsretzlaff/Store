@@ -4,7 +4,7 @@ namespace Store.Domain.Extensions
 {
 	public static class CategoryExtension
 	{
-		public static Category ToUserStatus(this string category)
+		public static Category ToCategory(this string category)
 		=> category switch
 		{
 			"jewelery" => Category.Jewelery,
@@ -12,7 +12,7 @@ namespace Store.Domain.Extensions
 			_ => throw new ArgumentOutOfRangeException(nameof(category))
 		};
 
-		public static string ToStringStatus(this Category category)
+		public static string ToCategoryString(this Category category)
 		=> category switch
 		{
 			Category.Jewelery => "jewelery",

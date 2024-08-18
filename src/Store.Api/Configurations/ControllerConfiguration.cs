@@ -38,6 +38,8 @@ namespace Store.Api.Configurations
 					ValidateAudience = false
 				};
 			});
+
+			
 			return services;
 		}
 	}

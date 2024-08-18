@@ -1,8 +1,8 @@
-﻿using Store.Domain.Entity.Store.Domain.Entity;
-using Store.Domain.Enum;
+﻿using Store.Domain.Enum;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace Store.Domain.Entity
 {
@@ -28,6 +28,23 @@ namespace Store.Domain.Entity
 			Products = new List<Product> { };
 		}
 
+		public int GetTotalProducts()
+		{
+			return Products.Count; 
+		}
+		public void AddProduct(Product product)
+		{
+			
+			var index = Products.FindIndex(p => p.Id == product.Id);
+
+			if (index >= 0)
+			{
+				Products[index].AddOneToQuantity();
+				return;
+			}
+
+			Products.Add(product);
+		}
 		public void Validate() 
 		{
 			Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, nameof(p.Title)));
@@ -35,6 +52,9 @@ namespace Store.Domain.Entity
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));
 			DomainValidation.MinLength(CustomerName, 4, nameof(CustomerName));
+
+			DomainValidation.NotNullOrEmpty(CustomerDocument, nameof(CustomerDocument));
+			//david melhorar criar validador CPF
 		}
 
 		private static string GenerateOrderCode()
@@ -54,11 +74,21 @@ namespace Store.Domain.Entity
 			Status = OrderStatus.Canceled;
 		}
 
-		public decimal GetTotal()
+		public string GetTotal()
 		{
 			decimal total = 0;
 			total = Products.Sum(item => item.GetTotal());
-			return total;
+			return FormatAsCurrency(total);
+		}
+		public string FormatAsCurrency(decimal amount)
+		{
+			var cultureInfo = new CultureInfo("pt-BR"); // Brazilian Portuguese
+			cultureInfo.NumberFormat.CurrencySymbol = "R$";
+			cultureInfo.NumberFormat.CurrencyDecimalSeparator = ",";
+			cultureInfo.NumberFormat.CurrencyGroupSeparator = ".";
+			cultureInfo.NumberFormat.CurrencyGroupSizes = new[] { 3 };
+
+			return amount.ToString("C", cultureInfo);
 		}
 	}
 }

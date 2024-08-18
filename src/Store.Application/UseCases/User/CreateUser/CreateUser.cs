@@ -1,7 +1,6 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.Common.Interface;
 using Store.Application.UseCases.User.Common;
-using Store.Domain.Entity;
 using Store.Domain.Repository;
 using DomainEntity = Store.Domain.Entity;
 
@@ -12,8 +11,7 @@ namespace Store.Application.UseCases.User.CreateUser
 		private readonly IUserRepository _userRepository;
 		private readonly IUnitOfWork _unitOfWork;
 
-		public CreateUser(IUserRepository userRepository, IUnitOfWork unitOfWork
-		)
+		public CreateUser(IUserRepository userRepository, IUnitOfWork unitOfWork)
 		{
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;

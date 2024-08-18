@@ -5,5 +5,6 @@ namespace Store.Domain.Repository
 	{
 		public Task<User?> GetByUserNameOrCompanyRegNumber(string userName, string companyRegNumber, CancellationToken cancellationToken);
 		public Task<User?> GetByUserName(string userName, CancellationToken cancellationToken);
+		public Task<User> Get(Guid id, CancellationToken cancellationToken);
 	}
 }
