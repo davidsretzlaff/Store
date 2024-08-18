@@ -30,7 +30,7 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 				PasswordInvalidException.ThrowIfPasswordInvalid();
 			}
 
-			var token = _jwtUtils.GenerateToken(user.UserName, Roles.BasicUser);
+			var token = _jwtUtils.GenerateToken(user.UserName, Roles.BasicUser, user.CompanyRegistrationNumber);
 			return AuthOutput.FromUser(user, token);
 		}
 	}

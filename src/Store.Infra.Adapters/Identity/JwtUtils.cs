@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Store.Infra.Adapters.Identity
 {
-    public class JwtUtils : IJwtUtils
+	public class JwtUtils : IJwtUtils
 	{
 		//private readonly string _key;
 		//private readonly string _issuer;
@@ -20,7 +20,7 @@ namespace Store.Infra.Adapters.Identity
 			_configuration = configuration;
 		}
 
-		public string GenerateToken(string userName, string role)
+		public string GenerateToken(string userName, string role, string companyRegisterNumber)
 		{
 			var jwtSettings = _configuration["JwtSettings:SecretKey"];
 
@@ -31,6 +31,7 @@ namespace Store.Infra.Adapters.Identity
 				Subject = new ClaimsIdentity(new Claim[]
 				{
 					new Claim(ClaimTypes.Name, userName.ToString()),
+					new Claim("CompanyRegisterNumber", companyRegisterNumber),
 					new Claim(ClaimTypes.Role, role) 
 				}),
 				Expires = DateTime.UtcNow.AddHours(8),
@@ -81,6 +82,16 @@ namespace Store.Infra.Adapters.Identity
 
 			// return user roles from JWT token if validation successful
 			return new List<string>();
+		}
+
+
+		public string GetCompanyRegNumberFromToken(string token)
+		{
+			var jwtSettings = _configuration["JwtSettings:SecretKey"];
+			var handler = new JwtSecurityTokenHandler();
+			var jwtToken = handler.ReadJwtToken(token);
+			var claim = jwtToken.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber");
+			return claim?.Value;
 		}
 	}
 }

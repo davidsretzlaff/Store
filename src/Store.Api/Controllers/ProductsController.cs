@@ -25,6 +25,7 @@ namespace Store.Api.Controllers
 
 		[HttpGet]
 		[ProducesResponseType(typeof(ListProductsInput), StatusCodes.Status200OK)]
+		[Authorize]
 		public async Task<IActionResult> List(
 			CancellationToken cancellationToken,
 			[FromQuery] int? Page = null,
@@ -48,6 +49,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[Authorize]
 		public async Task<IActionResult> Create(
 			[FromBody] CreateProductInput input,
 			CancellationToken cancellationToken
@@ -65,7 +67,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<ProductOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		//[Authorize]
+		[Authorize]
 		public async Task<IActionResult> GetById(
 			[FromRoute] int id,
 			CancellationToken cancellationToken
@@ -78,6 +80,7 @@ namespace Store.Api.Controllers
 		[HttpDelete("{id:int}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+		[Authorize]
 		public async Task<IActionResult> Delete(
 		   [FromRoute] int id,
 		   CancellationToken cancellationToken
