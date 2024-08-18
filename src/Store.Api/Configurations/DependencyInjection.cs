@@ -24,7 +24,7 @@ namespace Store.Api.Configurations
 			services.AddTransient<IOrderRepository, OrderRepository>();
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
 			services.AddTransient<IApiClient, ApiClient>();
-			services.AddTransient<IProductRepository, ProductRepository>();
+			services.AddSingleton<IProductRepository, ProductRepository>();
 			
 			services.AddHttpClient<ApiClient>(client =>
 			{

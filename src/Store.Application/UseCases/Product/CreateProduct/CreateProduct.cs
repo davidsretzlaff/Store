@@ -1,4 +1,5 @@
-﻿using Store.Application.Common.Interface;
+﻿using Store.Application.Common.Exceptions;
+using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Extensions;
 using Store.Domain.Repository;
@@ -18,13 +19,16 @@ namespace Store.Application.UseCases.Product.CreateProduct
 		}
 		public async Task<ProductOutput> Handle(CreateProductInput input, CancellationToken cancellationToken)
 		{
+			var existingProduct = await _productRepository.Get(input.Id, cancellationToken);
+			DuplicateException.ThrowIfHasValue(existingProduct, $"A product with ID '{input.Id}' already exists. Please use a unique ID to avoid duplication");
+			
 			var product = new DomainEntity.Product(
 				input.Id,
 				input.Title,
 				input.Description,
 				input.Price,
 				input.Category.ToCategory()
-				);
+			);
 			await _productRepository.Insert(product, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 			return ProductOutput.FromProduct(product);

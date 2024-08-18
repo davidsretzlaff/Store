@@ -42,15 +42,21 @@ namespace Store.Api.Exception
 			}
 			else if (exception is CompanyRegistrationNumberExistsException)
 			{
-				details.Title = "Company registration number already exist";
+				details.Title = "CompanyRegistrationRumber already exist";
 				details.Status = StatusCodes.Status409Conflict;
 				details.Type = "NotCreated";
 				details.Detail = exception!.Message;
 			}
 			else if (exception is PasswordInvalidException) {
-				details.Title = "Password Invalid";
+				details.Title = "Password invalid";
 				details.Status = StatusCodes.Status401Unauthorized;
 				details.Type = "NotAuth";
+				details.Detail = exception!.Message;
+			} 
+			else if (exception is DuplicateException) {
+				details.Title = "Product already exist";
+				details.Status = StatusCodes.Status409Conflict;
+				details.Type = "NotCreated";
 				details.Detail = exception!.Message;
 			}
 

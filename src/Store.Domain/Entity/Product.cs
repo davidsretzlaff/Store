@@ -1,6 +1,9 @@
 ﻿using Store.Domain.Enum;
+using Store.Domain.Extensions;
 using Store.Domain.SeedWork;
+using Store.Domain.Validation;
 using Store.Domain.ValueObject;
+using System.Net.Http.Headers;
 
 namespace Store.Domain.Entity
 {
@@ -21,8 +24,23 @@ namespace Store.Domain.Entity
 			Price = price;
 			Category = category;
 			Quantity = 1;
+			Validate();
 		}
 
+		private void Validate() 
+		{
+			DomainValidation.NotNullOrEmpty(Title, nameof(Title));
+			DomainValidation.MinLength(Title, 4, nameof(Title));
+
+			DomainValidation.NotNullOrEmpty(Description, nameof(Description));
+			DomainValidation.MinLength(Description, 4, nameof(Description));
+
+			DomainValidation.NotNull(Id, nameof(Id));
+			DomainValidation.NotNull(Price, nameof(Price));
+			DomainValidation.NotNull(Category, nameof(Category));
+			DomainValidation.ValidateCategory(Category, nameof(Category));
+
+		}
 		public void AddOneToQuantity() 
 		{
 			Quantity += 1;

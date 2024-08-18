@@ -1,4 +1,6 @@
-﻿using Store.Domain.Exceptions;
+﻿using Store.Domain.Enum;
+using Store.Domain.Exceptions;
+using Store.Domain.Extensions;
 using System.Text.RegularExpressions;
 
 namespace Store.Domain.Validation
@@ -73,6 +75,14 @@ namespace Store.Domain.Validation
 		{
 			if (target > maxQuantity)
 				throw new EntityValidationException($"{fieldName} should be less or equal {maxQuantity} quantity");
+		}
+
+		public static void ValidateCategory(Category category, string fieldName)
+		{
+			if (category == Category.Invalid)
+				throw new EntityValidationException(
+					$"{fieldName} is invalid. Only {Category.Jewelery.ToCategoryString()} and " +
+					$"{Category.Electronics.ToCategoryString()} are allowed.");
 		}
 	}
 }

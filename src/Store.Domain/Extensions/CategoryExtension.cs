@@ -5,7 +5,7 @@ namespace Store.Domain.Extensions
 	public static class CategoryExtension
 	{
 		public static Category ToCategory(this string category)
-		=> category switch
+		=> category.ToLower() switch
 		{
 			"jewelery" => Category.Jewelery,
 			"electronics" => Category.Electronics,
