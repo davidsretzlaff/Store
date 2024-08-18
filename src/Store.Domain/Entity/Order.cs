@@ -1,6 +1,7 @@
 ﻿using Store.Domain.Enum;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
+using Store.Domain.ValueObject;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
@@ -28,7 +29,7 @@ namespace Store.Domain.Entity
 			Products = new List<Product> { };
 		}
 
-		public int GetTotalProducts()
+		public int GetProductCount()
 		{
 			return Products.Count; 
 		}
@@ -74,21 +75,12 @@ namespace Store.Domain.Entity
 			Status = OrderStatus.Canceled;
 		}
 
-		public string GetTotal()
+		public string GetTotalAsCurrency()
 		{
 			decimal total = 0;
 			total = Products.Sum(item => item.GetTotal());
-			return FormatAsCurrency(total);
-		}
-		public string FormatAsCurrency(decimal amount)
-		{
-			var cultureInfo = new CultureInfo("pt-BR"); // Brazilian Portuguese
-			cultureInfo.NumberFormat.CurrencySymbol = "R$";
-			cultureInfo.NumberFormat.CurrencyDecimalSeparator = ",";
-			cultureInfo.NumberFormat.CurrencyGroupSeparator = ".";
-			cultureInfo.NumberFormat.CurrencyGroupSizes = new[] { 3 };
-
-			return amount.ToString("C", cultureInfo);
+			var money = new Money(total);
+			return money.Format();
 		}
 	}
 }

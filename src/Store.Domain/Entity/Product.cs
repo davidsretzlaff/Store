@@ -1,5 +1,6 @@
 ﻿using Store.Domain.Enum;
 using Store.Domain.SeedWork;
+using Store.Domain.ValueObject;
 
 namespace Store.Domain.Entity
 {
@@ -30,7 +31,20 @@ namespace Store.Domain.Entity
 		{
 			return Price * Quantity;
 		}
+		public string GetPriceAsCurrency()
+		{
+			return FormatCurrency(Price);
+		}
+		public string GetTotalAsCurrency()
+		{
+			return FormatCurrency(GetTotal());
+		}
 
+		private string FormatCurrency(decimal amount)
+		{
+			var money = new Money(amount);
+			return money.Format();
+		}
 		public int GetQuantity()
 		{
 			return Quantity; 

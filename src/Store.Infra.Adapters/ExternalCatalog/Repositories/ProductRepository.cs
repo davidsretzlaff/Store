@@ -12,8 +12,6 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 
         public ProductRepository(IApiClient apiClient) => _apiClient = apiClient;
 
-        //public 
-        //await _fixture.ApiClient.Post<Response<UserOutput>>("/users", input);
         public Task Delete(Product aggregate, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -21,7 +19,6 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 
         public async Task<Product> Get(int id, CancellationToken cancellationToken)
         {
-            //tratar erros
             var (response, product) = await _apiClient.Get<ProductDto>($"/products/{id}");
             return product.ToProduct();
         }

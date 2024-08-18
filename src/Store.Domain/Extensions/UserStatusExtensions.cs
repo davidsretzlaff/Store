@@ -13,7 +13,7 @@ namespace Store.Domain.Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(statusString))
         };
 
-        public static string ToStringStatus(this UserStatus statusString)
+        public static string ToUserStatusString(this UserStatus statusString)
         => statusString switch
         {
             UserStatus.Active => "Active",

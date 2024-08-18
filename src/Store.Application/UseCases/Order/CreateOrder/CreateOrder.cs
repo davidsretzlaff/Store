@@ -21,7 +21,6 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
 			List<Product> products = new List<Product>();
-			//// david pegar o companyreg do header;
 			foreach (var item in input.ProductIds)
 			{
 				var product = await _productRepository.Get(item, cancellationToken);

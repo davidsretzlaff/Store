@@ -15,8 +15,8 @@ namespace Store.Domain.Extensions
 		public static string ToCategoryString(this Category category)
 		=> category switch
 		{
-			Category.Jewelery => "jewelery",
-			Category.Electronics => "electronics",
+			Category.Jewelery => "Jewelery",
+			Category.Electronics => "Electronics",
 		};
 	}
 }

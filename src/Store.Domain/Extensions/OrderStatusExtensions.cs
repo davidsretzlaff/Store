@@ -14,7 +14,7 @@ namespace Store.Domain.Extensions
 			_ => throw new ArgumentOutOfRangeException(nameof(status))
 		};
 
-		public static string ToOrderStringStatus(this OrderStatus status)
+		public static string ToOrderStatusString(this OrderStatus status)
 		=> status switch
 		{
 			OrderStatus.Canceled => "Canceled",

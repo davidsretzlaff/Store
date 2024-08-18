@@ -19,7 +19,7 @@ namespace Store.Application.UseCases.Order.Common
 				product.Id,
 				product.Title,
 				product.Description,
-				$"R$ {product.Price}",
+				product.GetPriceAsCurrency(),
 				product.Category.ToCategoryString(),
 				product.Quantity
 				);

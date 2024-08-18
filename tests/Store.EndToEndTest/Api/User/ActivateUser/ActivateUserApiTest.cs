@@ -37,7 +37,7 @@ namespace Store.EndToEndTest.Api.User.ActivateUser
 				output.Should().NotBeNull();
 				output!.Data.Should().NotBeNull();
 				output.Data.Id.Should().Be(exampleUser.Id);
-				output.Data.Status.Should().Be(UserStatus.Active.ToStringStatus());
+				output.Data.Status.Should().Be(UserStatus.Active.ToUserStatusString());
 
 				var dbUser = await _fixture.Persistence.GetById(output.Data.Id);
 				dbUser.Should().NotBeNull();

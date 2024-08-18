@@ -12,8 +12,8 @@ namespace Store.Application.UseCases.Order.Common
 		string CustomerName,
 		string CustomerDocument,
 		string Status,
-		int ItemsQuantity,
 		string Total,
+		int ItemCount,
 		List<ProductOutput> Products
 	)
 	{
@@ -25,9 +25,9 @@ namespace Store.Application.UseCases.Order.Common
 				order.CreatedData,
 				order.CustomerName,
 				order.CustomerDocument,
-				order.Status.ToOrderStringStatus(),
-				order.GetTotalProducts(),
-				order.GetTotal(),
+				order.Status.ToOrderStatusString(),
+				order.GetTotalAsCurrency(),
+				order.GetProductCount(),
 				order.Products.Select(ProductOutput.FromProduct).ToList()
 			);
 		}
