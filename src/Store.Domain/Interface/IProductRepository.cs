@@ -4,6 +4,6 @@ namespace Store.Domain.Repository
 {
 	public interface IProductRepository : IGenericRepository<Product>, ISearchableRepository<Product>
 	{
-		public Task<Product> Get(int id, CancellationToken cancellationToken);
+		public Task<Product?> Get(int id, CancellationToken cancellationToken);
 	}
 }
