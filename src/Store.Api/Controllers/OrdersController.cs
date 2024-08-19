@@ -27,7 +27,7 @@ namespace Store.Api.Controllers
 			_jwtUtils = jwtUtils;
 		}
 
-		[HttpPost("create")]
+		[HttpPost("Create")]
 		[ProducesResponseType(typeof(Response<OrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -46,11 +46,11 @@ namespace Store.Api.Controllers
 			);
 		}
 
-		[HttpPut("{id}/Activate")]
+		[HttpPut("{id}/Approve")]
 		[ProducesResponseType(typeof(Response<UpdateOrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		public async Task<IActionResult> Activate(
+		public async Task<IActionResult> Approve(
 		  string id,
 		  CancellationToken cancellationToken
 		)
@@ -74,7 +74,7 @@ namespace Store.Api.Controllers
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
-		[HttpGet("list")]
+		[HttpGet("List")]
 		[ProducesResponseType(typeof(ListOrdersOutput), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
 		CancellationToken cancellationToken,

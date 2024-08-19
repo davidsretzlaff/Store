@@ -30,7 +30,7 @@ namespace Store.Infra.Adapters.Identity
 					new Claim("CompanyRegisterNumber", companyRegisterNumber),
 					new Claim(ClaimTypes.Role, role) 
 				}),
-				Expires = DateTime.UtcNow.AddMinutes(2),
+				Expires = DateTime.UtcNow.AddMinutes(20),
 				SigningCredentials = new SigningCredentials(
 					new SymmetricSecurityKey(key),
 					SecurityAlgorithms.HmacSha256Signature

@@ -3,7 +3,7 @@ using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Interface.Application;
 using Store.Domain.Interface.Infra.Repository;
-using Store.Domain.Validation;
+using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Order.ApproveOrder
 {
@@ -23,14 +23,18 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 		{
 			await _uservaValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
+			ValidateApproval(input, order);
 			
-			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.CompanyRegisterNumber}");
-			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.CompanyRegisterNumber, $"Operation failed: The user is not the owner of this order");
-
 			order!.Approve();
 			await _orderRepository.Update(order, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 			return UpdateOrderOutput.FromOrder(order);
+		}
+
+		private void ValidateApproval(ApproveOrderInput input, DomainEntity.Order? order)
+		{
+			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.id} not found");
+			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.CompanyRegisterNumber, $"Operation failed: The user is not the owner of this order");
 		}
 	}
 }

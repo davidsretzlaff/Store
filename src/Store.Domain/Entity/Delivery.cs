@@ -2,6 +2,7 @@
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Store.Domain.Entity
 {
@@ -12,8 +13,8 @@ namespace Store.Domain.Entity
 		public Address Address { get; private set; }
 		public DeliveryStatus Status { get; private set; }
 		public string CompanyRegisterNumber { get; private set; }
-
-		private Order Order;
+		[NotMapped]
+		public Order Order { get; private set; }
 
 		public Delivery(string orderId, Address adddress, Order? order)
 		{
@@ -24,33 +25,29 @@ namespace Store.Domain.Entity
 			AddOrder(order);
 			Validate();
 		}
+		public Delivery() { }
 		private void AddOrder(Order? order) 
 		{
-			DomainValidation.NotNull(order, nameof(order));
-			DomainValidation.NotFound(order, $"Order with id {order!.Id}");
+			DomainValidation.NotFound(order, $"Order with id {OrderId}");
 			order.Validate();
 			Order = order;
 			CompanyRegisterNumber = order.CompanyRegisterNumber;
 		}
 		private void Validate() 
 		{
+			DomainValidation.OrderIsNotApprove(Order);
 			DomainValidation.NotNullOrEmpty(OrderId, nameof(OrderId));
 			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
 		}
 
 		public void StartDelivery()
 		{
-			DomainValidation.NotNull(Order, nameof(Order));
-			DomainValidation.OrderIsNotApprove(Order);
 			DomainValidation.DeliveryIsPending(Status);
 			Status = DeliveryStatus.InTransit;
-			
 		}
 
 		public void CompleteDelivery()
 		{
-			DomainValidation.NotNull(Order, nameof(Order));
-			DomainValidation.OrderIsNotApprove(Order);
 			DomainValidation.DeliveryIsInTransit(Status);
 			Status = DeliveryStatus.Delivered;
 			DeliveredDate = DateTime.UtcNow;

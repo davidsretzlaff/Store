@@ -16,7 +16,7 @@ namespace Store.Domain.Validation
 
 		public static void OrderIsNotApprove(Order order)
 		{
-			if (order is null)
+			if (!order.IsApproved())
 				throw new EntityValidationException($"The current order status is '{order!.Status.ToOrderStatusString()}'. To create a delivery order, the status must be 'Approved'");
 		}
 		public static void DeliveryIsPending(DeliveryStatus status)

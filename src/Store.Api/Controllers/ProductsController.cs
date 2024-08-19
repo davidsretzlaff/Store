@@ -21,7 +21,7 @@ namespace Store.Api.Controllers
 
 		public ProductsController(IMediator mediator) => _mediator = mediator;
 
-		[HttpGet("list")]
+		[HttpGet("List")]
 		[ProducesResponseType(typeof(ListProductsInput), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
 			CancellationToken cancellationToken,
@@ -43,7 +43,7 @@ namespace Store.Api.Controllers
 			return Ok(new ResponseList<ProductOutput>(output));
 		}
 
-		[HttpPost]
+		[HttpPost("Create")]
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -90,7 +90,7 @@ namespace Store.Api.Controllers
 		   CancellationToken cancellationToken
 	    )
 		{
-			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			await _mediator.Send(new DeleteProductInput(id, companyRegisterNumber!), cancellationToken);
 			return NoContent();
 		}

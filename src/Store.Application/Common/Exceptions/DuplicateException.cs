@@ -5,9 +5,12 @@
 		public DuplicateException(string message) : base(message)
 		{ }
 
-		public static void ThrowIfHasValue(object? @object, string exceptionMessage)
+		public static void ThrowIfHasValue(object @object, string exceptionMessage)
 		{
-			if (@object is not null) throw new DuplicateException(exceptionMessage);
+			if (@object != null) 
+			{
+				throw new DuplicateException(exceptionMessage);
+			}
 		}
 	}
 }

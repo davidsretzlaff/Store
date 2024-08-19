@@ -13,7 +13,8 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserValidation _userValidation;
 
-		public CreateDelivery(
+		public CreateDelivery
+		(
 			IDeliveryRepository deliveryRepository, 
 			IOrderRepository orderRepository,
 			IUnitOfWork unitOfWork, 
@@ -29,17 +30,15 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 		public async Task<DeliveryOutput> Handle(CreateDeliveryInput input, CancellationToken cancellationToken)
 		{
 			await _userValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
-			CheckExistingDelivery(input, cancellationToken);
-			
+			await ValidateCreation(input, cancellationToken);
 			var order = await _orderRepository.Get(input.OrderId, cancellationToken);
 			var delivery = CreateDeliveryDomain(input, order);
-
 			await _deliveryRepository.Insert(delivery, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 			return DeliveryOutput.FromDelivery(delivery);
 		}
 
-		private async void CheckExistingDelivery(CreateDeliveryInput input, CancellationToken cancellationToken)
+		private async Task ValidateCreation(CreateDeliveryInput input, CancellationToken cancellationToken)
 		{
 			var existingDelivery = await _deliveryRepository.Get(input.OrderId, cancellationToken);
 			DuplicateException.ThrowIfHasValue(existingDelivery, "A delivery already exists for this order.");

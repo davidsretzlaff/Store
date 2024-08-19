@@ -8,8 +8,7 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 	(
 		string OrderId,
 		string DeliveryType,
-		string CustomerName,
 		AddressInput AddressCustomer,
-		string CompanyRegisterNumber
+		string? CompanyRegisterNumber
 	) : IRequest<DeliveryOutput>;
 }

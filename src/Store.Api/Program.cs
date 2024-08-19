@@ -15,17 +15,6 @@ app.UseCors(x => x
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<IdentityMiddleware>();
-
-
-//app.MapGet("/users", async (context) =>
-//{
-//})
-//.AllowAnonymous();
-
-//app.MapPost("/auth", async (context) =>
-//{
-//}).AllowAnonymous(); // Permite acesso anônimo a este endpoint
-
 app.MapGet("/", () => "Hello World!").AllowAnonymous();
 app.MapControllers();
 app.Run();

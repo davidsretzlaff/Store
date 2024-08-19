@@ -20,7 +20,7 @@ namespace Store.Api.Controllers
 
 		public UsersController(IMediator mediator) => _mediator = mediator;
 
-		[HttpPost]
+		[HttpPost("Create")]
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
@@ -78,7 +78,7 @@ namespace Store.Api.Controllers
 			return Ok(new Response<UserOutput>(output));
 		}
 
-		[HttpGet("list")]
+		[HttpGet("List")]
 		[ProducesResponseType(typeof(ListUsersOutput), StatusCodes.Status200OK)]
 		[AllowAnonymous]
 		public async Task<IActionResult> List(

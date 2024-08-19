@@ -21,7 +21,6 @@ namespace Store.Api.Configurations
 			services.AddHealthChecks();
 			services.AddMediatR(typeof(CreateUser));
 			services.AddMediatR(typeof(CreateOrder));
-			//services.AddMediatR(typeof(CreateAuth));
 			services.AddScoped<IJwtUtils, JwtUtils>();
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IOrderRepository, OrderRepository>();
