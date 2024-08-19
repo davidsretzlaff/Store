@@ -1,6 +1,6 @@
 ﻿using Store.Application.UseCases.User.ActivateUser;
 using Store.Application.UseCases.User.Common;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.User.DeactiveUser
 {

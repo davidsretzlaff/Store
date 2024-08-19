@@ -3,15 +3,14 @@ using Store.Infra.Data.EF;
 using Store.Infra.Data.EF.Repositories;
 using MediatR;
 using Store.Infra.Adapters.Identity;
-using Store.Application.Common.Interface;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Infra.Adapters.ExternalCatalog.Repositories;
 using Store.Infra.Adapters.ExternalCatalog;
-using Store.Domain.Interface.Repository;
-using Store.Domain.Interface;
 using Store.Infra.Adapters.CacheService;
 using Store.Domain.Interface.Application;
 using Store.Application.Common.UserValidation;
+using Store.Domain.Interface.Infra.Adapters;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Api.Configurations
 {
@@ -31,7 +30,7 @@ namespace Store.Api.Configurations
 			services.AddSingleton<IProductRepository, ProductRepository>();
 			services.AddTransient<IProductService, ProductService>(); 
 			services.AddSingleton<ICacheService, CacheService>();
-			services.AddTransient<IUserValidation, UserValidation>(); 
+			services.AddTransient<IUserValidation, UserValidation>();
 			services.AddHttpClient<ApiClient>(client =>
 			{
 				client.BaseAddress = new Uri("https://fakestoreapi.com");

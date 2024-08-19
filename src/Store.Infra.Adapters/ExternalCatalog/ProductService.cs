@@ -1,12 +1,11 @@
-﻿using Store.Application.Common.Interface;
-using Store.Application.Common.Models.Response;
+﻿using Store.Application.Common.Models.Response;
 using Store.Domain.Entity;
-using Store.Domain.Interface;
+using Store.Domain.Interface.Infra.Adapters;
 using Store.Infra.Adapters.ExternalCatalog.Models;
 
 namespace Store.Infra.Adapters.ExternalCatalog
 {
-	public class ProductService : IProductService
+    public class ProductService : IProductService
 	{
 		private readonly IApiClient _apiClient;
 

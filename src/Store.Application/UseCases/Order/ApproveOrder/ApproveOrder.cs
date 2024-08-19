@@ -2,12 +2,12 @@
 using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Interface.Application;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.Validation;
 
 namespace Store.Application.UseCases.Order.ApproveOrder
 {
-	internal class ApproveOrder : IApproveOrder
+    internal class ApproveOrder : IApproveOrder
 	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IUnitOfWork _unitOfWork;

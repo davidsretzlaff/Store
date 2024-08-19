@@ -1,17 +1,13 @@
-﻿using Store.Application.Common.Interface;
-using Store.Application.Common.Models.Response;
-using Store.Domain.Entity;
+﻿using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
-using Store.Domain.Interface;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Adapters;
+using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork.Searchable;
-using Store.Infra.Adapters.ExternalCatalog.Models;
-using System.Collections.Generic;
 
 namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 {
-	public class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
 	{
 		private readonly IProductService _productService;
 		private readonly ICacheService _cacheService;
@@ -31,18 +27,18 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 
 		public Task Delete(Product product, CancellationToken cancellationToken)
 		{
-
 			_cacheService.MarkProductAsDeleted(product.Id);
 			_cacheService.RemoveProductFromCache(product.Id);
 			return Task.CompletedTask;
 		}
 
-		public async Task<Product?> Get(int id, CancellationToken cancellationToken)
+		public async Task<Product?> Get(int id, bool includeDeleted, CancellationToken cancellationToken)
 		{
-			if (_cacheService.IsProductDeleted(id))
+			if (ShouldExcludeDeletedProduct(id, includeDeleted))
 			{
 				return null;
 			}
+
 			var cachedProduct = _cacheService.GetCachedProduct(id);
 			if (cachedProduct != null)
 			{
@@ -51,13 +47,13 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 			return await FetchAndCacheProduct(id);
 		}
 
-		public async Task<IReadOnlyList<Product>> GetListByIds(List<int> ids, CancellationToken cancellationToken)
+		public async Task<IReadOnlyList<Product>> GetListByIds(List<int> ids, bool includeDeleted, CancellationToken cancellationToken)
 		{
 			var result = new List<Product>();
 			foreach (var id in ids)
 			{
-				var product = await Get(id,cancellationToken);
-				if (product != null) 
+				var product = await Get(id, includeDeleted, cancellationToken);
+				if (product != null)
 				{
 					result.Add(product);
 				}
@@ -159,6 +155,14 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 				("description", SearchOrder.Desc) => query.OrderByDescending(x => x.Description).ThenByDescending(x => x.Id),
 				_ => query.OrderBy(x => x.Title).ThenBy(x => x.Id)
 			};
+		}
+		private bool ShouldExcludeDeletedProduct(int productId, bool includeDeleted)
+		{
+			if (includeDeleted)
+			{
+				return false;
+			}
+			return _cacheService.IsProductDeleted(productId);
 		}
 	}
 }

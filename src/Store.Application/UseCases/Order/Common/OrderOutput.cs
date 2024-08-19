@@ -9,7 +9,7 @@ namespace Store.Application.UseCases.Order.Common
 	(
 		string Id,
 		string CompanyRegisterNumber,
-		DateTime CreatedData,
+		string CreatedDate,
 		string CustomerName,
 		string CustomerDocument,
 		string Status,
@@ -23,7 +23,7 @@ namespace Store.Application.UseCases.Order.Common
 			return new OrderOutput(
 				order.Id,
 				order.CompanyRegisterNumber,
-				order.CreatedData,
+				order.FormattedDate(),
 				order.CustomerName,
 				order.CustomerDocument,
 				order.Status.ToOrderStatusString(),

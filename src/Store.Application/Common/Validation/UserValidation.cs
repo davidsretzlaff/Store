@@ -1,10 +1,10 @@
 ﻿using Store.Application.Common.Exceptions;
-using Store.Domain.Interface.Repository;
 using Store.Domain.Interface.Application;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.Common.UserValidation
 {
-	public class UserValidation : IUserValidation
+    public class UserValidation : IUserValidation
 	{
 
         private readonly IUserRepository _user;

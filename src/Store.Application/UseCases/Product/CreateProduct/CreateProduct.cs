@@ -1,7 +1,7 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Extensions;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Product.CreateProduct
@@ -18,7 +18,7 @@ namespace Store.Application.UseCases.Product.CreateProduct
 		}
 		public async Task<ProductOutput> Handle(CreateProductInput input, CancellationToken cancellationToken)
 		{
-			var existingProduct = await _productRepository.Get(input.Id, cancellationToken);
+			var existingProduct = await _productRepository.Get(input.Id, false, cancellationToken);
 			DuplicateException.ThrowIfHasValue(existingProduct, $"A product with ID '{input.Id}' already exists. Please use a unique ID to avoid duplication");
 			
 			var product = new DomainEntity.Product(

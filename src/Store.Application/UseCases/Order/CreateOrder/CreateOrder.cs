@@ -2,7 +2,7 @@
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Entity;
 using Store.Domain.Interface.Application;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 using System.Security.Cryptography.X509Certificates;
 using DomainEntity = Store.Domain.Entity;
 
@@ -54,7 +54,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		}
 		private async Task<List<DomainEntity.Product>> GetProductsAsync(List<int> productIds, CancellationToken cancellationToken)
 		{
-			var productTasks = productIds.Select(id => _productRepository.Get(id, cancellationToken));
+			var productTasks = productIds.Select(id => _productRepository.Get(id,false, cancellationToken));
 			var productsArray = await Task.WhenAll(productTasks);
 			ValidateProducts(productsArray, productIds);
 			return productsArray.ToList()!;

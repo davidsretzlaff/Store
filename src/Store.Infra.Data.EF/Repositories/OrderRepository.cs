@@ -3,13 +3,13 @@ using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork.Searchable;
 using Store.Infra.Data.EF.Models;
 
 namespace Store.Infra.Data.EF.Repositories
 {
-	public class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
 	{
 		private readonly StoreDbContext _context;
 		private DbSet<Order> _orders => _context.Set<Order>();
@@ -48,7 +48,7 @@ namespace Store.Infra.Data.EF.Repositories
 			{
 				var searchToLower = input.Search.ToLower();
 				query = query.Where(x =>
-					x.Status.ToOrderStatusString().Contains(searchToLower) ||
+					x.Status.ToOrderStatusString().ToLower().Contains(searchToLower) ||
 					x.CustomerDocument.ToLower().StartsWith(searchToLower) ||
 					x.CustomerName.ToLower().Contains(searchToLower)
 				);
@@ -98,13 +98,13 @@ namespace Store.Infra.Data.EF.Repositories
 		{
 			var orderedQuery = (orderProperty.ToLower(), order) switch
 			{
-				("createddata", SearchOrder.Asc) => query.OrderBy(x => x.CreatedData).ThenBy(x => x.Id),
-				("createddata", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedData).ThenByDescending(x => x.Id),
-				("status", SearchOrder.Asc) => query.OrderBy(x => x.Status).ThenBy(x => x.Id),
-				("status", SearchOrder.Desc) => query.OrderByDescending(x => x.Status).ThenByDescending(x => x.Id),
+				("createddate", SearchOrder.Asc) => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.Id),
+				("createddate", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id),
+				("status", SearchOrder.Asc) => query.OrderBy(x => x.Status.ToOrderStatusString()).ThenBy(x => x.Id),
+				("status", SearchOrder.Desc) => query.OrderByDescending(x => x.Status.ToOrderStatusString()).ThenByDescending(x => x.Id),
 				("customername", SearchOrder.Asc) => query.OrderBy(x => x.CustomerName).ThenBy(x => x.Id),
 				("customername", SearchOrder.Desc) => query.OrderByDescending(x => x.CustomerName).ThenByDescending(x => x.Id),
-				_ => query.OrderBy(x => x.CreatedData).ThenBy(x => x.Id)
+				_ => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.Id)
 			};
 			return orderedQuery;
 		}

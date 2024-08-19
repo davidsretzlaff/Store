@@ -1,6 +1,6 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.Order.Common;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.Product.GetProduct
 {
@@ -16,7 +16,7 @@ namespace Store.Application.UseCases.Product.GetProduct
 		}
 		public async Task<ProductOutput> Handle(GetProductInput input, CancellationToken cancellationToken)
 		{
-			var product = await _productRepository.Get(input.Id, cancellationToken);
+			var product = await _productRepository.Get(input.Id, false, cancellationToken);
 			RelatedAggregateException.ThrowIfNull(product, $"Product '{input.Id}' not found.");
 			return ProductOutput.FromProduct(product);
 		}

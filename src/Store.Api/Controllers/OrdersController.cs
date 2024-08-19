@@ -2,20 +2,18 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Api.Models.CreateOrder;
-using Store.Application.Common.Interface;
 using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.Order.ApproveOrder;
 using Store.Application.UseCases.Order.CancelOrder;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Application.UseCases.Order.ListOrders;
-using Store.Application.UseCases.User.ActivateUser;
-using Store.Application.UseCases.User.Common;
 using Store.Domain.Enum;
+using Store.Domain.Interface.Infra.Adapters;
 
 namespace Store.Api.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
 	public class OrdersController : ControllerBase
 	{
@@ -37,7 +35,7 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
 			var CreateOrderInputApplication = new CreateOrderInput(companyRegisterNumber, input.CustomerName, input.CustomerDocument, input.ProductIds);
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
@@ -57,7 +55,7 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
 			var output = await _mediator.Send(new ApproveOrderInput(id, companyRegisterNumber), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
@@ -72,7 +70,7 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
 			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
@@ -88,12 +86,15 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
+			
 			var input = new ListOrdersInput();
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;
 			if (!String.IsNullOrWhiteSpace(OrderBy)) input.OrderBy = OrderBy;
 			if (Order is not null) input.Order = Order.Value;
+			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
+			input.companyRegisterNumber = companyRegisterNumber;
 
 			var output = await _mediator.Send(input, cancellationToken);
 			return Ok(new ResponseList<OrderOutput>(output));

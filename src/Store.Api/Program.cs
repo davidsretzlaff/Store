@@ -1,11 +1,12 @@
 using Store.Api.Configurations;
+using Store.Api.Middleware;
 using Store.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAppConections(builder.Configuration).addConfigureControllers(builder.Configuration).addApiServices(builder.Configuration);
 
 var app = builder.Build();
-app.MapControllers();
+
 app.UseCors(x => x
 	.AllowAnyOrigin()
 	.AllowAnyMethod()
@@ -13,6 +14,19 @@ app.UseCors(x => x
 );
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapGet("/", () => "Hello World!");
+app.UseMiddleware<IdentityMiddleware>();
+
+
+app.MapGet("/users", async (context) =>
+{
+})
+.AllowAnonymous();
+
+app.MapPost("/auth", async (context) =>
+{
+}).AllowAnonymous(); // Permite acesso anônimo a este endpoint
+
+app.MapGet("/", () => "Hello World!").AllowAnonymous();
+app.MapControllers();
 app.Run();
 public partial class Program { }

@@ -1,5 +1,5 @@
 ﻿using Store.Application.UseCases.Order.Common;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.Product.ListProducts
 {

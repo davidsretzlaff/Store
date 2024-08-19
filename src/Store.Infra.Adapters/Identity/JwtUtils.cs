@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Store.Application.Common.Interface;
+using Store.Domain.Interface.Infra.Adapters;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace Store.Infra.Adapters.Identity
 {
-	public class JwtUtils : IJwtUtils
+    public class JwtUtils : IJwtUtils
 	{
 		private readonly IConfiguration _configuration;
 

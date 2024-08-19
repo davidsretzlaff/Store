@@ -1,4 +1,4 @@
-﻿namespace Store.Domain.Interface.Repository
+﻿namespace Store.Domain.Interface.Infra.Repository
 {
     public interface IUnitOfWork
     {

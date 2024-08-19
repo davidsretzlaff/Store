@@ -20,9 +20,11 @@ namespace Store.Api.Controllers
 
 		public UsersController(IMediator mediator) => _mediator = mediator;
 
+		[HttpPost]
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[AllowAnonymous]
 		public async Task<IActionResult> Create(
 		  [FromBody] CreateUserInput input,
 		  CancellationToken cancellationToken
@@ -68,7 +70,6 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> GetById(
 		  [FromRoute] Guid id,
 		  CancellationToken cancellationToken
@@ -78,8 +79,9 @@ namespace Store.Api.Controllers
 			return Ok(new Response<UserOutput>(output));
 		}
 
-		[HttpGet]
+		[HttpGet("list")]
 		[ProducesResponseType(typeof(ListUsersOutput), StatusCodes.Status200OK)]
+		[AllowAnonymous]
 		public async Task<IActionResult> List(
 		CancellationToken cancellationToken,
 			[FromQuery] int? Page = null,

@@ -1,11 +1,11 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Interface.Application;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.Order.CancelOrder
 {
-	internal class CancelOrder : ICancelOrder
+    internal class CancelOrder : ICancelOrder
 	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IUnitOfWork _unitOfWork;

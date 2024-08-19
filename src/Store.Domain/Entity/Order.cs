@@ -13,7 +13,7 @@ namespace Store.Domain.Entity
 	{	
 		public string Id { get; private set; }
 		public string CompanyRegisterNumber { get; private set; }
-        public DateTime CreatedData { get; private set; }		
+        public DateTime CreatedDate { get; private set; }		
 		public string CustomerName { get; private set; }
 		public string CustomerDocument {  get; private set; }
 		public OrderStatus Status { get; private set; }
@@ -24,7 +24,7 @@ namespace Store.Domain.Entity
 		{
 			Id = GenerateOrderCode();
 			CompanyRegisterNumber = companyRegisterNumber;
-			CreatedData = DateTime.Now;
+			CreatedDate = DateTime.Now;
 			CustomerName = customerName;
 			CustomerDocument = customerDocument;
 			Status = OrderStatus.Created;
@@ -87,6 +87,10 @@ namespace Store.Domain.Entity
 			total = Items.Sum(item => item.GetTotal());
 			var money = new Money(total);
 			return money.Format();
+		}
+		public string FormattedDate()
+		{
+			return CreatedDate.ToString("dd/MM/yyyy HH:mm:ss");
 		}
 	}
 }

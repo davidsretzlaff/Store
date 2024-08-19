@@ -7,7 +7,7 @@ namespace Store.Application.UseCases.Order.Common
 	(
 		string Id,
 		string CompanyRegisterNumber,
-		DateTime CreatedData,
+		string CreatedData,
 		string CustomerName,
 		string CustomerDocument,
 		string Status
@@ -18,7 +18,7 @@ namespace Store.Application.UseCases.Order.Common
 			return new UpdateOrderOutput(
 				order.Id,
 				order.CompanyRegisterNumber,
-				order.CreatedData,
+				order.FormattedDate(),
 				order.CustomerName,
 				order.CustomerDocument,
 				order.Status.ToOrderStatusString()

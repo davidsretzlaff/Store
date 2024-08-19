@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Store.Application.Common.Exceptions;
-using Store.Application.Common.Interface;
 using Store.Application.UseCases.User.Auth.CreateAuth;
-using Store.Domain.Interface.Repository;
+using Store.Domain.Interface.Infra.Adapters;
+using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork;
 
 namespace Store.Application.UseCases.Auth.CreateAuth

@@ -1,11 +1,11 @@
 ﻿
 using Store.Domain.Entity;
-using Store.Domain.Interface;
+using Store.Domain.Interface.Infra.Adapters;
 using Store.Infra.Adapters.CacheService.Models;
 
 namespace Store.Infra.Adapters.CacheService
 {
-	public class CacheService : ICacheService
+    public class CacheService : ICacheService
 	{
 		private readonly Dictionary<int, CachedProduct> _productCache = new Dictionary<int, CachedProduct>();
 		private bool _allProductsCached = false;

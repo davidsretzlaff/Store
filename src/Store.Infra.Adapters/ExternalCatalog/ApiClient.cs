@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
-using Store.Application.Common.Interface;
+using Store.Domain.Interface.Infra.Adapters;
 
 namespace Store.Infra.Adapters.ExternalCatalog
 {
