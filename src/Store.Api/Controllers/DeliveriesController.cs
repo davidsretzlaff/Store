@@ -6,10 +6,12 @@ using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.Delivery.Common;
 using Store.Application.UseCases.Delivery.CompleteDelivery;
 using Store.Application.UseCases.Delivery.CreateDelivery;
+using Store.Application.UseCases.Delivery.ListDeliveries;
 using Store.Application.UseCases.Delivery.StartDelivery;
 using Store.Application.UseCases.Order.ApproveOrder;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Order.CreateOrder;
+using Store.Domain.Enum;
 using Store.Domain.Extensions;
 using Store.Domain.Interface.Infra.Adapters;
 
@@ -32,7 +34,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<DeliveryOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		public async Task<IActionResult> Create(
+		public async Task<IActionResult> Create
+		(
 			[FromBody] ApiCreateDeliveryInput input,
 			CancellationToken cancellationToken
 		)
@@ -52,7 +55,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<DeliveryOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		public async Task<IActionResult> Start(
+		public async Task<IActionResult> Start
+		(
 			string id,
 			CancellationToken cancellationToken
 		)
@@ -66,7 +70,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<DeliveryOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		public async Task<IActionResult> Complete(
+		public async Task<IActionResult> Complete
+		(
 			string id,
 			CancellationToken cancellationToken
 		)
@@ -74,6 +79,30 @@ namespace Store.Api.Controllers
 			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var output = await _mediator.Send(new CompleteDeliveryInput(id, companyRegisterNumber), cancellationToken);
 			return Ok(new Response<DeliveryOutput>(output));
+		}
+
+		[HttpGet("List")]
+		[ProducesResponseType(typeof(ListDeliveriesInput), StatusCodes.Status200OK)]
+		public async Task<IActionResult> List
+		(
+			CancellationToken cancellationToken,
+			[FromQuery] int? Page = null,
+			[FromQuery] int? PerPage = null,
+			[FromQuery] string? Search = null,
+			[FromQuery] string? OrderBy = null,
+			[FromQuery] SearchOrder? Order = null
+		)
+		{
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var input = new ListDeliveriesInput(companyRegisterNumber);
+			if (Page is not null) input.Page = Page.Value;
+			if (PerPage is not null) input.PerPage = PerPage.Value;
+			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;
+			if (!String.IsNullOrWhiteSpace(OrderBy)) input.OrderBy = OrderBy;
+			if (Order is not null) input.Order = Order.Value;
+
+			var output = await _mediator.Send(input, cancellationToken);
+			return Ok(new ResponseList<DeliveryOutput>(output));
 		}
 	}
 }

@@ -49,7 +49,8 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 			return new DomainEntity.Delivery(
 				input.OrderId,
 				input.AddressCustomer.ToDomainAddress(),
-				order
+				order,
+				input.CompanyRegisterNumber!
 			);
 		}
 	}

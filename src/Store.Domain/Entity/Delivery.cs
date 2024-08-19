@@ -16,12 +16,13 @@ namespace Store.Domain.Entity
 		[NotMapped]
 		public Order Order { get; private set; }
 
-		public Delivery(string orderId, Address adddress, Order? order)
+		public Delivery(string orderId, Address adddress, Order? order, string companyRegisterNumber)
 		{
 			OrderId = orderId;
 			DeliveredDate = new DateTime();
 			Address = adddress;
 			Status = DeliveryStatus.Pending;
+			CompanyRegisterNumber =	companyRegisterNumber;
 			AddOrder(order);
 			Validate();
 		}
