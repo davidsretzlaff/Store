@@ -6,25 +6,29 @@ namespace Store.Domain.Entity
 	{
 		public string OrderId { get; private set; }
 		public int ProductId { get; private set; }
-		public decimal Price { get; private set; }
 		public int Quantity { get; private set; }
 		public Product Product { get; private set; }
 
-		public Item(string orderId, int productId, decimal price)
+		public Item(string orderId, int productId, int quantity)
 		{
 			OrderId = orderId;
 			ProductId = productId;
-			Price = price;
-			Quantity = 0;
+			Quantity = quantity;
+			
+		}
+
+		public void addProduct(Product product) 
+		{
+			Product = new Product(product.Id, product.Title, product.Description, product.Price, product.Category);
 		}
 
 		public decimal GetTotal()
 		{
-			return Price * Quantity;
+			return Product.Price * Quantity;
 		}
 		public string GetPriceAsCurrency()
 		{
-			return FormatCurrency(Price);
+			return FormatCurrency(Product.Price);
 		}
 		public string GetTotalAsCurrency()
 		{

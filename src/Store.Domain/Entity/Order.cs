@@ -5,6 +5,7 @@ using Store.Domain.Validation;
 using Store.Domain.ValueObject;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Store.Domain.Entity
 {
@@ -16,9 +17,8 @@ namespace Store.Domain.Entity
 		public string CustomerName { get; private set; }
 		public string CustomerDocument {  get; private set; }
 		public OrderStatus Status { get; private set; }
-		private List<int> _productsIds; 
 		[NotMapped]
-		public List<Product> Products { get; private set; }
+		public List<Item> Items { get; private set; }
 
 		public Order(string companyRegisterNumber, string customerName, string customerDocument)
 		{
@@ -28,18 +28,17 @@ namespace Store.Domain.Entity
 			CustomerName = customerName;
 			CustomerDocument = customerDocument;
 			Status = OrderStatus.Created;
-			Products = new List<Product> { };
-			_productsIds = new();
+			Items = new List<Item> { };
 		}
 
 		public int GetProductCount()
 		{
 			var count = 0;
-			foreach (var product in Products)
+			foreach (var item in Items)
 			{
-				count = count + product.Quantity;
+				count = count + item.Quantity;
 			}
-			return count; 
+			return count;
 		}
 		//public void AddProduct(Product product)
 		//{
@@ -53,27 +52,39 @@ namespace Store.Domain.Entity
 		//	Products.Add(product);
 		//}
 
-		public void AddProduct(int id, string title, string description, decimal price, Category category)
-		{
-			var index = Products.FindIndex(p => p.Id == id);
+		//public void AddProduct(int id, string title, string description, decimal price, Category category)
+		//{
+		//	var index = Products.FindIndex(p => p.Id == id);
 
-			if (index >= 0)
+		//	if (index >= 0)
+		//	{
+		//		Products[index].AddOneToQuantity();
+		//		return;
+		//	}
+		//	var product = new Product(id, title, description, price, category);
+		//	Products.Add(product);
+		//}
+
+		public void AddItem(int productId, int quantity, Product? product = null)
+		{
+			var item = new Item(Id, productId, quantity);
+			if (product is not null)
 			{
-				Products[index].AddOneToQuantity();
-				return;
+				item.addProduct(product);
 			}
-			var product = new Product(id, title, description, price, category);
-			Products.Add(product);
+			Items.Add(item);
+			
 		}
 
 
-		public void AddProductIds(int id)
-		{
-			_productsIds.Add(id);
-		}
+		//public void AddProductIds(int id)
+		//{
+		//	_productsIds.Add(id);
+		
+		//}
 		public void Validate()
 		{
-			Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.Id} has a quantity of {p.Quantity}, but it"));
+			//Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.Id} has a quantity of {p.Quantity}, but it"));
 			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));
@@ -103,14 +114,19 @@ namespace Store.Domain.Entity
 		public string GetTotalAsCurrency()
 		{
 			decimal total = 0;
-			total = Products.Sum(item => item.GetTotal());
+			total = Items.Sum(item => item.GetTotal());
 			var money = new Money(total);
 			return money.Format();
 		}
 
-		public List<int> GetProductsIds()
-		{
-			return _productsIds;
-		}
+		//public List<Item> GetProductOrder()
+		//{
+		//	var items = new List<Item>();
+  //          foreach (var productId in _productsIds)
+  //          {
+		//		items.Add(new Item(Id, productId, 1, null));
+  //          }
+  //      }
+
 	}
 }

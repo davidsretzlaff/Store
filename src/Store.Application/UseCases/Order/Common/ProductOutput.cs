@@ -9,8 +9,7 @@ namespace Store.Application.UseCases.Order.Common
 		 string Title,
 		 string Description,
 		 string Price,
-		 string Category,
-		 int Quantity
+		 string Category
 	)
 	{
 		public static ProductOutput FromProduct(DomainEntity.Product product)
@@ -20,8 +19,7 @@ namespace Store.Application.UseCases.Order.Common
 				product.Title,
 				product.Description,
 				product.GetPriceAsCurrency(),
-				product.Category.ToCategoryString(),
-				product.Quantity
+				product.Category.ToCategoryString()
 				);
 		}
 	}

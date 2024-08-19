@@ -64,10 +64,17 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		private DomainEntity.Order CreateOrderDomain(CreateOrderInput input, List<DomainEntity.Product> products)
 		{
 			var order = new DomainEntity.Order(input.CompanyRegisterNumber, input.CustomerName, input.CustomerDocument);
-
-			foreach (var product in products)
+			var productGroups = products
+			  .GroupBy(p => p.Id)
+			  .Select(g => new
+			  {
+				  Product = g.First(),
+				  Count = g.Count()   
+			  })
+			  .ToList();
+			foreach (var productGroup in productGroups)
 			{
-				order.AddProduct(product.Id, product.Title, product.Description, product.Price, product.Category);
+				order.AddItem(productGroup.Product.Id, productGroup.Count, productGroup.Product);
 			}
 			return order;
 		}

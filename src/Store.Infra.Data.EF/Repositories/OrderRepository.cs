@@ -18,12 +18,12 @@ namespace Store.Infra.Data.EF.Repositories
 		public async Task Insert(Order order, CancellationToken cancellationToken)
 		{
 			await _orders.AddAsync(order, cancellationToken);
-			if (order.Products.Count > 0)
+			if (order.Items.Count > 0)
 			{
-				var relation = order.Products
+				var relation = order.Items
 					.Select(product => new OrdersProducts(
 							order.Id,
-							product.Id,
+							product.ProductId,
 							product.Quantity
 						));
 				await _ordersProducts.AddRangeAsync(relation);
@@ -66,20 +66,45 @@ namespace Store.Infra.Data.EF.Repositories
 
 		private async Task AddProductsToOrder(List<Order> items, List<string> ordersId)
 		{
+			//var productsRelations = await _ordersProducts
+			//	.Where(relation => ordersId.Contains(relation.OrderId))
+			//	.ToListAsync();
+			//var relationsWithProductsByOrderId =
+			//	productsRelations.GroupBy(x => x.OrderId).ToList();
+			//relationsWithProductsByOrderId.ForEach(relationGroup =>
+			//{
+			//	var order = items.Find(order => order.Id == relationGroup.Key);
+			//	if (order is null) return;
+			//	relationGroup
+			//	.SelectMany(relation => Enumerable.Repeat(relation.ProductId, relation.Quantity))
+			//	.ToList()
+			//	.ForEach(order.AddItem(order.Id, productid, quantity));
+			//});
+
+			// Fetch the product relations based on the provided order IDs
 			var productsRelations = await _ordersProducts
 				.Where(relation => ordersId.Contains(relation.OrderId))
 				.ToListAsync();
-			var relationsWithProductsByOrderId =
-				productsRelations.GroupBy(x => x.OrderId).ToList();
-			relationsWithProductsByOrderId.ForEach(relationGroup =>
+
+			// Group the relations by OrderId
+			var relationsWithProductsByOrderId = productsRelations
+				.GroupBy(x => x.OrderId)
+				.ToList();
+
+			// Iterate over each group of relations
+			foreach (var relationGroup in relationsWithProductsByOrderId)
 			{
-				var order = items.Find(order => order.Id == relationGroup.Key);
-				if (order is null) return;
-				relationGroup
-				.SelectMany(relation => Enumerable.Repeat(relation.ProductId, relation.Quantity))
-				.ToList()
-				.ForEach(order.AddProductIds);
-			});
+				// Find the corresponding order in the provided list
+				var order = items.Find(o => o.Id == relationGroup.Key);
+				if (order == null) continue;
+
+				// Iterate over each relation in the group and add items to the order
+				foreach (var relation in relationGroup)
+				{
+					// Add each product to the order with the specified quantity
+					order.AddItem(relation.ProductId, relation.Quantity);
+				}
+			}
 		}
 
 		private IQueryable<Order> AddOrderToQuery(IQueryable<Order> query, string orderProperty, SearchOrder order)

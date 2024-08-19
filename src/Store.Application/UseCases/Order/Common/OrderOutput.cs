@@ -15,7 +15,7 @@ namespace Store.Application.UseCases.Order.Common
 		string Status,
 		string Total,
 		int ItemCount,
-		List<ProductOutput> Products
+		List<ItemOutput> Items
 	)
 	{
 		public static OrderOutput FromOrder(DomainEntity.Order order)
@@ -29,27 +29,7 @@ namespace Store.Application.UseCases.Order.Common
 				order.Status.ToOrderStatusString(),
 				order.GetTotalAsCurrency(),
 				order.GetProductCount(),
-				order.Products.Select(ProductOutput.FromProduct).ToList()
-			);
-		}
-
-		public static OrderOutput FromOrder(
-			DomainEntity.Order order,
-			IReadOnlyList<Domain.Entity.Product> products
-		)
-		{
-			products.ToList().ForEach( p => order.AddProduct(p.Id, p.Title,p.Description, p.Price, p.Category));
-
-			return new OrderOutput(
-				order.Id,
-				order.CompanyRegisterNumber,
-				order.CreatedData,
-				order.CustomerName,
-				order.CustomerDocument,
-				order.Status.ToOrderStatusString(),
-				order.GetTotalAsCurrency(),
-				order.GetProductCount(),
-				order.Products.Select(ProductOutput.FromProduct).ToList()
+				order.Items.Select(ItemOutput.FromProduct).ToList()
 			);
 		}
 	}

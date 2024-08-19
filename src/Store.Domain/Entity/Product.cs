@@ -14,7 +14,6 @@ namespace Store.Domain.Entity
 		public string Description { get; private set; }
 		public decimal Price { get; private set; }
 		public Category Category { get; private set; }
-		public int Quantity { get; private set; }
 
 		public Product(int id, string title, string description, decimal price, Category category)
 		{
@@ -23,7 +22,6 @@ namespace Store.Domain.Entity
 			Description = description;
 			Price = price;
 			Category = category;
-			Quantity = 1;
 			Validate();
 		}
 
@@ -32,7 +30,7 @@ namespace Store.Domain.Entity
 			Id = id;
 		}
 
-			private void Validate() 
+		private void Validate() 
 		{
 			DomainValidation.NotNullOrEmpty(Title, nameof(Title));
 			DomainValidation.MinLength(Title, 4, nameof(Title));
@@ -46,31 +44,31 @@ namespace Store.Domain.Entity
 			DomainValidation.ValidateCategory(Category, nameof(Category));
 
 		}
-		public void AddOneToQuantity() 
-		{
-			Quantity += 1;
-		}
-		public decimal GetTotal()
-		{
-			return Price * Quantity;
-		}
+		//public void AddOneToQuantity() 
+		//{
+		//	Quantity += 1;
+		//}
+		//public decimal GetTotal()
+		//{
+		//	return Price * Quantity;
+		//}
 		public string GetPriceAsCurrency()
 		{
 			return FormatCurrency(Price);
 		}
-		public string GetTotalAsCurrency()
-		{
-			return FormatCurrency(GetTotal());
-		}
+		//public string GetTotalAsCurrency()
+		//{
+		//	return FormatCurrency(GetTotal());
+		//}
 
 		private string FormatCurrency(decimal amount)
 		{
 			var money = new Money(amount);
 			return money.Format();
 		}
-		public int GetQuantity()
-		{
-			return Quantity; 
-		}
+		//public int GetQuantity()
+		//{
+		//	return Quantity; 
+		//}
 	}
 }

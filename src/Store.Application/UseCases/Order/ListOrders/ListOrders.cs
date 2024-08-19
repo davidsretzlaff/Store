@@ -1,5 +1,6 @@
 ﻿
 using Store.Application.UseCases.Order.Common;
+using Store.Domain.Entity;
 using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
@@ -18,20 +19,42 @@ namespace Store.Application.UseCases.Order.ListOrders
 		}
 		public async Task<ListOrdersOutput> Handle(ListOrdersInput input, CancellationToken cancellationToken)
 		{
-			var order = await _orderRepository.Search(input.ToSearchInput(), cancellationToken);
+			var orders = await _orderRepository.Search(input.ToSearchInput(), cancellationToken);
 
-			IReadOnlyList<DomainEntity.Product>? products = null;
-			var relatedProductsIds = order.Items.SelectMany(order => order.GetProductsIds()).ToList();
-			if (relatedProductsIds is not null && relatedProductsIds.Count > 0)
-			{
-				products = await _productRepository.GetListByIds(relatedProductsIds, cancellationToken);
+			//IReadOnlyList<DomainEntity.Product>? products = null;
+            //var relatedProductsIds = orders.Items.SelectMany(orders => orders.Items).ToList();
+            //if (relatedProductsIds is not null && relatedProductsIds.Count > 0)
+            //{
+            //	products = await _productRepository.GetListByIds(relatedProductsIds.ForEach(i => i.ProductId).ToList(), cancellationToken);
+            //}
+
+            foreach (var order in orders.Items)
+            {
+				var relatedProductsIds = orders.Items
+					.SelectMany(item => item.Items)
+					.Select(item => item.ProductId)
+					.Distinct() // Remove duplicates if needed
+					.ToList();
+
+
+				var products = await _productRepository.GetListByIds(relatedProductsIds, cancellationToken);
+				
+				foreach (var product in products)
+				{
+					var item = order.Items.First(item => item.ProductId == product.Id);
+					if (item is not null)
+					{
+						item.addProduct(product);
+					}
+				
+				}
 			}
-			
-			return new ListOrdersOutput(
-				order.CurrentPage,
-				order.PerPage,
-				order.Total,
-				order.Items.Select(item => OrderOutput.FromOrder(item, products)).ToList()
+
+            return new ListOrdersOutput(
+				orders.CurrentPage,
+				orders.PerPage,
+				orders.Total,
+				orders.Items.Select(item => OrderOutput.FromOrder(item)).ToList()
 			);
 		}
 	}
