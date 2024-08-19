@@ -13,6 +13,12 @@ namespace Store.Domain.Validation
 				throw new EntityValidationException($"{fieldName} should not be null");
 		}
 
+		public static void NotFound(object? target, string fieldName)
+		{
+			if (target is null)
+				throw new EntityValidationException($"{fieldName} not found");
+		}
+
 		public static void NotNullOrEmpty(string? target, string fieldName)
 		{
 			if (string.IsNullOrWhiteSpace(target))

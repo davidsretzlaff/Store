@@ -139,7 +139,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			var action = async () => await repository.Get(ramdomGuid, CancellationToken.None);
 
 			// Assert
-			action.Should().ThrowAsync<NotFoundException>().WithMessage($"User '{ramdomGuid}' not found");
+			action.Should().ThrowAsync<RelatedAggregateException>().WithMessage($"User '{ramdomGuid}' not found");
 		}
 
 

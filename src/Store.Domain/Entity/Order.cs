@@ -35,7 +35,6 @@ namespace Store.Domain.Entity
 		}
 		public void AddProduct(Product product)
 		{
-			
 			var index = Products.FindIndex(p => p.Id == product.Id);
 
 			if (index >= 0)

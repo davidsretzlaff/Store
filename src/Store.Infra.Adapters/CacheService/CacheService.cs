@@ -1,6 +1,7 @@
 ﻿
 using Store.Domain.Entity;
 using Store.Domain.Interface;
+using Store.Infra.Adapters.CacheService.Models;
 
 namespace Store.Infra.Adapters.CacheService
 {
@@ -28,7 +29,7 @@ namespace Store.Infra.Adapters.CacheService
 		public void CacheProduct(Product product)
 		{
 			if (product == null) throw new ArgumentNullException(nameof(product));
-			_productCache[product.Id] = new CachedProduct(product, DateTime.UtcNow);
+			_productCache[product.Id] = new CachedProduct(new ProductModel(product), DateTime.UtcNow);
 		}
 
 		public void RemoveProductFromCache(int productId)
@@ -40,7 +41,7 @@ namespace Store.Infra.Adapters.CacheService
 		{
 			if (_productCache.TryGetValue(id, out var cachedProduct) && !cachedProduct.IsExpired(_cacheExpiration))
 			{
-				return cachedProduct.Product;
+				return cachedProduct.Product.ToProduct();
 			}
 			return null;
 		}
@@ -49,27 +50,12 @@ namespace Store.Infra.Adapters.CacheService
 		{
 			return _productCache.Values
 				.Where(cp => !cp.IsExpired(_cacheExpiration))
-				.Select(cp => cp.Product);
+				.Select(cp => cp.Product.ToProduct());
 		}
 
 		public void MarkAllProductsAsCached()
 		{
 			_allProductsCached = true;
-		}
-
-		private class CachedProduct
-		{
-			public Product Product { get; }
-			public DateTime Timestamp { get; }
-
-			public CachedProduct(Product product, DateTime timestamp)
-			{
-				Product = product ?? throw new ArgumentNullException(nameof(product));
-				Timestamp = timestamp;
-			}
-
-			public bool IsExpired(TimeSpan cacheExpiration) =>
-				(DateTime.UtcNow - Timestamp) >= cacheExpiration;
 		}
 	}
 }

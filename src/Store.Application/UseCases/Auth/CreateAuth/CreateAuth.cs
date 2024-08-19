@@ -23,7 +23,7 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 		public async Task<AuthOutput> Handle(CreateAuthInput input, CancellationToken cancellationToken)
 		{
 			var user = await _userRepository.GetByUserName(input.UserName, cancellationToken);
-			NotFoundException.ThrowIfNull(user, $"User '{input.UserName}' not found.");
+			RelatedAggregateException.ThrowIfNull(user, $"User '{input.UserName}' not found.");
 			
 			if (user!.Password != input.Password) 
 			{

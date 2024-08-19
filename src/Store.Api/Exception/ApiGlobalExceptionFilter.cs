@@ -26,7 +26,7 @@ namespace Store.Api.Exception
 				details.Type = "UnprocessableEntity";
 				details.Detail = exception!.Message;
 			}
-			else if (exception is NotFoundException)
+			else if (exception is RelatedAggregateException)
 			{
 				details.Title = "Not Found";
 				details.Status = StatusCodes.Status404NotFound;
@@ -59,14 +59,13 @@ namespace Store.Api.Exception
 				details.Type = "NotCreated";
 				details.Detail = exception!.Message;
 			}
-
-			//else if (exception is RelatedAggregateException)
-			//{
-			//	details.Title = "Invalid Related Aggregate";
-			//	details.Status = StatusCodes.Status422UnprocessableEntity;
-			//	details.Type = "RelatedAggregate";
-			//	details.Detail = exception!.Message;
-			//}
+			else if (exception is RelatedAggregateException)
+			{
+				details.Title = "Invalid Related Aggregate";
+				details.Status = StatusCodes.Status422UnprocessableEntity;
+				details.Type = "RelatedAggregate";
+				details.Detail = exception!.Message;
+			}
 			else
 			{
 				details.Title = "An unexpected error ocurred";

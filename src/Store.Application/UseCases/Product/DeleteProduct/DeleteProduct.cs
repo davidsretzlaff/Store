@@ -17,7 +17,7 @@ namespace Store.Application.UseCases.Product.DeleteProduct
 		public async Task<ProductOutput> Handle(DeleteProductInput input, CancellationToken cancellationToken)
 		{
 			var product = await _productRepository.Get(input.Id, cancellationToken);
-			NotFoundException.ThrowIfNull(product, $"Product with ID '{input.Id}' not found");
+			RelatedAggregateException.ThrowIfNull(product, $"Product with ID '{input.Id}' not found");
 			await _productRepository.Delete(product, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
 			return ProductOutput.FromProduct(product);

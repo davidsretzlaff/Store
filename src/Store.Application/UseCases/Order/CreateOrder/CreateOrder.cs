@@ -1,4 +1,6 @@
-﻿using Store.Application.UseCases.Order.Common;
+﻿using Store.Application.Common.Exceptions;
+using Store.Application.UseCases.Order.Common;
+using Store.Domain.Entity;
 using Store.Domain.Interface.Repository;
 using DomainEntity = Store.Domain.Entity;
 
@@ -16,18 +18,57 @@ namespace Store.Application.UseCases.Order.CreateOrder
 			_productRepository = productRepository;
 			_unitOfWork = unitOfWork;
 		}
+
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
-			List<DomainEntity.Product> products = new List<DomainEntity.Product>();
-			foreach (var item in input.ProductIds)
-			{
-				var product = await _productRepository.Get(item, cancellationToken);
-				products.Add(product);
-			}
-			var order = new DomainEntity.Order(input.CompanyRegisterNumber, input.CustomerName, input.CustomerDocument);
-			products.ForEach(order.AddProduct);
+			var products = await GetValidProducts(input.ProductIds, cancellationToken);
+
+			var order = Create(input, products);
+
 			order.Validate();
+
 			return OrderOutput.FromOrder(order);
+		}
+
+		private async Task<List<DomainEntity.Product>> GetValidProducts(List<int> productIds, CancellationToken cancellationToken)
+		{
+			RelatedAggregateException.ThrowIfNull(productIds, "Product IDs cannot be null or empty");
+
+			var products = await GetProductsAsync(productIds, cancellationToken);
+
+			return products;
+		}
+		private async Task<List<DomainEntity.Product>> GetProductsAsync(List<int> productIds, CancellationToken cancellationToken)
+		{
+			var productTasks = productIds.Select(id => _productRepository.Get(id, cancellationToken));
+			var productsArray = await Task.WhenAll(productTasks);
+			ValidateProducts(productsArray, productIds);
+			return productsArray.ToList()!;
+		}
+		
+		private void ValidateProducts(DomainEntity.Product?[] productsArray, List<int> productIds)
+		{
+			var invalidProductIds = productIds
+				.Where((id, index) => productsArray[index] == null)
+				.ToList();
+
+			if (invalidProductIds.Any())
+			{
+				var invalidIdsString = string.Join(", ", invalidProductIds);
+				RelatedAggregateException.Throw($"Products with IDs '{invalidIdsString}' not found.");
+			}
+		}
+
+		private DomainEntity.Order Create(CreateOrderInput input, List<DomainEntity.Product> products)
+		{
+			var order = new DomainEntity.Order(input.CompanyRegisterNumber, input.CustomerName, input.CustomerDocument);
+
+			foreach (var product in products)
+			{
+				order.AddProduct(product);
+			}
+
+			return order;
 		}
 	}
 }
