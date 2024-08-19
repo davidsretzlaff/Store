@@ -5,7 +5,8 @@ namespace Store.Api.Configurations
 {
 	public static class ConnectionsConfiguration
 	{
-		public static IServiceCollection AddAppConections(
+		public static IServiceCollection AddAppConections
+		(
 			this IServiceCollection services,
 			IConfiguration configuration
 		)

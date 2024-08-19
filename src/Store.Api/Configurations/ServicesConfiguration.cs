@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Store.Api.Exception;
+using Store.Application.UseCases.HealtCheck;
+using Store.Infra.Data.EF;
 using System.Text;
 
 namespace Store.Api.Configurations
 {
-	public static class ControllerConfiguration
+	public static class ServicesConfiguration
 	{
 		public static IServiceCollection addConfigureControllers(this IServiceCollection services, IConfiguration configuration)
 		{
@@ -39,7 +42,12 @@ namespace Store.Api.Configurations
 				};
 			});
 
-			
+			services.AddHealthChecks()
+			.AddCheck<ApplicationHealthCheck>("ApplicationHealthCheck")
+			.AddCheck("ProductApiHealtCheck", new ProductApiHealtCheck())
+			.AddDbContextCheck<StoreDbContext>("inMemory-Database");
+
+
 			return services;
 		}
 	}
