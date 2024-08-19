@@ -23,9 +23,11 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		{
 			var products = await GetValidProducts(input.ProductIds, cancellationToken);
 
-			var order = Create(input, products);
-
+			var order = CreateOrderDomain(input, products);
 			order.Validate();
+
+			await _orderRepository.Insert(order, cancellationToken);
+			await _unitOfWork.Commit(cancellationToken);
 
 			return OrderOutput.FromOrder(order);
 		}
@@ -59,15 +61,14 @@ namespace Store.Application.UseCases.Order.CreateOrder
 			}
 		}
 
-		private DomainEntity.Order Create(CreateOrderInput input, List<DomainEntity.Product> products)
+		private DomainEntity.Order CreateOrderDomain(CreateOrderInput input, List<DomainEntity.Product> products)
 		{
 			var order = new DomainEntity.Order(input.CompanyRegisterNumber, input.CustomerName, input.CustomerDocument);
 
 			foreach (var product in products)
 			{
-				order.AddProduct(product);
+				order.AddProduct(product.Id, product.Title, product.Description, product.Price, product.Category);
 			}
-
 			return order;
 		}
 	}

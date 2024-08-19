@@ -1,14 +1,5 @@
-﻿using MediatR;
-using Store.Application.Common.Models.PaginatedList;
-using Store.Application.UseCases.Order.Common;
-using Store.Application.UseCases.User.Common;
-using Store.Application.UseCases.User.ListUsers;
+﻿using Store.Application.UseCases.Order.Common;
 using Store.Domain.Interface.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.Application.UseCases.Product.ListProducts
 {

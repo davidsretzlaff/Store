@@ -5,6 +5,5 @@ namespace Store.Domain.Interface.Repository
         where TAggregate : AggregateRoot
     {
         public Task Insert(TAggregate aggregate, CancellationToken cancellationToken);
-        public Task Delete(TAggregate aggregate, CancellationToken cancellationToken);
     }
 }

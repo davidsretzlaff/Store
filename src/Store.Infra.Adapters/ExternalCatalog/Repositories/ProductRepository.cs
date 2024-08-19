@@ -7,6 +7,7 @@ using Store.Domain.Interface;
 using Store.Domain.Interface.Repository;
 using Store.Domain.SeedWork.Searchable;
 using Store.Infra.Adapters.ExternalCatalog.Models;
+using System.Collections.Generic;
 
 namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 {
@@ -48,6 +49,20 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 				return cachedProduct;
 			}
 			return await FetchAndCacheProduct(id);
+		}
+
+		public async Task<IReadOnlyList<Product>> GetListByIds(List<int> ids, CancellationToken cancellationToken)
+		{
+			var result = new List<Product>();
+			foreach (var id in ids)
+			{
+				var product = await Get(id,cancellationToken);
+				if (product != null) 
+				{
+					result.Add(product);
+				}
+			}
+			return result;
 		}
 
 		public async Task<SearchOutput<Product>> Search(SearchInput input, CancellationToken cancellationToken)
@@ -105,7 +120,7 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 		private async Task CacheProductsFromCategoryAsync(string category)
 		{
 			var products = await _productService.FetchProductsFromCategory(category);
-			if (products is not null)
+			if (products != null)
 			{
 				foreach (var item in products)
 				{
@@ -120,7 +135,7 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 		private async Task<Product?> FetchAndCacheProduct(int id)
 		{
 			var product = await _productService.FetchProduct(id);
-			if (product is not null)
+			if (product != null)
 			{
 				_cacheService.CacheProduct(product);
 				return product;

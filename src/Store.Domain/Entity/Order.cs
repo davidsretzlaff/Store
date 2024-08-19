@@ -1,4 +1,5 @@
 ﻿using Store.Domain.Enum;
+using Store.Domain.Extensions;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
@@ -15,6 +16,7 @@ namespace Store.Domain.Entity
 		public string CustomerName { get; private set; }
 		public string CustomerDocument {  get; private set; }
 		public OrderStatus Status { get; private set; }
+		private List<int> _productsIds; 
 		[NotMapped]
 		public List<Product> Products { get; private set; }
 
@@ -27,27 +29,51 @@ namespace Store.Domain.Entity
 			CustomerDocument = customerDocument;
 			Status = OrderStatus.Created;
 			Products = new List<Product> { };
+			_productsIds = new();
 		}
 
 		public int GetProductCount()
 		{
-			return Products.Count; 
+			var count = 0;
+			foreach (var product in Products)
+			{
+				count = count + product.Quantity;
+			}
+			return count; 
 		}
-		public void AddProduct(Product product)
+		//public void AddProduct(Product product)
+		//{
+		//	var index = Products.FindIndex(p => p.Id == product.Id);
+
+		//	if (index >= 0)
+		//	{
+		//		Products[index].AddOneToQuantity();
+		//		return;
+		//	}
+		//	Products.Add(product);
+		//}
+
+		public void AddProduct(int id, string title, string description, decimal price, Category category)
 		{
-			var index = Products.FindIndex(p => p.Id == product.Id);
+			var index = Products.FindIndex(p => p.Id == id);
 
 			if (index >= 0)
 			{
 				Products[index].AddOneToQuantity();
 				return;
 			}
-
+			var product = new Product(id, title, description, price, category);
 			Products.Add(product);
 		}
-		public void Validate() 
+
+
+		public void AddProductIds(int id)
 		{
-			Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, nameof(p.Title)));
+			_productsIds.Add(id);
+		}
+		public void Validate()
+		{
+			Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.Id} has a quantity of {p.Quantity}, but it"));
 			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));
@@ -80,6 +106,11 @@ namespace Store.Domain.Entity
 			total = Products.Sum(item => item.GetTotal());
 			var money = new Money(total);
 			return money.Format();
+		}
+
+		public List<int> GetProductsIds()
+		{
+			return _productsIds;
 		}
 	}
 }

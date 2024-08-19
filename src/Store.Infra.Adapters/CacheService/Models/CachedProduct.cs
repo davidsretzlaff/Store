@@ -34,7 +34,7 @@ namespace Store.Infra.Adapters.CacheService.Models
 
 		public CachedProduct(ProductModel product, DateTime timestamp)
 		{
-			Product = product ?? throw new ArgumentNullException(nameof(product));
+			Product = product;
 			Timestamp = timestamp;
 		}
 

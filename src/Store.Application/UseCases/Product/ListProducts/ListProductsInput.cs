@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Store.Application.Common.ApiResponse.PaginatedList;
 using Store.Application.Common.Models.PaginatedList;
-using Store.Application.UseCases.Order.Common;
 using Store.Domain.Enum;
 
 namespace Store.Application.UseCases.Product.ListProducts

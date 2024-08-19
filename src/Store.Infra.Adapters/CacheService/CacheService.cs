@@ -28,7 +28,10 @@ namespace Store.Infra.Adapters.CacheService
 		}
 		public void CacheProduct(Product product)
 		{
-			if (product == null) throw new ArgumentNullException(nameof(product));
+			if (product == null)
+			{
+				throw new ArgumentNullException(nameof(product));
+			}
 			_productCache[product.Id] = new CachedProduct(new ProductModel(product), DateTime.UtcNow);
 		}
 

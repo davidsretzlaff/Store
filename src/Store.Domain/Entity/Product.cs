@@ -27,7 +27,12 @@ namespace Store.Domain.Entity
 			Validate();
 		}
 
-		private void Validate() 
+		public Product(int id)
+		{ 
+			Id = id;
+		}
+
+			private void Validate() 
 		{
 			DomainValidation.NotNullOrEmpty(Title, nameof(Title));
 			DomainValidation.MinLength(Title, 4, nameof(Title));
