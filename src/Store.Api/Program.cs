@@ -15,6 +15,7 @@ app.UseCors(x => x
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<IdentityMiddleware>();
+app.UseMiddleware<CorrelationIdMiddleware>();
 app.MapGet("/", () => "Hello World!").AllowAnonymous();
 app.MapControllers();
 app.Run();
