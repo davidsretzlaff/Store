@@ -42,7 +42,6 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Activate(
 		  Guid id,
 		  CancellationToken cancellationToken
@@ -56,7 +55,6 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Deactivate(
 		  [FromRoute] Guid id,
 		  CancellationToken cancellationToken
@@ -70,6 +68,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+		[AllowAnonymous]
 		public async Task<IActionResult> GetById(
 		  [FromRoute] Guid id,
 		  CancellationToken cancellationToken

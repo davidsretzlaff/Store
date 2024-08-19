@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Store.Api.Models.CreateProduct;
 using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Product.CreateProduct;
@@ -20,9 +21,8 @@ namespace Store.Api.Controllers
 
 		public ProductsController(IMediator mediator) => _mediator = mediator;
 
-		[HttpGet]
+		[HttpGet("list")]
 		[ProducesResponseType(typeof(ListProductsInput), StatusCodes.Status200OK)]
-		[Authorize]
 		public async Task<IActionResult> List(
 			CancellationToken cancellationToken,
 			[FromQuery] int? Page = null,
@@ -43,16 +43,25 @@ namespace Store.Api.Controllers
 			return Ok(new ResponseList<ProductOutput>(output));
 		}
 
+		[HttpPost]
 		[ProducesResponseType(typeof(Response<UserOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Create(
-			[FromBody] CreateProductInput input,
+			[FromBody] ApiCreateProductInput input,
 			CancellationToken cancellationToken
 		)
 		{
-			var output = await _mediator.Send(input, cancellationToken);
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var inputApplication = new CreateProductInput(
+				input.Id,
+				input.Title,
+				input.Price,
+				input.Description,
+				input.Category,
+				companyRegisterNumber!
+			);
+			var output = await _mediator.Send(inputApplication, cancellationToken);
 			return CreatedAtAction(
 				nameof(Create),
 				new { output.Id },
@@ -64,7 +73,6 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<ProductOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> GetById(
 			[FromRoute] int id,
 			CancellationToken cancellationToken
@@ -77,13 +85,13 @@ namespace Store.Api.Controllers
 		[HttpDelete("{id:int}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-		[Authorize]
 		public async Task<IActionResult> Delete(
 		   [FromRoute] int id,
 		   CancellationToken cancellationToken
 	    )
 		{
-			await _mediator.Send(new DeleteProductInput(id), cancellationToken);
+			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
+			await _mediator.Send(new DeleteProductInput(id, companyRegisterNumber!), cancellationToken);
 			return NoContent();
 		}
 	}

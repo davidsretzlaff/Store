@@ -31,9 +31,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
 			await _userValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
-
 			var products = await GetValidProducts(input.ProductIds, cancellationToken);
-
 			var order = CreateOrderDomain(input, products);
 			order.Validate();
 

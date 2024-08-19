@@ -8,6 +8,7 @@ using Store.Application.UseCases.Order.CancelOrder;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Application.UseCases.Order.ListOrders;
+using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Interface.Infra.Adapters;
 
@@ -26,17 +27,17 @@ namespace Store.Api.Controllers
 			_jwtUtils = jwtUtils;
 		}
 
+		[HttpPost("create")]
 		[ProducesResponseType(typeof(Response<OrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Create(
 			[FromBody] ApiCreateOrderInput input,
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
-			var CreateOrderInputApplication = new CreateOrderInput(companyRegisterNumber, input.CustomerName, input.CustomerDocument, input.ProductIds);
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var CreateOrderInputApplication = new CreateOrderInput(companyRegisterNumber!, input.CustomerName, input.CustomerDocument, input.ProductIds);
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
 				nameof(Create),
@@ -49,13 +50,12 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UpdateOrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Activate(
 		  string id,
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var output = await _mediator.Send(new ApproveOrderInput(id, companyRegisterNumber), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
@@ -64,18 +64,17 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(Response<UpdateOrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-		[Authorize]
 		public async Task<IActionResult> Cancel(
 		  string id,
 		  CancellationToken cancellationToken
 		)
 		{
 			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
-			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber), cancellationToken);
+			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber!), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
-		[HttpGet]
+		[HttpGet("list")]
 		[ProducesResponseType(typeof(ListOrdersOutput), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
 		CancellationToken cancellationToken,
@@ -93,8 +92,8 @@ namespace Store.Api.Controllers
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;
 			if (!String.IsNullOrWhiteSpace(OrderBy)) input.OrderBy = OrderBy;
 			if (Order is not null) input.Order = Order.Value;
-			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
-			input.companyRegisterNumber = companyRegisterNumber;
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			input.companyRegisterNumber = companyRegisterNumber!;
 
 			var output = await _mediator.Send(input, cancellationToken);
 			return Ok(new ResponseList<OrderOutput>(output));

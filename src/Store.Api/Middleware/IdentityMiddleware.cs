@@ -20,6 +20,11 @@ namespace Store.Api.Middleware
 				await _next(context);
 				return;
 			}
+			if (context.Request.Path.StartsWithSegments("/users/list"))
+			{
+				await _next(context);
+				return;
+			}
 
 			var user = context.User;
 
@@ -29,13 +34,15 @@ namespace Store.Api.Middleware
 				await context.Response.WriteAsync("User is not authenticated.");
 				return;
 			}
+		
+
 
 			var registerNumber = user.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 
 			if (string.IsNullOrEmpty(registerNumber))
 			{
 				context.Response.StatusCode = StatusCodes.Status400BadRequest;
-				await context.Response.WriteAsync("Register number claim not found.");
+				await context.Response.WriteAsync("Company Register number claim not found.");
 				return;
 			}
 

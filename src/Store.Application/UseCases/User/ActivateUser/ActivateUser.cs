@@ -1,6 +1,4 @@
-﻿using Store.Application.UseCases.User.CreateUser;
-using DomainEntity = Store.Domain.Entity;
-using Store.Application.UseCases.User.Common;
+﻿using Store.Application.UseCases.User.Common;
 using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.User.ActivateUser
