@@ -31,6 +31,7 @@ namespace Store.Api.Configurations
 			services.AddTransient<IProductService, ProductService>(); 
 			services.AddSingleton<ICacheService, CacheService>();
 			services.AddTransient<IUserValidation, UserValidation>();
+			services.AddTransient<IDeliveryRepository, DeliveryRepository>();
 			services.AddHttpClient<ApiClient>(client =>
 			{
 				client.BaseAddress = new Uri("https://fakestoreapi.com");

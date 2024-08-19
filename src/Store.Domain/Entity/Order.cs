@@ -88,9 +88,15 @@ namespace Store.Domain.Entity
 			var money = new Money(total);
 			return money.Format();
 		}
+
 		public string FormattedDate()
 		{
 			return CreatedDate.ToString("dd/MM/yyyy HH:mm:ss");
+		}
+
+		public bool IsApproved() 
+		{ 
+			return Status == OrderStatus.Approved;
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Store.Domain.Enum;
+﻿using Store.Domain.Entity;
+using Store.Domain.Enum;
 using Store.Domain.Exceptions;
 using Store.Domain.Extensions;
 using System.Text.RegularExpressions;
@@ -11,6 +12,23 @@ namespace Store.Domain.Validation
 		{
 			if (target is null)
 				throw new EntityValidationException($"{fieldName} should not be null");
+		}
+
+		public static void OrderIsNotApprove(Order order)
+		{
+			if (order is null)
+				throw new EntityValidationException($"The current order status is '{order!.Status.ToOrderStatusString()}'. To create a delivery order, the status must be 'Approved'");
+		}
+		public static void DeliveryIsPending(DeliveryStatus status)
+		{
+			if (status != DeliveryStatus.Pending)
+				throw new EntityValidationException($"Current delivery status is '{status.ToDeliveryStatusString()}'. To start the delivery process, the status must be 'Pending'");
+		}
+
+		public static void DeliveryIsInTransit(DeliveryStatus status)
+		{
+			if (status != DeliveryStatus.InTransit)
+				throw new EntityValidationException($"Current delivery status is '{status.ToDeliveryStatusString()}'. To Proceed, the status must be 'InTransit'");
 		}
 
 		public static void NotFound(object? target, string fieldName)

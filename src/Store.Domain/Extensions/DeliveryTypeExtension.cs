@@ -1,0 +1,21 @@
+﻿using Store.Domain.Enum;
+
+namespace Store.Domain.Extensions
+{
+	public static class DeliveryTypeExtension
+	{
+		public static DeliveryType ToDeliveryTypeStatus(this string category)
+		=> category.ToLower() switch
+		{
+			"Javalog" => DeliveryType.Javalog,
+			"Csharplog" => DeliveryType.Csharplog
+		};
+
+		public static string ToDeliveryTypeString(this DeliveryType category)
+		=> category switch
+		{
+			DeliveryType.Javalog => "Javalog",
+			DeliveryType.Csharplog => "Csharplog",
+		};
+	}
+}
