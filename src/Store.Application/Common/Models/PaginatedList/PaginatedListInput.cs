@@ -10,21 +10,25 @@ namespace Store.Application.Common.Models.PaginatedList
 		public string Search { get; set; }
 		public string OrderBy { get; set; }
 		public SearchOrder Order { get; set; }
+		public string CompanyRegisterNumber { get; set; }	
 		public PaginatedListInput(
 			int page,
 			int perPage,
 			string search,
 			string orderBy,
-			SearchOrder order)
+			SearchOrder order,
+			string companyRegisterNumber
+			)
 		{
 			Page = page;
 			PerPage = perPage;
 			Search = search;
 			OrderBy = orderBy;
 			Order  = order;
+			CompanyRegisterNumber = companyRegisterNumber;
 		}
 
 		public SearchInput ToSearchInput()
-			=> new(Page, PerPage, Search, OrderBy, Order);
+			=> new(Page, PerPage, Search, OrderBy, Order,CompanyRegisterNumber);
 	}
 }

@@ -54,7 +54,7 @@ namespace Store.Domain.Entity
 
 		public void Validate()
 		{
-			//Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.Id} has a quantity of {p.Quantity}, but it"));
+			Items.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.ProductId} has a quantity of {p.Quantity}, but it"));
 			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));

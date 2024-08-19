@@ -27,7 +27,7 @@ namespace Store.Application.UseCases.Order.ListOrders
 		}
 		public async Task<ListOrdersOutput> Handle(ListOrdersInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.companyRegisterNumber, cancellationToken);
+			await _userValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
 
 			var orders = await _orderRepository.Search(input.ToSearchInput(), cancellationToken);
             

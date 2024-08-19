@@ -80,6 +80,13 @@ namespace Store.Api.Exception
 				details.Type = "NotFound";
 				details.Detail = exception!.Message;
 			}
+			else if (exception is InvalidOrderOwnershipException)
+			{
+				details.Title = "Not Owner";
+				details.Status = StatusCodes.Status409Conflict;
+				details.Type = "NotOwner";
+				details.Detail = exception!.Message;
+			}
 			else
 			{
 				details.Title = "An unexpected error ocurred";

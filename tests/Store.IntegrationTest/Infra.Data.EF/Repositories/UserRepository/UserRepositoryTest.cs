@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
-using Store.Domain.Repository;
 using Store.Domain.SeedWork.Searchable;
 using System.Text.Json;
 using Repository = Store.Infra.Data.EF.Repositories;
@@ -153,7 +151,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			await dbContext.AddRangeAsync(exampleUserList);
 			await dbContext.SaveChangesAsync(CancellationToken.None);
 			var userRepository = new Repository.UserRepository(dbContext);
-			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
+			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc, string.Empty);
 
 			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
@@ -186,7 +184,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			// Arrange
 			var dbContext = _fixture.CreateDbContext();
 			var userRepository = new Repository.UserRepository(dbContext);
-			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
+			var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc, string.Empty);
 
 			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
@@ -220,7 +218,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			await dbContext.AddRangeAsync(exampleUserList);
 			await dbContext.SaveChangesAsync(CancellationToken.None);
 			var userRepository = new Repository.UserRepository(dbContext);
-			var searchInput = new SearchInput(NumberOfPagesToReturn, ItemsPerPage, "", "", SearchOrder.Asc);
+			var searchInput = new SearchInput(NumberOfPagesToReturn, ItemsPerPage, "", "", SearchOrder.Asc, string.Empty);
 
 			// Act
 			var output = await userRepository.Search(searchInput, CancellationToken.None);
@@ -275,7 +273,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			await dbContext.AddRangeAsync(exampleUsersList);
 			await dbContext.SaveChangesAsync(CancellationToken.None);
 			var categoryRepository = new Repository.UserRepository(dbContext);
-			var searchInput = new SearchInput(page, itemsPerPage, search, "", SearchOrder.Asc);
+			var searchInput = new SearchInput(page, itemsPerPage, search, "", SearchOrder.Asc, string.Empty);
 
 			var searchInputJson = JsonSerializer.Serialize(searchInput); ;
 			// Act
@@ -319,7 +317,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			await dbContext.SaveChangesAsync(CancellationToken.None);
 			var repository = new Repository.UserRepository(dbContext);
 			var searchOrder = order.ToLower() == "asc" ? SearchOrder.Asc : SearchOrder.Desc;
-			var searchInput = new SearchInput(1, 20, "", orderBy, searchOrder);
+			var searchInput = new SearchInput(1, 20, "", orderBy, searchOrder, string.Empty);
 
 			// Act
 			var output = await repository.Search(searchInput, CancellationToken.None);

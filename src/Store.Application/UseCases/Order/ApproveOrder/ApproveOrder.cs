@@ -23,7 +23,10 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 		{
 			await _uservaValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
-			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.CompanyRegisterNumber} not found");
+			
+			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.CompanyRegisterNumber}");
+			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.CompanyRegisterNumber, $"Operation failed: The user is not the owner of this order");
+
 			order!.Approve();
 			await _orderRepository.Update(order, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);

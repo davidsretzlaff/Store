@@ -7,11 +7,11 @@ namespace Store.Application.UseCases.User.ListUsers
 	public class ListUsersInput : PaginatedListInput, IRequest<ListUsersOutput>
 	{
 		public ListUsersInput(int page, int perPage, string search, string orderBy, SearchOrder dir) 
-			: base(page, perPage, search, orderBy, dir)
+			: base(page, perPage, search, orderBy, dir, string.Empty)
 		{
 		}
 
-		public ListUsersInput() : base(1, 10, "", "", SearchOrder.Asc)
+		public ListUsersInput() : base(1, 10, "", "", SearchOrder.Asc, string.Empty)
 		{ }
 	}
 }

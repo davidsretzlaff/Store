@@ -19,8 +19,9 @@ namespace Store.Application.UseCases.User.ListUsers
 						input.PerPage,
 						input.Search,
 						input.OrderBy,
-						input.Order
-					), 
+						input.Order,
+						string.Empty
+					),
 					cancellationToken
 				);
 

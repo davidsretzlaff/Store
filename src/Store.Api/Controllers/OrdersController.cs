@@ -69,7 +69,7 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = HttpContext.Items["CompanyRegisterNumber"] as string;
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber!), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
@@ -85,15 +85,14 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
-			
-			var input = new ListOrdersInput();
+			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var input = new ListOrdersInput(companyRegisterNumber!);
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;
 			if (!String.IsNullOrWhiteSpace(OrderBy)) input.OrderBy = OrderBy;
 			if (Order is not null) input.Order = Order.Value;
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			input.companyRegisterNumber = companyRegisterNumber!;
+			
 
 			var output = await _mediator.Send(input, cancellationToken);
 			return Ok(new ResponseList<OrderOutput>(output));

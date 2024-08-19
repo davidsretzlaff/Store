@@ -21,7 +21,8 @@ namespace Store.Application.UseCases.Product.ListProducts
 						input.PerPage,
 						input.Search,
 						input.OrderBy,
-						input.Order
+						input.Order,
+						string.Empty
 					),
 					cancellationToken
 				);

@@ -9,19 +9,23 @@ namespace Store.Domain.SeedWork.Searchable
 		public string Search { get; set; }
 		public string OrderBy { get; set; }
 		public SearchOrder Order { get; set; }
+		public string companyRegisterNumber { get; set; }
 
 		public SearchInput(
 			int page,
 			int perPage,
 			string search,
 			string orderBy,
-			SearchOrder order)
+			SearchOrder order,
+			string companyRegisterNumber
+		)
 		{
 			Page = page;
 			PerPage = perPage;
 			Search = search;
 			OrderBy = orderBy;
 			Order = order;
+			this.companyRegisterNumber = companyRegisterNumber;
 		}
 	}
 }

@@ -54,6 +54,8 @@ namespace Store.Infra.Data.EF.Repositories
 				);
 			}
 
+			query = query.Where(x => x.CompanyRegisterNumber == input.companyRegisterNumber);
+
 			var total = await query.CountAsync();
 			var items = await query
 				.Skip(toSkip)
