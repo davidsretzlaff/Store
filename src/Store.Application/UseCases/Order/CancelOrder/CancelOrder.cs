@@ -17,7 +17,7 @@ namespace Store.Application.UseCases.Order.CancelOrder
 			_orderRepository = orderRepository;
 			_uservaValidation = userValidation;
 		}
-		public async Task<OrderOutput> Handle(CancelOrderInput input, CancellationToken cancellationToken)
+		public async Task<UpdateOrderOutput> Handle(CancelOrderInput input, CancellationToken cancellationToken)
 		{
 			await _uservaValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
@@ -25,7 +25,7 @@ namespace Store.Application.UseCases.Order.CancelOrder
 			order!.Cancel();
 			await _orderRepository.Update(order, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
-			return OrderOutput.FromOrder(order);
+			return UpdateOrderOutput.FromOrder(order);
 		}
 	}
 }

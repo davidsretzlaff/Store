@@ -19,7 +19,7 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 			_orderRepository = orderRepository;
 			_uservaValidation = userValidation;
 		}
-		public async Task<OrderOutput> Handle(ApproveOrderInput input, CancellationToken cancellationToken)
+		public async Task<UpdateOrderOutput> Handle(ApproveOrderInput input, CancellationToken cancellationToken)
 		{
 			await _uservaValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
@@ -27,7 +27,7 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 			order!.Approve();
 			await _orderRepository.Update(order, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
-			return OrderOutput.FromOrder(order);
+			return UpdateOrderOutput.FromOrder(order);
 		}
 	}
 }

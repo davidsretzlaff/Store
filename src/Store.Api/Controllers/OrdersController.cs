@@ -48,7 +48,7 @@ namespace Store.Api.Controllers
 		}
 
 		[HttpPut("{id}/Activate")]
-		[ProducesResponseType(typeof(Response<OrderOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UpdateOrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[Authorize]
@@ -59,11 +59,11 @@ namespace Store.Api.Controllers
 		{
 			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var output = await _mediator.Send(new ApproveOrderInput(id, companyRegisterNumber), cancellationToken);
-			return Ok(new Response<OrderOutput>(output));
+			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
 		[HttpPut("{id}/Cancel")]
-		[ProducesResponseType(typeof(Response<OrderOutput>), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(Response<UpdateOrderOutput>), StatusCodes.Status201Created)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[Authorize]
@@ -74,7 +74,7 @@ namespace Store.Api.Controllers
 		{
 			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber), cancellationToken);
-			return Ok(new Response<OrderOutput>(output));
+			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
 		[HttpGet]
