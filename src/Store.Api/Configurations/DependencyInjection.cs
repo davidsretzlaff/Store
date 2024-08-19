@@ -10,6 +10,8 @@ using Store.Infra.Adapters.ExternalCatalog;
 using Store.Domain.Interface.Repository;
 using Store.Domain.Interface;
 using Store.Infra.Adapters.CacheService;
+using Store.Domain.Interface.Application;
+using Store.Application.Common.UserValidation;
 
 namespace Store.Api.Configurations
 {
@@ -28,7 +30,8 @@ namespace Store.Api.Configurations
 			services.AddTransient<IApiClient, ApiClient>();
 			services.AddSingleton<IProductRepository, ProductRepository>();
 			services.AddTransient<IProductService, ProductService>(); 
-			services.AddSingleton<ICacheService, CacheService>(); 
+			services.AddSingleton<ICacheService, CacheService>();
+			services.AddTransient<IUserValidation, UserValidation>(); 
 			services.AddHttpClient<ApiClient>(client =>
 			{
 				client.BaseAddress = new Uri("https://fakestoreapi.com");

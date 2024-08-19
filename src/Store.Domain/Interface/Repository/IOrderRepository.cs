@@ -5,8 +5,8 @@ namespace Store.Domain.Interface.Repository
 {
     public interface IOrderRepository : IGenericRepository<Order>, ISearchableRepository<Order>
     {
-        public Task<Order> Get(Guid id, CancellationToken cancellationToken);
+		public Task<Order?> Get(string id, CancellationToken cancellationToken);
 
-		//public Task Update(Order aggregate, CancellationToken cancellationToken);
+		public Task Update(Order order, CancellationToken cancellationToken);
 	}
 }

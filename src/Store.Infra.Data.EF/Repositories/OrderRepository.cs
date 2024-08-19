@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
@@ -8,7 +9,7 @@ using Store.Infra.Data.EF.Models;
 
 namespace Store.Infra.Data.EF.Repositories
 {
-    public class OrderRepository : IOrderRepository
+	public class OrderRepository : IOrderRepository
 	{
 		private readonly StoreDbContext _context;
 		private DbSet<Order> _orders => _context.Set<Order>();
@@ -30,9 +31,10 @@ namespace Store.Infra.Data.EF.Repositories
 			}
 		}
 
-		public Task<Order> Get(Guid id, CancellationToken cancellationToken)
+		public async Task<Order?> Get(string id, CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			var order = await _orders.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+			return order;
 		}
 
 
@@ -105,6 +107,11 @@ namespace Store.Infra.Data.EF.Repositories
 				_ => query.OrderBy(x => x.CreatedData).ThenBy(x => x.Id)
 			};
 			return orderedQuery;
+		}
+
+		public async Task Update(Order order, CancellationToken cancellationToken)
+		{
+			await Task.FromResult(_orders.Update(order));
 		}
 	}
 }

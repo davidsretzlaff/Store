@@ -40,30 +40,6 @@ namespace Store.Domain.Entity
 			}
 			return count;
 		}
-		//public void AddProduct(Product product)
-		//{
-		//	var index = Products.FindIndex(p => p.Id == product.Id);
-
-		//	if (index >= 0)
-		//	{
-		//		Products[index].AddOneToQuantity();
-		//		return;
-		//	}
-		//	Products.Add(product);
-		//}
-
-		//public void AddProduct(int id, string title, string description, decimal price, Category category)
-		//{
-		//	var index = Products.FindIndex(p => p.Id == id);
-
-		//	if (index >= 0)
-		//	{
-		//		Products[index].AddOneToQuantity();
-		//		return;
-		//	}
-		//	var product = new Product(id, title, description, price, category);
-		//	Products.Add(product);
-		//}
 
 		public void AddItem(int productId, int quantity, Product? product = null)
 		{
@@ -76,12 +52,6 @@ namespace Store.Domain.Entity
 			
 		}
 
-
-		//public void AddProductIds(int id)
-		//{
-		//	_productsIds.Add(id);
-		
-		//}
 		public void Validate()
 		{
 			//Products.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.Id} has a quantity of {p.Quantity}, but it"));
@@ -118,15 +88,5 @@ namespace Store.Domain.Entity
 			var money = new Money(total);
 			return money.Format();
 		}
-
-		//public List<Item> GetProductOrder()
-		//{
-		//	var items = new List<Item>();
-  //          foreach (var productId in _productsIds)
-  //          {
-		//		items.Add(new Item(Id, productId, 1, null));
-  //          }
-  //      }
-
 	}
 }

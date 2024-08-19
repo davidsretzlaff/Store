@@ -73,6 +73,13 @@ namespace Store.Api.Exception
 				details.Type = "UserInactive";
 				details.Detail = exception!.Message;
 			}
+			else if (exception is AggregateDomainException)
+			{
+				details.Title = "Not Found";
+				details.Status = StatusCodes.Status404NotFound;
+				details.Type = "NotFound";
+				details.Detail = exception!.Message;
+			}
 			else
 			{
 				details.Title = "An unexpected error ocurred";

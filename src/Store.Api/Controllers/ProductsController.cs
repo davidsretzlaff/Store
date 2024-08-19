@@ -8,9 +8,6 @@ using Store.Application.UseCases.Product.DeleteProduct;
 using Store.Application.UseCases.Product.GetProduct;
 using Store.Application.UseCases.Product.ListProducts;
 using Store.Application.UseCases.User.Common;
-using Store.Application.UseCases.User.CreateUser;
-using Store.Application.UseCases.User.GetUser;
-using Store.Application.UseCases.User.ListUsers;
 using Store.Domain.Enum;
 
 namespace Store.Api.Controllers
