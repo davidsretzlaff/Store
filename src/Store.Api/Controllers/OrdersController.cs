@@ -7,10 +7,7 @@ using Store.Application.Common.Models.Response;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Application.UseCases.Order.ListOrders;
-using Store.Application.UseCases.User.Common;
-using Store.Application.UseCases.User.ListUsers;
 using Store.Domain.Enum;
-using Store.Infra.Adapters.Identity;
 
 namespace Store.Api.Controllers
 {
@@ -19,10 +16,12 @@ namespace Store.Api.Controllers
 	public class OrdersController : ControllerBase
 	{
 		private readonly IMediator _mediator;
+		private readonly IJwtUtils _jwtUtils;
 
-		public OrdersController(IMediator mediator)
+		public OrdersController(IMediator mediator, IJwtUtils jwtUtils)
 		{
 			_mediator = mediator;
+			_jwtUtils = jwtUtils;
 		}
 
 		[ProducesResponseType(typeof(Response<OrderOutput>), StatusCodes.Status201Created)]
@@ -34,6 +33,14 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
+			// Extract the token from the Authorization header
+			var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+			if (string.IsNullOrEmpty(token))
+			{
+				return Unauthorized();
+			}
+			_jwtUtils.ValidateToken(token);
 			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
 			var CreateOrderInputApplication = new CreateOrderInput(companyRegisterNumber, input.CustomerName, input.CustomerDocument, input.ProductIds);
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);

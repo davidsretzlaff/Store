@@ -24,10 +24,8 @@ namespace Store.Domain.Entity
 			Category = category;
 			Validate();
 		}
-
-		public Product(int id)
-		{ 
-			Id = id;
+		public Product()
+		{
 		}
 
 		private void Validate() 
@@ -44,31 +42,16 @@ namespace Store.Domain.Entity
 			DomainValidation.ValidateCategory(Category, nameof(Category));
 
 		}
-		//public void AddOneToQuantity() 
-		//{
-		//	Quantity += 1;
-		//}
-		//public decimal GetTotal()
-		//{
-		//	return Price * Quantity;
-		//}
+
 		public string GetPriceAsCurrency()
 		{
 			return FormatCurrency(Price);
 		}
-		//public string GetTotalAsCurrency()
-		//{
-		//	return FormatCurrency(GetTotal());
-		//}
 
 		private string FormatCurrency(decimal amount)
 		{
 			var money = new Money(amount);
 			return money.Format();
 		}
-		//public int GetQuantity()
-		//{
-		//	return Quantity; 
-		//}
 	}
 }

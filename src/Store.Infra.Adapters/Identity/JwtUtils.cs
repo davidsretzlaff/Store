@@ -9,10 +9,6 @@ namespace Store.Infra.Adapters.Identity
 {
 	public class JwtUtils : IJwtUtils
 	{
-		//private readonly string _key;
-		//private readonly string _issuer;
-		//private readonly string _audience;
-		//private readonly string _expiryMinutes;
 		private readonly IConfiguration _configuration;
 
 		public JwtUtils(IConfiguration configuration)
@@ -34,7 +30,7 @@ namespace Store.Infra.Adapters.Identity
 					new Claim("CompanyRegisterNumber", companyRegisterNumber),
 					new Claim(ClaimTypes.Role, role) 
 				}),
-				Expires = DateTime.UtcNow.AddHours(8),
+				Expires = DateTime.UtcNow.AddMinutes(2),
 				SigningCredentials = new SigningCredentials(
 					new SymmetricSecurityKey(key),
 					SecurityAlgorithms.HmacSha256Signature
@@ -53,8 +49,6 @@ namespace Store.Infra.Adapters.Identity
 			var tokenHandler = new JwtSecurityTokenHandler();
 
 			var jwtSettings = _configuration["JwtSettings:SecretKey"];
-			//Guard.Against.Null(jwtSettings, message: "JwtOptions not found.");
-			//var key = Guard.Against.NullOrEmpty(jwtSettings["Secret"], message: "'Secret' not found or empty.");
 
 			tokenHandler.ValidateToken(token, new TokenValidationParameters
 			{
@@ -80,18 +74,7 @@ namespace Store.Infra.Adapters.Identity
 				return roles;
 			}
 
-			// return user roles from JWT token if validation successful
 			return new List<string>();
-		}
-
-
-		public string GetCompanyRegNumberFromToken(string token)
-		{
-			var jwtSettings = _configuration["JwtSettings:SecretKey"];
-			var handler = new JwtSecurityTokenHandler();
-			var jwtToken = handler.ReadJwtToken(token);
-			var claim = jwtToken.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber");
-			return claim?.Value;
 		}
 	}
 }

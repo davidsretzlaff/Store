@@ -2,6 +2,7 @@
 using Store.Application.UseCases.Order.Common;
 using Store.Domain.Entity;
 using Store.Domain.Interface.Repository;
+using System.Security.Cryptography.X509Certificates;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.Order.CreateOrder
@@ -11,16 +12,25 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		private readonly IOrderRepository _orderRepository;
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IUserRepository _user;
 
-		public CreateOrder(IOrderRepository orderRepository, IProductRepository productRepository, IUnitOfWork unitOfWork)
+		public CreateOrder(
+			IOrderRepository orderRepository, 
+			IProductRepository productRepository, 
+			IUnitOfWork unitOfWork, 
+			IUserRepository user
+		)
 		{
 			_orderRepository = orderRepository;
 			_productRepository = productRepository;
 			_unitOfWork = unitOfWork;
+			_user = user;
 		}
 
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
+			await ValidateActiveUser(input.CompanyRegisterNumber, cancellationToken);
+
 			var products = await GetValidProducts(input.ProductIds, cancellationToken);
 
 			var order = CreateOrderDomain(input, products);
@@ -32,6 +42,15 @@ namespace Store.Application.UseCases.Order.CreateOrder
 			return OrderOutput.FromOrder(order);
 		}
 
+		private async Task ValidateActiveUser(string companyRegisterNumber, CancellationToken cancellationToken)
+		{
+			var user = await _user.GetByUserNameOrCompanyRegNumber(null, companyRegisterNumber, cancellationToken);
+
+			if (user is null || !user.IsActive())
+			{
+				throw new UserInactiveException($"User with CompanyRegisterNumber '{companyRegisterNumber}' is not active. Only Active users can create an order.");
+			}
+		}
 		private async Task<List<DomainEntity.Product>> GetValidProducts(List<int> productIds, CancellationToken cancellationToken)
 		{
 			RelatedAggregateException.ThrowIfNull(productIds, "Product IDs cannot be null or empty");

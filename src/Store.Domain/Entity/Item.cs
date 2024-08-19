@@ -14,7 +14,7 @@ namespace Store.Domain.Entity
 			OrderId = orderId;
 			ProductId = productId;
 			Quantity = quantity;
-			
+			Product = new Product() { };
 		}
 
 		public void addProduct(Product product) 

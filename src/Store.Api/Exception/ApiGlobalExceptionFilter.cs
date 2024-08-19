@@ -66,6 +66,13 @@ namespace Store.Api.Exception
 				details.Type = "RelatedAggregate";
 				details.Detail = exception!.Message;
 			}
+			else if (exception is UserInactiveException)
+			{
+				details.Title = "User is Inactive";
+				details.Status = StatusCodes.Status401Unauthorized;
+				details.Type = "UserInactive";
+				details.Detail = exception!.Message;
+			}
 			else
 			{
 				details.Title = "An unexpected error ocurred";

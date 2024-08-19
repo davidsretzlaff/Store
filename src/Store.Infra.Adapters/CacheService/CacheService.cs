@@ -9,11 +9,10 @@ namespace Store.Infra.Adapters.CacheService
 	{
 		private readonly Dictionary<int, CachedProduct> _productCache = new Dictionary<int, CachedProduct>();
 		private bool _allProductsCached = false;
-		private readonly TimeSpan _cacheExpiration = TimeSpan.FromHours(3);
+		private readonly TimeSpan _cacheExpiration = TimeSpan.FromHours(10);
 
 		public HashSet<int> DeletedProducts { get; } = new HashSet<int>();
 		public bool AllProductsCached => _allProductsCached;
-
 
 		public bool IsProductDeleted(int id)
 		{
@@ -52,7 +51,7 @@ namespace Store.Infra.Adapters.CacheService
 		public IEnumerable<Product> GetAllCachedProducts()
 		{
 			return _productCache.Values
-				.Where(cp => !cp.IsExpired(_cacheExpiration))
+				.Where(cp => cp != null && !cp.IsExpired(_cacheExpiration))
 				.Select(cp => cp.Product.ToProduct());
 		}
 

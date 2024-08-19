@@ -77,5 +77,10 @@ namespace Store.Domain.Entity
 		{
 			Status = UserStatus.Inactive;
 		}
+
+		public bool IsActive() 
+		{ 
+			return Status == UserStatus.Active;
+		}
 	}
 }

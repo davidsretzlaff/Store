@@ -66,21 +66,6 @@ namespace Store.Infra.Data.EF.Repositories
 
 		private async Task AddProductsToOrder(List<Order> items, List<string> ordersId)
 		{
-			//var productsRelations = await _ordersProducts
-			//	.Where(relation => ordersId.Contains(relation.OrderId))
-			//	.ToListAsync();
-			//var relationsWithProductsByOrderId =
-			//	productsRelations.GroupBy(x => x.OrderId).ToList();
-			//relationsWithProductsByOrderId.ForEach(relationGroup =>
-			//{
-			//	var order = items.Find(order => order.Id == relationGroup.Key);
-			//	if (order is null) return;
-			//	relationGroup
-			//	.SelectMany(relation => Enumerable.Repeat(relation.ProductId, relation.Quantity))
-			//	.ToList()
-			//	.ForEach(order.AddItem(order.Id, productid, quantity));
-			//});
-
 			// Fetch the product relations based on the provided order IDs
 			var productsRelations = await _ordersProducts
 				.Where(relation => ordersId.Contains(relation.OrderId))
