@@ -1,4 +1,6 @@
-﻿using Store.Application.UseCases.Order.Common;
+﻿using Store.Application.Common.UserValidation;
+using Store.Application.UseCases.Order.Common;
+using Store.Domain.Interface.Application;
 using Store.Domain.Interface.Infra.Repository;
 
 namespace Store.Application.UseCases.Product.ListProducts
@@ -7,14 +9,22 @@ namespace Store.Application.UseCases.Product.ListProducts
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IUserValidation _userValidation;
 
-		public ListProducts(IProductRepository productRepository, IUnitOfWork unitOfWork)
+		public ListProducts
+		(
+			IProductRepository productRepository, 
+			IUnitOfWork unitOfWork, 
+			IUserValidation userValidation
+		)
 		{
 			_unitOfWork = unitOfWork;
 			_productRepository = productRepository;
+			_userValidation = userValidation;
 		}
 		public async Task<ListProductsOutput> Handle(ListProductsInput input, CancellationToken cancellationToken)
 		{
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			var searchOutput = await _productRepository.Search(
 				new Domain.SeedWork.Searchable.SearchInput(
 						input.Page,
@@ -22,7 +32,7 @@ namespace Store.Application.UseCases.Product.ListProducts
 						input.Search,
 						input.OrderBy,
 						input.Order,
-						string.Empty
+						input.User
 					),
 					cancellationToken
 				);

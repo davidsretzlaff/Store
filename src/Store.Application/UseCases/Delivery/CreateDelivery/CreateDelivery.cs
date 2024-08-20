@@ -30,7 +30,7 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 
 		public async Task<DeliveryOutput> Handle(CreateDeliveryInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			await ValidateInput(input, cancellationToken);
 			var order = await _orderRepository.Get(input.OrderId, cancellationToken);
 			var delivery = CreateDeliveryDomain(input, order);
@@ -52,7 +52,7 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 				input.OrderId,
 				input.AddressCustomer.ToDomainAddress(),
 				order,
-				input.Cnpj!,
+				input.User!,
 				input.DeliveryType.ToDeliveryTypeStatus()
 			);
 		}

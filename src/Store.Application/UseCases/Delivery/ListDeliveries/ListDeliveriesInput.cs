@@ -7,13 +7,12 @@ namespace Store.Application.UseCases.Delivery.ListDeliveries
 {
 	public class ListDeliveriesInput : PaginatedListInput, IRequest<ListDeliveriesOutput>
 	{
-
-		public ListDeliveriesInput(int page, int perPage, string search, string orderBy, SearchOrder dir, string cnpj)
-			: base(page, perPage, search, orderBy, dir, cnpj)
+		public ListDeliveriesInput(int page, int perPage, string search, string orderBy, SearchOrder dir, string? user)
+			: base(page, perPage, search, orderBy, dir, user)
 		{
 		}
 
-		public ListDeliveriesInput(string? cnpj) : base(1, 10, "", "", SearchOrder.Asc, cnpj)
+		public ListDeliveriesInput(string? user) : base(1, 10, "", "", SearchOrder.Asc, user)
 		{
 		}
 	}

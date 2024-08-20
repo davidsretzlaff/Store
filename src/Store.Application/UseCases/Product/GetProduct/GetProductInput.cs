@@ -5,6 +5,7 @@ namespace Store.Application.UseCases.Product.GetProduct
 {
 	public record GetProductInput
 	(
-		int Id
+		int Id,
+		string? User
 	) : IRequest<ProductOutput>;
 }

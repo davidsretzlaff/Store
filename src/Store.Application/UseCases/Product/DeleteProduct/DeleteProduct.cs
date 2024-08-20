@@ -23,12 +23,12 @@ namespace Store.Application.UseCases.Product.DeleteProduct
 		}
 		public async Task<ProductOutput> Handle(DeleteProductInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			var product = await _productRepository.Get(input.Id, false, cancellationToken);
 			RelatedAggregateException.ThrowIfNull(product, $"Product with ID '{input.Id}' not found");
-			await _productRepository.Delete(product, cancellationToken);
+			await _productRepository.Delete(product!, cancellationToken);
 			await _unitOfWork.Commit(cancellationToken);
-			return ProductOutput.FromProduct(product);
+			return ProductOutput.FromProduct(product!);
 		}
 	}
 }

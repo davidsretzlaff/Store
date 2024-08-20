@@ -54,9 +54,9 @@ namespace Store.Infra.Data.EF.Repositories
 					x.CustomerName.ToLower().Contains(searchToLower)
 				);
 			}
-			var inputCompanyRegFormatted = Cnpj.RemoveNonDigits(input.CompanyIdentificationNumber);
+			var userCnpj = Cnpj.RemoveNonDigits(input.User);
 			query = query.Where(x => 
-				x.CompanyIdentificationNumber.Value.Equals(inputCompanyRegFormatted));
+				x.CompanyIdentificationNumber.Value.Equals(userCnpj));
 
 			var total = await query.CountAsync();
 			var items = await query

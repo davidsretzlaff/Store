@@ -16,7 +16,7 @@ namespace Store.Infra.Adapters.Identity
 			_configuration = configuration;
 		}
 
-		public string GenerateToken(string userName, string role, string Cnpj)
+		public string GenerateToken(string userName, string role, string userDocument)
 		{
 			var jwtSettings = _configuration["JwtSettings:SecretKey"];
 
@@ -27,7 +27,7 @@ namespace Store.Infra.Adapters.Identity
 				Subject = new ClaimsIdentity(new Claim[]
 				{
 					new Claim(ClaimTypes.Name, userName.ToString()),
-					new Claim("Cnpj", Cnpj),
+					new Claim("User", userDocument),
 					new Claim(ClaimTypes.Role, role) 
 				}),
 				Expires = DateTime.UtcNow.AddMinutes(20),

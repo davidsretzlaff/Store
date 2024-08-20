@@ -5,8 +5,8 @@ using Store.Application.UseCases.User.Common;
 namespace Store.Application.UseCases.Order.ApproveOrder
 {
 	public record class ApproveOrderInput(
-		string id,
-		string Cnpj
+		string Id,
+		string? User
 	) : IRequest<UpdateOrderOutput>
 	{
 	}

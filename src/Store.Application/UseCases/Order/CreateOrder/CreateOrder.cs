@@ -30,7 +30,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 
 		public async Task<OrderOutput> Handle(CreateOrderInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			var products = await GetValidProducts(input.ProductIds, cancellationToken);
 			var order = CreateOrderDomain(input, products);
 			order.Validate();
@@ -71,7 +71,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 
 		private DomainEntity.Order CreateOrderDomain(CreateOrderInput input, List<DomainEntity.Product> products)
 		{
-			var order = new DomainEntity.Order(input.Cnpj, input.CustomerName, input.CustomerDocument);
+			var order = new DomainEntity.Order(input.User!, input.CustomerName, input.CustomerDocument);
 			var productGroups = products
 			  .GroupBy(p => p.ProductId)
 			  .Select(g => new

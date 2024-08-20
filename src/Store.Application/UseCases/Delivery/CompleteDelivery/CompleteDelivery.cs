@@ -30,7 +30,7 @@ namespace Store.Application.UseCases.Delivery.CompleteDelivery
 
 		public async Task<DeliveryOutput> Handle(CompleteDeliveryInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			
 			var delivery = await _deliveryRepository.Get(input.OrderId, cancellationToken);
 			ValidateApproval(input,delivery);
@@ -44,7 +44,7 @@ namespace Store.Application.UseCases.Delivery.CompleteDelivery
 		private void ValidateApproval(CompleteDeliveryInput input, DomainEntity.Delivery? delivery)
 		{
 			AggregateDomainException.ThrowIfNull(delivery, $"Delivery with ID {input.OrderId} not found");
-			InvalidOrderOwnershipException.ThrowIfNotOwnership(delivery, input.Cnpj, $"Operation failed: The user is not the owner of this delivery");
+			InvalidOrderOwnershipException.ThrowIfNotOwnership(delivery, input.User, $"Operation failed: The user is not the owner of this delivery");
 		}
 	}
 }

@@ -21,8 +21,8 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 		}
 		public async Task<UpdateOrderOutput> Handle(ApproveOrderInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
-			var order = await _orderRepository.Get(input.id, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
+			var order = await _orderRepository.Get(input.Id, cancellationToken);
 			ValidateApproval(input, order);
 			
 			order!.Approve();
@@ -33,8 +33,8 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 
 		private void ValidateApproval(ApproveOrderInput input, DomainEntity.Order? order)
 		{
-			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.id} not found");
-			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.Cnpj, $"Operation failed: The user is not the owner of this order");
+			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.Id} not found");
+			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.User, $"Operation failed: The user is not the owner of this order");
 		}
 	}
 }

@@ -5,6 +5,6 @@ namespace Store.Application.UseCases.Delivery.StartDelivery
 	public record StartDeliveryInput
 	(
 		string OrderId,
-		string? Cnpj
+		string? User
 	): IRequest<DeliveryOutput>;
 }

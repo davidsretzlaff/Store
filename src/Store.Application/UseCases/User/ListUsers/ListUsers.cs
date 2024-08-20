@@ -20,7 +20,7 @@ namespace Store.Application.UseCases.User.ListUsers
 						input.Search,
 						input.OrderBy,
 						input.Order,
-						string.Empty
+						input.User
 					),
 					cancellationToken
 				);

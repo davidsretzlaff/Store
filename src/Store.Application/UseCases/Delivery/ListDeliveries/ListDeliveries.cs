@@ -28,6 +28,7 @@ namespace Store.Application.UseCases.Delivery.ListDeliveries
 
 		public async Task<ListDeliveriesOutput> Handle(ListDeliveriesInput input, CancellationToken cancellationToken)
 		{
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			var searchOutput = await _deliveryRepository.Search(
 				new Domain.SeedWork.Searchable.SearchInput(
 						input.Page,
@@ -35,7 +36,7 @@ namespace Store.Application.UseCases.Delivery.ListDeliveries
 						input.Search,
 						input.OrderBy,
 						input.Order,
-						input.Cnpj
+						input.User
 					),
 					cancellationToken
 				);

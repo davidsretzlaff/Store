@@ -6,6 +6,6 @@ namespace Store.Application.UseCases.Product.DeleteProduct
 	public record DeleteProductInput
 	(
 		int Id,
-		string? Cnpj
+		string? User
 	) : IRequest<ProductOutput>;
 }

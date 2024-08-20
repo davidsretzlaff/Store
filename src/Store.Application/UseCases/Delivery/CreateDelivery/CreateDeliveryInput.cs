@@ -9,6 +9,6 @@ namespace Store.Application.UseCases.Delivery.CreateDelivery
 		string OrderId,
 		string DeliveryType,
 		AddressInput AddressCustomer,
-		string? Cnpj
+		string? User
 	) : IRequest<DeliveryOutput>;
 }

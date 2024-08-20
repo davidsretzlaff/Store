@@ -1,5 +1,6 @@
 ﻿using Store.Domain.Enum;
 using Store.Domain.SeedWork.Searchable;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Store.Application.Common.Models.PaginatedList
 {
@@ -10,25 +11,25 @@ namespace Store.Application.Common.Models.PaginatedList
 		public string Search { get; set; }
 		public string OrderBy { get; set; }
 		public SearchOrder Order { get; set; }
-		public string? Cnpj { get; set; }	
+		public string? User {  get; set; }
 		public PaginatedListInput(
 			int page,
 			int perPage,
 			string search,
 			string orderBy,
 			SearchOrder order,
-			string cnpj
-			)
+			string? user
+		)
 		{
 			Page = page;
 			PerPage = perPage;
 			Search = search;
 			OrderBy = orderBy;
 			Order  = order;
-			Cnpj = cnpj;
+			User = user;
 		}
 
 		public SearchInput ToSearchInput()
-			=> new(Page, PerPage, Search, OrderBy, Order, Cnpj);
+			=> new(Page, PerPage, Search, OrderBy, Order, User);
 	}
 }

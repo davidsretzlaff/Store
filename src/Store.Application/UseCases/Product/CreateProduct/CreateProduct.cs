@@ -25,7 +25,7 @@ namespace Store.Application.UseCases.Product.CreateProduct
 		}
 		public async Task<ProductOutput> Handle(CreateProductInput input, CancellationToken cancellationToken)
 		{
-			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.User, cancellationToken);
 			var existingProduct = await _productRepository.Get(input.Id, false, cancellationToken);
 			DuplicateException.ThrowIfHasValue(existingProduct, $"A product with ID '{input.Id}' already exists. Please use a unique ID to avoid duplication");
 			

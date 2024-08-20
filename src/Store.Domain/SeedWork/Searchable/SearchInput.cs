@@ -9,7 +9,7 @@ namespace Store.Domain.SeedWork.Searchable
 		public string Search { get; set; }
 		public string OrderBy { get; set; }
 		public SearchOrder Order { get; set; }
-		public string CompanyIdentificationNumber { get; set; }
+		public string? User {  get; set; }
 
 		public SearchInput(
 			int page,
@@ -17,7 +17,7 @@ namespace Store.Domain.SeedWork.Searchable
 			string search,
 			string orderBy,
 			SearchOrder order,
-			string companyIdentificationNumber
+			string? user
 		)
 		{
 			Page = page;
@@ -25,7 +25,7 @@ namespace Store.Domain.SeedWork.Searchable
 			Search = search;
 			OrderBy = orderBy;
 			Order = order;
-			CompanyIdentificationNumber = companyIdentificationNumber;
+			User = user;
 		}
 	}
 }

@@ -45,10 +45,10 @@ namespace Store.Infra.Data.EF.Repositories
 				);
 			}
 
-			var inputCompanyIdentFormatted = Cnpj.RemoveNonDigits(input.CompanyIdentificationNumber);
+			var userCnpj = Cnpj.RemoveNonDigits(input.User);
 			query = query.Where(x => 
 				x.CompanyIdentificationNumber.Value
-				.Equals(inputCompanyIdentFormatted));
+				.Equals(userCnpj));
 
 			var total = await query.CountAsync();
 			var items = await query

@@ -4,7 +4,7 @@ using Store.Application.UseCases.Order.Common;
 namespace Store.Application.UseCases.Order.CreateOrder
 {
 	public record CreateOrderInput(
-		string Cnpj,
+		string? User,
 		string CustomerName,
 		string CustomerDocument,
 		List<int> ProductIds

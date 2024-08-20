@@ -12,6 +12,7 @@ namespace Store.Application.UseCases.User.ListUsers
 		}
 
 		public ListUsersInput() : base(1, 10, "", "", SearchOrder.Asc, string.Empty)
-		{ }
+		{
+		}
 	}
 }

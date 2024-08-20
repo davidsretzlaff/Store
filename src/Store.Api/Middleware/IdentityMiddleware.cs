@@ -37,7 +37,7 @@ namespace Store.Api.Middleware
 		
 
 
-			var registerNumber = user.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var registerNumber = user.Claims.FirstOrDefault(c => c.Type == "User")?.Value;
 
 			if (string.IsNullOrEmpty(registerNumber))
 			{
