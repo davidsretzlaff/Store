@@ -78,8 +78,9 @@ Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**,
 ### Diagrama da Arquitetura
 
 ![image](https://github.com/user-attachments/assets/eaefcb32-d362-4205-90d0-a762c89863ec)
-![image](https://github.com/user-attachments/assets/97737786-e7bf-4cbb-9458-6affc3989ff5)
-![image](https://github.com/user-attachments/assets/fe5e3085-d6f8-48a4-a10e-26f7b113ad94)
+![image](https://github.com/user-attachments/assets/c513fbc6-aa7d-41a7-89b4-2a600aa667ec)
+![image](https://github.com/user-attachments/assets/360beb7a-d19e-432f-8fa6-1e247daea57d)
+
 
 ## Documentação das Rotas
 
