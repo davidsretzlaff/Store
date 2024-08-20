@@ -94,6 +94,3 @@ As rotas da API foram documentadas utilizando o Postman. O arquivo de exportaç�
 
 Por favor, se houver qualquer dúvida ou problema durante a execução, sinta-se à vontade para entrar em contato.
 
----
-
-Esse README fornece uma visão geral clara do projeto, as instruções para execução e onde o diagrama de arquitetura deve ser inserido.
