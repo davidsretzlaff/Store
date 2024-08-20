@@ -73,7 +73,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		{
 			var order = new DomainEntity.Order(input.Cnpj, input.CustomerName, input.CustomerDocument);
 			var productGroups = products
-			  .GroupBy(p => p.Id)
+			  .GroupBy(p => p.ProductId)
 			  .Select(g => new
 			  {
 				  Product = g.First(),
@@ -82,7 +82,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 			  .ToList();
 			foreach (var productGroup in productGroups)
 			{
-				order.AddItem(productGroup.Product.Id, productGroup.Count, productGroup.Product);
+				order.AddItem(productGroup.Product.ProductId, productGroup.Count, productGroup.Product);
 			}
 			return order;
 		}

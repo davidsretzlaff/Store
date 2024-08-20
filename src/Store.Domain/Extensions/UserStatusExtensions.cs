@@ -18,7 +18,8 @@ namespace Store.Domain.Extensions
         {
             UserStatus.Active => "Active",
             UserStatus.Inactive => "Inactive",
-            UserStatus.Waiting => "Waiting"
-        };
+            UserStatus.Waiting => "Waiting",
+            _ => throw new ArgumentOutOfRangeException(nameof(statusString))
+		};
     }
 }

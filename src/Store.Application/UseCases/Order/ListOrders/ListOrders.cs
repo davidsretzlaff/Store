@@ -44,7 +44,7 @@ namespace Store.Application.UseCases.Order.ListOrders
 				
 				foreach (var product in products)
 				{
-					var item = order.Items.Where(item => item.ProductId == product.Id).FirstOrDefault();
+					var item = order.Items.Where(item => item.ProductId == product.ProductId).FirstOrDefault();
 					if (item is not null)
 					{
 						item.addProduct(product);

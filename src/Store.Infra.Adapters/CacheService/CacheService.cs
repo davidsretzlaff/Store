@@ -31,7 +31,7 @@ namespace Store.Infra.Adapters.CacheService
 			{
 				throw new ArgumentNullException(nameof(product));
 			}
-			_productCache[product.Id] = new CachedProduct(new ProductModel(product), DateTime.UtcNow);
+			_productCache[product.ProductId] = new CachedProduct(new ProductModel(product), DateTime.UtcNow);
 		}
 
 		public void RemoveProductFromCache(int productId)

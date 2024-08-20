@@ -45,7 +45,20 @@ namespace Store.Domain.Entity
 			Address = address;
 			Validate();
 		}
-		private User() { }
+		private User() 
+		{
+			CompanyIdentificationNumber = new Cnpj();
+			UserName = string.Empty;
+			Password = string.Empty;
+			BusinessName = string.Empty;
+			CorporateName = string.Empty;
+			Status = UserStatus.Waiting;
+			Email = string.Empty;
+			SiteUrl = string.Empty;
+			Phone = string.Empty;
+			CompanyIdentificationNumber = new Cnpj();
+			Address = new Address();
+		}
 
 		public void Validate()
 		{

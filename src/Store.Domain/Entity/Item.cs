@@ -1,8 +1,9 @@
-﻿using Store.Domain.ValueObject;
+﻿using Store.Domain.SeedWork;
+using Store.Domain.ValueObject;
 
 namespace Store.Domain.Entity
 {
-	public class Item
+	public class Item : AggregateRoot
 	{
 		public string OrderId { get; private set; }
 		public int ProductId { get; private set; }
@@ -19,7 +20,7 @@ namespace Store.Domain.Entity
 
 		public void addProduct(Product product) 
 		{
-			Product = new Product(product.Id, product.Title, product.Description, product.Price, product.Category);
+			Product = new Product(product.ProductId, product.Title, product.Description, product.Price, product.Category);
 		}
 
 		public decimal GetTotal()

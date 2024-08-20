@@ -1,15 +1,13 @@
 ﻿using Store.Domain.Enum;
-using Store.Domain.Extensions;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
-using System.Net.Http.Headers;
 
 namespace Store.Domain.Entity
 {
 	public class Product : AggregateRoot
 	{
-		public int Id { get; private set; }
+		public int ProductId { get; private set; }
 		public string Title { get; private set; }
 		public string Description { get; private set; }
 		public decimal Price { get; private set; }
@@ -17,7 +15,7 @@ namespace Store.Domain.Entity
 
 		public Product(int id, string title, string description, decimal price, Category category)
 		{
-			Id = id;
+			ProductId = id;
 			Title = title;
 			Description = description;
 			Price = price;
@@ -26,6 +24,11 @@ namespace Store.Domain.Entity
 		}
 		public Product()
 		{
+			ProductId = 0;
+			Title = string.Empty;
+			Description = string.Empty;
+			Price = 0;
+			Category = new Category();
 		}
 
 		private void Validate() 
@@ -36,7 +39,7 @@ namespace Store.Domain.Entity
 			DomainValidation.NotNullOrEmpty(Description, nameof(Description));
 			DomainValidation.MinLength(Description, 4, nameof(Description));
 
-			DomainValidation.NotNull(Id, nameof(Id));
+			DomainValidation.NotNull(ProductId, nameof(ProductId));
 			DomainValidation.NotNull(Price, nameof(Price));
 			DomainValidation.NotNull(Category, nameof(Category));
 			DomainValidation.ValidateCategory(Category, nameof(Category));

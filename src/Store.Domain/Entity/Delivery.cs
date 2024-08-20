@@ -23,14 +23,23 @@ namespace Store.Domain.Entity
 			Address = adddress;
 			Status = DeliveryStatus.Pending;
 			CompanyIdentificationNumber = new Cnpj(companyIdentificationNumber);
+			Order = new Order();
 			AddOrder(order);
 			Validate();
 		}
-		public Delivery() { }
+		public Delivery() 
+		{
+			OrderId = string.Empty;
+			DeliveredDate = new DateTime();
+			Address = new Address();
+			Status = DeliveryStatus.Pending;
+			CompanyIdentificationNumber = new Cnpj();
+			Order = new Order();
+		}
 		private void AddOrder(Order? order) 
 		{
 			DomainValidation.NotFound(order, $"Order with id {OrderId}");
-			order.Validate();
+			order!.Validate();
 			Order = order;
 			CompanyIdentificationNumber = order.CompanyIdentificationNumber;
 		}

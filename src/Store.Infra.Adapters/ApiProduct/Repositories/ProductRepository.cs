@@ -27,8 +27,8 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 
 		public Task Delete(Product product, CancellationToken cancellationToken)
 		{
-			_cacheService.MarkProductAsDeleted(product.Id);
-			_cacheService.RemoveProductFromCache(product.Id);
+			_cacheService.MarkProductAsDeleted(product.ProductId);
+			_cacheService.RemoveProductFromCache(product.ProductId);
 			return Task.CompletedTask;
 		}
 
@@ -149,11 +149,11 @@ namespace Store.Infra.Adapters.ExternalCatalog.Repositories
 		{
 			return (orderProperty.ToLower(), order) switch
 			{
-				("title", SearchOrder.Asc) => query.OrderBy(x => x.Title).ThenBy(x => x.Id),
-				("title", SearchOrder.Desc) => query.OrderByDescending(x => x.Title).ThenByDescending(x => x.Id),
-				("description", SearchOrder.Asc) => query.OrderBy(x => x.Description).ThenBy(x => x.Id),
-				("description", SearchOrder.Desc) => query.OrderByDescending(x => x.Description).ThenByDescending(x => x.Id),
-				_ => query.OrderBy(x => x.Title).ThenBy(x => x.Id)
+				("title", SearchOrder.Asc) => query.OrderBy(x => x.Title).ThenBy(x => x.ProductId),
+				("title", SearchOrder.Desc) => query.OrderByDescending(x => x.Title).ThenByDescending(x => x.ProductId),
+				("description", SearchOrder.Asc) => query.OrderBy(x => x.Description).ThenBy(x => x.ProductId),
+				("description", SearchOrder.Desc) => query.OrderByDescending(x => x.Description).ThenByDescending(x => x.ProductId),
+				_ => query.OrderBy(x => x.Title).ThenBy(x => x.ProductId)
 			};
 		}
 		private bool ShouldExcludeDeletedProduct(int productId, bool includeDeleted)

@@ -3,6 +3,7 @@ using Store.Domain.Extensions;
 using Store.Domain.SeedWork;
 using Store.Domain.Validation;
 using Store.Domain.ValueObject;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -10,8 +11,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Store.Domain.Entity
 {
 	public class Order : AggregateRoot
-	{	
-		public string Id { get; private set; }
+	{
+		public string OrderId { get; private set; }
 		public Cnpj CompanyIdentificationNumber { get; private set; }
         public DateTime CreatedDate { get; private set; }		
 		public string CustomerName { get; private set; }
@@ -22,7 +23,7 @@ namespace Store.Domain.Entity
 
 		public Order(string companyIdentificationNumber, string customerName, string customerDocument)
 		{
-			Id = GenerateOrderCode();
+			OrderId = GenerateOrderCode();
 			CompanyIdentificationNumber = new Cnpj(companyIdentificationNumber);
 			CreatedDate = DateTime.Now;
 			CustomerName = customerName;
@@ -33,7 +34,11 @@ namespace Store.Domain.Entity
 
 		public Order() 
 		{
+			CompanyIdentificationNumber = new Cnpj();
+			OrderId = GenerateOrderCode();
 			Items = new List<Item>();
+			CustomerName = string.Empty;
+			CustomerDocument = new Cpf();
 		}
 
 		public int GetProductCount()
@@ -48,7 +53,7 @@ namespace Store.Domain.Entity
 
 		public void AddItem(int productId, int quantity, Product? product = null)
 		{
-			var item = new Item(Id, productId, quantity);
+			var item = new Item(OrderId, productId, quantity);
 			if (product is not null)
 			{
 				item.addProduct(product);

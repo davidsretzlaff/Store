@@ -8,7 +8,8 @@ namespace Store.Domain.Extensions
 		=> category.ToLower() switch
 		{
 			"Javalog" => DeliveryType.Javalog,
-			"Csharplog" => DeliveryType.Csharplog
+			"Csharplog" => DeliveryType.Csharplog,
+			_ => throw new ArgumentOutOfRangeException(nameof(category))
 		};
 
 		public static string ToDeliveryTypeString(this DeliveryType category)
@@ -16,6 +17,7 @@ namespace Store.Domain.Extensions
 		{
 			DeliveryType.Javalog => "Javalog",
 			DeliveryType.Csharplog => "Csharplog",
+			_ => throw new ArgumentOutOfRangeException(nameof(category))
 		};
 	}
 }

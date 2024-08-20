@@ -20,6 +20,7 @@ namespace Store.Domain.Extensions
 			DeliveryStatus.Pending => "Pending",
 			DeliveryStatus.InTransit => "InTransit",
 			DeliveryStatus.Delivered => "Delivered",
+			_ => throw new ArgumentOutOfRangeException(nameof(category))
 		};
 	}
 }

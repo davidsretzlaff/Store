@@ -16,7 +16,7 @@ namespace Store.Application.UseCases.Order.Common
 		public static UpdateOrderOutput FromOrder(DomainEntity.Order order)
 		{
 			return new UpdateOrderOutput(
-				order.Id,
+				order.OrderId,
 				order.CompanyIdentificationNumber.Value,
 				order.FormattedDate(),
 				order.CustomerName,

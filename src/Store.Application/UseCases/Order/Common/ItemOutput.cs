@@ -16,7 +16,7 @@ namespace Store.Application.UseCases.Order.Common
 		public static ItemOutput FromProduct(Item item)
 		{
 			return new ItemOutput(
-				item.Product.Id,
+				item.Product.ProductId,
 				item.Product.Title,
 				item.Product.Description,
 				item.Product.GetPriceAsCurrency(),

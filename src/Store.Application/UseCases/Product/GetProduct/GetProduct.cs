@@ -18,7 +18,7 @@ namespace Store.Application.UseCases.Product.GetProduct
 		{
 			var product = await _productRepository.Get(input.Id, false, cancellationToken);
 			RelatedAggregateException.ThrowIfNull(product, $"Product '{input.Id}' not found.");
-			return ProductOutput.FromProduct(product);
+			return ProductOutput.FromProduct(product!);
 		}
 	}
 }

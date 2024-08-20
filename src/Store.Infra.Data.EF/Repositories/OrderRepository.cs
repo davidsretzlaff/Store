@@ -23,7 +23,7 @@ namespace Store.Infra.Data.EF.Repositories
 			{
 				var relation = order.Items
 					.Select(product => new OrdersProducts(
-							order.Id,
+							order.OrderId,
 							product.ProductId,
 							product.Quantity
 						));
@@ -33,7 +33,7 @@ namespace Store.Infra.Data.EF.Repositories
 
 		public async Task<Order?> Get(string id, CancellationToken cancellationToken)
 		{
-			var order = await _orders.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+			var order = await _orders.AsNoTracking().FirstOrDefaultAsync(x => x.OrderId == id, cancellationToken);
 			return order;
 		}
 
@@ -48,7 +48,7 @@ namespace Store.Infra.Data.EF.Repositories
 			{
 				var searchToLower = input.Search.ToLower();
 				query = query.Where(x =>
-					x.Id.ToLower().Contains(searchToLower) ||
+					x.OrderId.ToLower().Contains(searchToLower) ||
 					x.Status.ToOrderStatusString().ToLower().Contains(searchToLower) ||
 					x.CustomerDocument.Value.ToLower().StartsWith(searchToLower) ||
 					x.CustomerName.ToLower().Contains(searchToLower)
@@ -64,7 +64,7 @@ namespace Store.Infra.Data.EF.Repositories
 				.Take(input.PerPage)
 				.ToListAsync();
 
-			var productIds = items.Select(order => order.Id).ToList();
+			var productIds = items.Select(order => order.OrderId).ToList();
 			await AddProductsToOrder(items, productIds);
 
 			return new SearchOutput<Order>(input.Page, input.PerPage, total, items);
@@ -86,7 +86,7 @@ namespace Store.Infra.Data.EF.Repositories
 			foreach (var relationGroup in relationsWithProductsByOrderId)
 			{
 				// Find the corresponding order in the provided list
-				var order = items.Find(o => o.Id == relationGroup.Key);
+				var order = items.Find(o => o.OrderId == relationGroup.Key);
 				if (order == null) continue;
 
 				// Iterate over each relation in the group and add items to the order
@@ -102,13 +102,13 @@ namespace Store.Infra.Data.EF.Repositories
 		{
 			var orderedQuery = (orderProperty.ToLower(), order) switch
 			{
-				("createddate", SearchOrder.Asc) => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.Id),
-				("createddate", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id),
-				("status", SearchOrder.Asc) => query.OrderBy(x => x.Status.ToOrderStatusString()).ThenBy(x => x.Id),
-				("status", SearchOrder.Desc) => query.OrderByDescending(x => x.Status.ToOrderStatusString()).ThenByDescending(x => x.Id),
-				("customername", SearchOrder.Asc) => query.OrderBy(x => x.CustomerName).ThenBy(x => x.Id),
-				("customername", SearchOrder.Desc) => query.OrderByDescending(x => x.CustomerName).ThenByDescending(x => x.Id),
-				_ => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.Id)
+				("createddate", SearchOrder.Asc) => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.OrderId),
+				("createddate", SearchOrder.Desc) => query.OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.OrderId),
+				("status", SearchOrder.Asc) => query.OrderBy(x => x.Status.ToOrderStatusString()).ThenBy(x => x.OrderId),
+				("status", SearchOrder.Desc) => query.OrderByDescending(x => x.Status.ToOrderStatusString()).ThenByDescending(x => x.OrderId),
+				("customername", SearchOrder.Asc) => query.OrderBy(x => x.CustomerName).ThenBy(x => x.OrderId),
+				("customername", SearchOrder.Desc) => query.OrderByDescending(x => x.CustomerName).ThenByDescending(x => x.OrderId),
+				_ => query.OrderBy(x => x.CreatedDate).ThenBy(x => x.OrderId)
 			};
 			return orderedQuery;
 		}

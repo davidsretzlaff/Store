@@ -14,7 +14,7 @@ namespace Store.Application.Common.UserValidation
             _user = user;
         }
 
-		public async Task IsUserActive(string cnpj, CancellationToken cancellationToken)
+		public async Task IsUserActive(string? cnpj, CancellationToken cancellationToken)
         {
             var user = await _user.GetByUserNameOrcompanyIdentificationNumber(null, cnpj, cancellationToken);
 

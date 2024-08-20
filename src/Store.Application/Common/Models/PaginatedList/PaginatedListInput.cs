@@ -10,7 +10,7 @@ namespace Store.Application.Common.Models.PaginatedList
 		public string Search { get; set; }
 		public string OrderBy { get; set; }
 		public SearchOrder Order { get; set; }
-		public string Cnpj { get; set; }	
+		public string? Cnpj { get; set; }	
 		public PaginatedListInput(
 			int page,
 			int perPage,
@@ -29,6 +29,6 @@ namespace Store.Application.Common.Models.PaginatedList
 		}
 
 		public SearchInput ToSearchInput()
-			=> new(Page, PerPage, Search, OrderBy, Order,Cnpj);
+			=> new(Page, PerPage, Search, OrderBy, Order, Cnpj);
 	}
 }

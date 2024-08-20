@@ -14,7 +14,7 @@ namespace Store.Infra.Adapters.CacheService.Models
 
 		public ProductModel(Product product)
 		{
-			Id = product.Id;
+			Id = product.ProductId;
 			Title = product.Title;
 			Description = product.Description;
 			Price = product.Price;

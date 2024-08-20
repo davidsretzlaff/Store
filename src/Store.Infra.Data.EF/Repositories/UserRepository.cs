@@ -80,7 +80,7 @@ namespace Store.Infra.Data.EF.Repositories
 		}
 
 		//david criar test
-		public async Task<User?> GetByUserNameOrcompanyIdentificationNumber(string userName, string? cnpj, CancellationToken cancellationToken)
+		public async Task<User?> GetByUserNameOrcompanyIdentificationNumber(string? userName, string? cnpj, CancellationToken cancellationToken)
 		{
 			var user = await _users
 				.AsNoTracking()

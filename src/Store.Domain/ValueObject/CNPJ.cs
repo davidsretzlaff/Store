@@ -12,7 +12,10 @@ namespace Store.Domain.ValueObject
 			Value = companyIdentificationNumber;
 			DomainValidation.Throw(isValid(), "Cnpj is invalid");
 		}
-		public Cnpj() { }
+		public Cnpj() 
+		{
+			Value = string.Empty;
+		}
 		public bool isValid()
 		{
 			if(string.IsNullOrEmpty(Value))
@@ -65,7 +68,7 @@ namespace Store.Domain.ValueObject
 		{
 			if (string.IsNullOrEmpty(input))
 			{
-				return input;
+				return string.Empty;
 			}
 			return Regex.Replace(input, @"\D", "");
 		}

@@ -12,7 +12,10 @@ namespace Store.Domain.ValueObject
 			Value = value;
 			DomainValidation.Throw(IsValid(), "CPF is invalid");
 		}
-
+		public Cpf()
+		{
+			Value = string.Empty;
+		}
 		public bool IsValid() 
 		{
 			int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };

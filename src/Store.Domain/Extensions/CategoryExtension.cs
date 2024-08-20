@@ -17,6 +17,7 @@ namespace Store.Domain.Extensions
 		{
 			Category.Jewelery => "Jewelery",
 			Category.Electronics => "Electronics",
+			_ => throw new ArgumentOutOfRangeException(nameof(category))
 		};
 	}
 }

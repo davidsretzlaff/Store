@@ -21,7 +21,7 @@ namespace Store.Application.UseCases.Order.Common
 		public static OrderOutput FromOrder(DomainEntity.Order order)
 		{
 			return new OrderOutput(
-				order.Id,
+				order.OrderId,
 				order.CompanyIdentificationNumber.Value,
 				order.FormattedDate(),
 				order.CustomerName,

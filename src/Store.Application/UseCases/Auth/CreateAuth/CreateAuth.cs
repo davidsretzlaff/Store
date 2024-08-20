@@ -19,6 +19,7 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 			_unitOfWork = unitOfWork;
 			_userRepository = userRepository;
 			_jwtUtils = jwtUtils;
+			_jwtSecretKey = string.Empty;
 		}
 		public async Task<AuthOutput> Handle(CreateAuthInput input, CancellationToken cancellationToken)
 		{

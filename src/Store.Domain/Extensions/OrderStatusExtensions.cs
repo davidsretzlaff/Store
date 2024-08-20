@@ -20,6 +20,7 @@ namespace Store.Domain.Extensions
 			OrderStatus.Canceled => "Canceled",
 			OrderStatus.Approved => "Approved",
 			OrderStatus.Created => "Created",
+			_ => throw new ArgumentOutOfRangeException(nameof(status))
 		};
 	}
 }
