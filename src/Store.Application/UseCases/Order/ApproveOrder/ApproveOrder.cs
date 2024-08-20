@@ -11,17 +11,17 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IUserValidation _uservaValidation;
+		private readonly IUserValidation _userValidation;
 
 		public ApproveOrder(IOrderRepository orderRepository, IUnitOfWork unitOfWork, IUserValidation userValidation)
 		{
 			_unitOfWork = unitOfWork;
 			_orderRepository = orderRepository;
-			_uservaValidation = userValidation;
+			_userValidation = userValidation;
 		}
 		public async Task<UpdateOrderOutput> Handle(ApproveOrderInput input, CancellationToken cancellationToken)
 		{
-			await _uservaValidation.IsUserActive(input.Cnpj, cancellationToken);
+			await _userValidation.IsUserActive(input.Cnpj, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
 			ValidateApproval(input, order);
 			

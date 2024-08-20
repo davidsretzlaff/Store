@@ -57,7 +57,7 @@ namespace Store.Application.UseCases.Order.ListOrders
 				orders.CurrentPage,
 				orders.PerPage,
 				orders.Total,
-				orders.Items.Select(item => OrderOutput.FromOrder(item)).ToList()
+				orders.Items.Select(OrderOutput.FromOrder).ToList()
 			);
 		}
 	}

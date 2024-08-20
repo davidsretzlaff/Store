@@ -61,7 +61,7 @@ namespace Store.Domain.ValueObject
 			return Value.EndsWith(digito);
 		}
 
-		public static string RemoveNonDigits(string input)
+		public static string RemoveNonDigits(string? input)
 		{
 			if (string.IsNullOrEmpty(input))
 			{

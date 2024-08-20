@@ -45,9 +45,7 @@ namespace Store.Application.UseCases.Order.CreateOrder
 		private async Task<List<DomainEntity.Product>> GetValidProducts(List<int> productIds, CancellationToken cancellationToken)
 		{
 			RelatedAggregateException.ThrowIfNull(productIds, "Product IDs cannot be null or empty");
-
 			var products = await GetProductsAsync(productIds, cancellationToken);
-
 			return products;
 		}
 		private async Task<List<DomainEntity.Product>> GetProductsAsync(List<int> productIds, CancellationToken cancellationToken)

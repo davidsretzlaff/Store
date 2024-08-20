@@ -26,8 +26,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[AllowAnonymous]
 		public async Task<IActionResult> Create(
-		  [FromBody] CreateUserInput input,
-		  CancellationToken cancellationToken
+			[FromBody] CreateUserInput input,
+			CancellationToken cancellationToken
 		)
 		{
 			var output = await _mediator.Send(input, cancellationToken);
@@ -43,8 +43,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Activate(
-		  Guid id,
-		  CancellationToken cancellationToken
+			Guid id,
+			CancellationToken cancellationToken
 		)
 		{
 			var output = await _mediator.Send(new ActivateUserInput(id), cancellationToken);
@@ -56,8 +56,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Deactivate(
-		  [FromRoute] Guid id,
-		  CancellationToken cancellationToken
+			[FromRoute] Guid id,
+			CancellationToken cancellationToken
 		)
 		{
 			var output = await _mediator.Send(new DeactivateUserInput(id), cancellationToken);
@@ -70,8 +70,8 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		[AllowAnonymous]
 		public async Task<IActionResult> GetById(
-		  [FromRoute] Guid id,
-		  CancellationToken cancellationToken
+			[FromRoute] Guid id,
+			CancellationToken cancellationToken
 		)
 		{
 			var output = await _mediator.Send(new GetUserInput(id), cancellationToken);
@@ -82,7 +82,7 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ListUsersOutput), StatusCodes.Status200OK)]
 		[AllowAnonymous]
 		public async Task<IActionResult> List(
-		CancellationToken cancellationToken,
+			CancellationToken cancellationToken,
 			[FromQuery] int? Page = null,
 			[FromQuery] int? PerPage = null,
 			[FromQuery] string? Search = null,

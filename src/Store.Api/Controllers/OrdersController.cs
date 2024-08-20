@@ -8,7 +8,6 @@ using Store.Application.UseCases.Order.CancelOrder;
 using Store.Application.UseCases.Order.Common;
 using Store.Application.UseCases.Order.CreateOrder;
 using Store.Application.UseCases.Order.ListOrders;
-using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Interface.Infra.Adapters;
 
@@ -33,11 +32,11 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Create(
 			[FromBody] ApiCreateOrderInput input,
-		  CancellationToken cancellationToken
+			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var CreateOrderInputApplication = new CreateOrderInput(Cnpj!, input.CustomerName, input.CustomerDocument, input.ProductIds);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var CreateOrderInputApplication = new CreateOrderInput(cnpj!, input.CustomerName, input.CustomerDocument, input.ProductIds);
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
 				nameof(Create),
@@ -51,12 +50,12 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Approve(
-		  string id,
-		  CancellationToken cancellationToken
+			string id,
+			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var output = await _mediator.Send(new ApproveOrderInput(id, Cnpj), cancellationToken);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new ApproveOrderInput(id, cnpj), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
@@ -65,19 +64,19 @@ namespace Store.Api.Controllers
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
 		public async Task<IActionResult> Cancel(
-		  string id,
-		  CancellationToken cancellationToken
+			string id,
+			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var output = await _mediator.Send(new CancelOrderInput(id, Cnpj!), cancellationToken);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new CancelOrderInput(id, cnpj!), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
 		[HttpGet("List")]
 		[ProducesResponseType(typeof(ListOrdersOutput), StatusCodes.Status200OK)]
 		public async Task<IActionResult> List(
-		CancellationToken cancellationToken,
+			CancellationToken cancellationToken,
 			[FromQuery] int? Page = null,
 			[FromQuery] int? PerPage = null,
 			[FromQuery] string? Search = null,
@@ -85,8 +84,8 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var input = new ListOrdersInput(Cnpj!);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var input = new ListOrdersInput(cnpj!);
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;

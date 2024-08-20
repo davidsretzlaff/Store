@@ -40,8 +40,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var CreateOrderInputApplication = input.ToInput(Cnpj);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var CreateOrderInputApplication = input.ToInput(cnpj);
 			
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
@@ -61,8 +61,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var output = await _mediator.Send(new StartDeliveryInput(id, Cnpj), cancellationToken);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new StartDeliveryInput(id, cnpj), cancellationToken);
 			return Ok(new Response<DeliveryOutput>(output));
 		}
 
@@ -76,8 +76,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var output = await _mediator.Send(new CompleteDeliveryInput(id, Cnpj), cancellationToken);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new CompleteDeliveryInput(id, cnpj), cancellationToken);
 			return Ok(new Response<DeliveryOutput>(output));
 		}
 
@@ -93,8 +93,8 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
-			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
-			var input = new ListDeliveriesInput(Cnpj);
+			var cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var input = new ListDeliveriesInput(cnpj);
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;

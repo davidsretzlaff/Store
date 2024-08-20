@@ -8,11 +8,11 @@ namespace Store.Application.Common.Exceptions
 		public InvalidOrderOwnershipException(string message) : base(message)
 		{ }
 
-		public static void ThrowIfNotOwnership(object? @object, string Cnpj , string exceptionMessage)
+		public static void ThrowIfNotOwnership(object? @object, string? cnpj , string exceptionMessage)
 		{
 			if (@object is Order order)
 			{
-				if (order.CompanyIdentificationNumber.Value != DomainValueObject.Cnpj.RemoveNonDigits(Cnpj)) throw new InvalidOrderOwnershipException(exceptionMessage);
+				if (order.CompanyIdentificationNumber.Value != DomainValueObject.Cnpj.RemoveNonDigits(cnpj)) throw new InvalidOrderOwnershipException(exceptionMessage);
 			}
 		}
 	}

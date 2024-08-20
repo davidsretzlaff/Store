@@ -2,6 +2,6 @@
 {
 	public interface IUserValidation
 	{
-		Task IsUserActive(string companyIdentificationNumber, CancellationToken cancellationToken);
+		Task IsUserActive(string? companyIdentificationNumber, CancellationToken cancellationToken);
 	}
 }
