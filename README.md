@@ -18,16 +18,16 @@
 3. **Executar o Projeto:**
    - Para iniciar a aplicação, utilize:
      ```bash
-     <nome-do-diretorio>\Store\tests\Store.EndToEndTest dotnet run
-     <nome-do-diretorio>\Store\tests\Store.IntegrationTest dotnet run
-     <nome-do-diretorio>\Store\tests\Store.UnitTest dotnet run
+     <nome-do-diretorio>\Store\ dotnet run
      ```
    - A API estará disponível em `https://localhost:7017/`.
 
 4. **Executar Testes:**
    - Para executar os testes, utilize:
      ```bash
-     dotnet test
+      <nome-do-diretorio>\Store\tests\Store.EndToEndTest dotnet run
+      <nome-do-diretorio>\Store\tests\Store.IntegrationTest dotnet run
+      <nome-do-diretorio>\Store\tests\Store.UnitTest dotnet run
      ```
 
 ## Descrição
