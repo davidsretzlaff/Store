@@ -43,6 +43,7 @@ Este projeto é uma API desenvolvida em .NET Core para a gestão de pedidos de v
 - **Autenticação:** Implementação de autenticação para proteger as rotas da API.
 - **Middleware:** Implementação de um middleware para adicionar um `Correlation-Id` no header da resposta.
 - **Health Check:** Implementação de um endpoint de health check para verificar o estado da aplicação.
+- **Autenticação:** o usuário autenticado só ira conseguir gerenciar os seus pedidos. (isso significa que só vai mostrar os pedidos / envios para o usuário que fez o pedido.)
 
 ## Arquitetura
 
@@ -65,10 +66,11 @@ As rotas da API foram documentadas utilizando o Postman. O arquivo de exportaç�
 
 1. Abra o Postman
 2. Importe o arquivo de rotas incluído no repositório.
-
+3. Localhost e token está setado nas variaveis globais, então quando você autenticar o usuário precisa pegar o token e atualizar na variavel.
+   
 ## Comentários Finais
 
-Por favor, se houver qualquer dúvida ou problema durante a execução, sinta-se à vontade para entrar em contato. Se algumas funcionalidades não foram implementadas, elas estarão devidamente sinalizadas no código ou neste README.
+Por favor, se houver qualquer dúvida ou problema durante a execução, sinta-se à vontade para entrar em contato.
 
 ---
 
