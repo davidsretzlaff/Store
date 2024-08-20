@@ -15,7 +15,7 @@ namespace Store.Domain.Entity
 		public CNPJ Cnpj { get; private set; }
         public DateTime CreatedDate { get; private set; }		
 		public string CustomerName { get; private set; }
-		public string CustomerDocument {  get; private set; }
+		public CPF CustomerDocument {  get; private set; }
 		public OrderStatus Status { get; private set; }
 		[NotMapped]
 		public List<Item> Items { get; private set; }
@@ -26,10 +26,11 @@ namespace Store.Domain.Entity
 			Cnpj = new CNPJ(cnpj);
 			CreatedDate = DateTime.Now;
 			CustomerName = customerName;
-			CustomerDocument = customerDocument;
+			CustomerDocument = new CPF(customerDocument);
 			Status = OrderStatus.Created;
 			Items = new List<Item> { };
 		}
+
 		public Order() 
 		{
 			Items = new List<Item>();
@@ -62,9 +63,6 @@ namespace Store.Domain.Entity
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));
 			DomainValidation.MinLength(CustomerName, 4, nameof(CustomerName));
-
-			DomainValidation.NotNullOrEmpty(CustomerDocument, nameof(CustomerDocument));
-			//david melhorar criar validador CPF
 		}
 
 		private static string GenerateOrderCode()

@@ -25,7 +25,7 @@ namespace Store.Application.UseCases.Order.Common
 				order.Cnpj.Value,
 				order.FormattedDate(),
 				order.CustomerName,
-				order.CustomerDocument,
+				order.CustomerDocument.Value,
 				order.Status.ToOrderStatusString(),
 				order.GetTotalAsCurrency(),
 				order.GetProductCount(),

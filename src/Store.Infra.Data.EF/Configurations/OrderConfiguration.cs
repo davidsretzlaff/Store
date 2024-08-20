@@ -13,6 +13,10 @@ namespace Store.Infra.Data.EF.Configurations
 			{
 				a.Property(ad => ad.Value).IsRequired();
 			});
+			builder.OwnsOne(u => u.CustomerDocument, a =>
+			{
+				a.Property(ad => ad.Value).IsRequired();
+			});
 		}
 	}
 }

@@ -50,7 +50,7 @@ namespace Store.Infra.Data.EF.Repositories
 				query = query.Where(x =>
 					x.Id.ToLower().Contains(searchToLower) ||
 					x.Status.ToOrderStatusString().ToLower().Contains(searchToLower) ||
-					x.CustomerDocument.ToLower().StartsWith(searchToLower) ||
+					x.CustomerDocument.Value.ToLower().StartsWith(searchToLower) ||
 					x.CustomerName.ToLower().Contains(searchToLower)
 				);
 			}
