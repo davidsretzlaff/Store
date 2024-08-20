@@ -77,7 +77,7 @@ Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**,
 
 ### Diagrama da Arquitetura
 
-![image](https://github.com/user-attachments/assets/24e98f8e-28e4-4f44-9198-7926dea4c1e2)
+![image](https://github.com/user-attachments/assets/eaefcb32-d362-4205-90d0-a762c89863ec)
 ![image](https://github.com/user-attachments/assets/97737786-e7bf-4cbb-9458-6affc3989ff5)
 ![image](https://github.com/user-attachments/assets/fe5e3085-d6f8-48a4-a10e-26f7b113ad94)
 
