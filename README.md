@@ -44,7 +44,7 @@ Este projeto é uma API desenvolvida em .NET Core para a gestão de pedidos de v
 - **Middleware:** Implementação de um middleware para adicionar um `Correlation-Id` no header da resposta.
 - **Health Check:** Implementação de um endpoint de health check para verificar o estado da aplicação.
 - **Autenticação:** o usuário autenticado só ira conseguir gerenciar os seus pedidos. (isso significa que só vai mostrar os pedidos / envios para o usuário que fez o pedido.)
-
+- **Validações:** Foi implementado diversas validações de input, como cpf , cnpj, nome etc. será avisado na api quando algum input for invalido.
 ## Arquitetura
 
 Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**, com uma organização clara e separação de responsabilidades em diferentes camadas:
