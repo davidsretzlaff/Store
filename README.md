@@ -56,7 +56,16 @@ Este projeto é uma API desenvolvida em .NET Core para a gestão de pedidos de v
   - PerPage - quantos itens por página.
   - OrderBy - ordernar por 
   - Order - ordernação
- 
+
+ ## Flow para autenticar o usuário 
+ - **1 - Criar usuário** Usando endpoint Create User
+![image](https://github.com/user-attachments/assets/34ddcefb-2774-4dbe-bc84-152e77f76273)
+- **2- Autenticar o usuário** Usando endpoint Auth
+![image](https://github.com/user-attachments/assets/2aa22df8-688b-45e1-a18f-25421924c9b3)
+- **3- Setar o token gerado na variavel global** - copiar o token gerado e colocar na variavel global
+- ![image](https://github.com/user-attachments/assets/3d77933c-545c-47ee-8bf8-584badfca67c)
+
+
 ## Arquitetura
 
 Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**, com uma organização clara e separação de responsabilidades em diferentes camadas:
