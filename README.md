@@ -59,13 +59,6 @@ Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**,
 ![image](https://github.com/user-attachments/assets/97737786-e7bf-4cbb-9458-6affc3989ff5)
 ![image](https://github.com/user-attachments/assets/fe5e3085-d6f8-48a4-a10e-26f7b113ad94)
 
-
-## Testes
-
-O projeto inclui testes unitários, integração e end2end para verificar a funcionalidade de componentes críticos da aplicação. Os testes cobrem as principais operações, como criação e gestão de clientes, produtos, e pedidos.
-
-
-
 ## Documentação das Rotas
 
 As rotas da API foram documentadas utilizando o Postman. O arquivo de exportação das rotas está incluído no repositório. Para importar as rotas:
