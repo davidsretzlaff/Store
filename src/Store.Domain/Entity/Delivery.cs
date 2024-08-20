@@ -12,11 +12,12 @@ namespace Store.Domain.Entity
 		public DateTime DeliveredDate { get; private set; }
 		public Address Address { get; private set; }
 		public DeliveryStatus Status { get; private set; }
+		public DeliveryType DeliveryType { get; private set; }
 		public Cnpj CompanyIdentificationNumber { get; private set; }
 		[NotMapped]
 		public Order Order { get; private set; }
 
-		public Delivery(string orderId, Address adddress, Order? order, string companyIdentificationNumber)
+		public Delivery(string orderId, Address adddress, Order? order, string companyIdentificationNumber, DeliveryType deliveryType)
 		{
 			OrderId = orderId;
 			DeliveredDate = new DateTime();
@@ -26,6 +27,7 @@ namespace Store.Domain.Entity
 			Order = new Order();
 			AddOrder(order);
 			Validate();
+			DeliveryType = deliveryType;
 		}
 		public Delivery() 
 		{

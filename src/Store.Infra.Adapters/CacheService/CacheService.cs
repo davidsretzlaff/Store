@@ -32,8 +32,15 @@ namespace Store.Infra.Adapters.CacheService
 				throw new ArgumentNullException(nameof(product));
 			}
 			_productCache[product.ProductId] = new CachedProduct(new ProductModel(product), DateTime.UtcNow);
+			RemoveProductFromDeleted(product.ProductId);
 		}
-
+		public void RemoveProductFromDeleted(int productId)
+		{
+			if (IsProductDeleted(productId))
+			{
+				DeletedProducts.Remove(productId);
+			}
+		}
 		public void RemoveProductFromCache(int productId)
 		{
 			_productCache.Remove(productId);
