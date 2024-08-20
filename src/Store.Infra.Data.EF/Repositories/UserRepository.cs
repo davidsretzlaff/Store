@@ -49,7 +49,7 @@ namespace Store.Infra.Data.EF.Repositories
 					x.UserName.ToLower().Contains(searchToLower) ||
 					x.BusinessName.ToLower().StartsWith(searchToLower) ||
 					x.CorporateName.ToLower().Contains(searchToLower) ||
-					x.Cnpj.Value.ToLower().Contains(searchToLower)
+					x.CompanyIdentificationNumber.Value.ToLower().Contains(searchToLower)
 				);
 			}
 
@@ -80,11 +80,11 @@ namespace Store.Infra.Data.EF.Repositories
 		}
 
 		//david criar test
-		public async Task<User?> GetByUserNameOrCnpj(string userName, string? Cnpj, CancellationToken cancellationToken)
+		public async Task<User?> GetByUserNameOrcompanyIdentificationNumber(string userName, string? cnpj, CancellationToken cancellationToken)
 		{
 			var user = await _users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(x => x.UserName == userName || x.Cnpj.Value == CNPJ.RemoveNonDigits(Cnpj), cancellationToken);
+				.FirstOrDefaultAsync(x => x.UserName == userName || x.CompanyIdentificationNumber.Value == Cnpj.RemoveNonDigits(cnpj), cancellationToken);
 			return user;
 		}
 

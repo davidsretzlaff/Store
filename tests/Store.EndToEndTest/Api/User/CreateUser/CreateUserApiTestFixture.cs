@@ -25,7 +25,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				user.Email,
 				user.SiteUrl,
 				user.Phone,
-				user.Cnpj.Value,
+				user.CompanyIdentificationNumber.Value,
 				AddressInput.FromDomainAddress(user.Address)
 			);
 		}
@@ -40,7 +40,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				user.Email,
 				user.SiteUrl,
 				user.Phone,
-				user.Cnpj.Value,
+				user.CompanyIdentificationNumber.Value,
 				AddressInput.FromDomainAddress(user.Address)
 			);
 		}

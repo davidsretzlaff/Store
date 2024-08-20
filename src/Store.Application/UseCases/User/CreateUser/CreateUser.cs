@@ -38,7 +38,7 @@ namespace Store.Application.UseCases.User.CreateUser
 
 		private async Task VerifyUserExistence(CreateUserInput input , CancellationToken cancellationToken)
 		{
-			var existingUser = await _userRepository.GetByUserNameOrCnpj(input.UserName, input.Cnpj, cancellationToken);
+			var existingUser = await _userRepository.GetByUserNameOrcompanyIdentificationNumber(input.UserName, input.Cnpj, cancellationToken);
 			
 			if (existingUser is null) 
 			{
@@ -49,7 +49,7 @@ namespace Store.Application.UseCases.User.CreateUser
 			{
 				UserNameExistsException.ThrowIfNull($"'{input.UserName}' already exists.");
 			}
-			if (existingUser.Cnpj.isCNPJMatching(input.Cnpj))
+			if (existingUser.CompanyIdentificationNumber.isMatch(input.Cnpj))
 			{
 				CnpjExistsException.ThrowIfNull($"'{input.Cnpj}' already exists.");
 			}

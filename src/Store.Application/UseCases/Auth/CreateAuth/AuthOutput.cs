@@ -7,7 +7,7 @@ namespace Store.Application.UseCases.Auth.CreateAuth
 		{
 			return new AuthOutput(
 				  user.UserName,
-				  user.Cnpj.Value,
+				  user.CompanyIdentificationNumber.Value,
 				  token
 			   );
 		}

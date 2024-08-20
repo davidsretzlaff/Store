@@ -17,8 +17,8 @@ namespace Store.Domain.Entity
 		public string Email { get; private set; }
 		public string SiteUrl { get; private set; }
 		public string Phone {  get; private set; }
-		//public string Cnpj {  get; private set; }
-		public CNPJ Cnpj { get; set; }
+		//public string CompanyIdentificationNumber {  get; private set; }
+		public Cnpj CompanyIdentificationNumber { get; set; }
 		public Address Address { get; private set; }
 
 		public User(
@@ -29,7 +29,7 @@ namespace Store.Domain.Entity
 			string email,
 			string siteUrl,
 			string phone,
-			string cnpj,
+			string companyIdentificationNumber,
 			Address address
 		   )
 		{
@@ -41,7 +41,7 @@ namespace Store.Domain.Entity
 			Email = email;
 			SiteUrl = siteUrl;
 			Phone = phone;
-			Cnpj = new CNPJ(cnpj);
+			CompanyIdentificationNumber = new Cnpj(companyIdentificationNumber);
 			Address = address;
 			Validate();
 		}

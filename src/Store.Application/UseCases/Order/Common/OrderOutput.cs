@@ -22,7 +22,7 @@ namespace Store.Application.UseCases.Order.Common
 		{
 			return new OrderOutput(
 				order.Id,
-				order.Cnpj.Value,
+				order.CompanyIdentificationNumber.Value,
 				order.FormattedDate(),
 				order.CustomerName,
 				order.CustomerDocument.Value,

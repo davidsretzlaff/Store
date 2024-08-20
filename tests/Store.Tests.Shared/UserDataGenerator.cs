@@ -47,7 +47,7 @@ namespace Store.Tests.Shared
 				user.Email, 
 				user.SiteUrl, 
 				user.Phone, 
-				user.Cnpj.Value, 
+				user.CompanyIdentificationNumber.Value, 
 				user.Address
 			);
 		}
@@ -97,7 +97,7 @@ namespace Store.Tests.Shared
 				user.Email,
 				user.SiteUrl,
 				user.Phone,
-				user.Cnpj.Value,
+				user.CompanyIdentificationNumber.Value,
 				AddressInput.FromDomainAddress(user.Address)
 			);
 		}
@@ -112,7 +112,7 @@ namespace Store.Tests.Shared
 				user.Email,
 				user.SiteUrl,
 				user.Phone,
-				user.Cnpj.Value,
+				user.CompanyIdentificationNumber.Value,
 				AddressInput.FromDomainAddress(user.Address)
 			);
 		}

@@ -37,7 +37,7 @@ namespace Store.Infra.Data.EF.Configurations
 					.HasMaxLength(10);
 			});
 
-			builder.OwnsOne(u => u.Cnpj, a =>
+			builder.OwnsOne(u => u.CompanyIdentificationNumber, a =>
 			{
 				a.Property(ad => ad.Value)
 					.IsRequired();

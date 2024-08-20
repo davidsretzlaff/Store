@@ -9,7 +9,7 @@ namespace Store.Infra.Data.EF.Configurations
 		public void Configure(EntityTypeBuilder<Order> builder)
 		{
 			builder.Property(u => u.Status).HasConversion<string>().IsRequired();
-			builder.OwnsOne(u => u.Cnpj, a =>
+			builder.OwnsOne(u => u.CompanyIdentificationNumber, a =>
 			{
 				a.Property(ad => ad.Value).IsRequired();
 			});

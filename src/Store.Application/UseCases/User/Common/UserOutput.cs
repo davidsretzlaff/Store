@@ -27,7 +27,7 @@ namespace Store.Application.UseCases.User.Common
                    user.Email,
                    user.SiteUrl,
                    user.Phone,
-                   user.Cnpj.Value,
+                   user.CompanyIdentificationNumber.Value,
                    user.Status.ToUserStatusString(),
                    new AddressOutput(user.Address.Street, user.Address.City, user.Address.State, user.Address.Country, user.Address.ZipCode)
                );

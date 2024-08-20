@@ -3,16 +3,15 @@ using Store.Domain.Validation;
 
 namespace Store.Domain.ValueObject
 {
-	public class CPF
+	public class Cpf
 	{
 		public string Value {  get; private set; }
 
-		public CPF(string value)
+		public Cpf(string value)
 		{
 			Value = value;
 			DomainValidation.Throw(IsValid(), "CPF is invalid");
 		}
-
 
 		public bool IsValid() 
 		{

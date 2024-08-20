@@ -12,21 +12,21 @@ namespace Store.Domain.Entity
 	public class Order : AggregateRoot
 	{	
 		public string Id { get; private set; }
-		public CNPJ Cnpj { get; private set; }
+		public Cnpj CompanyIdentificationNumber { get; private set; }
         public DateTime CreatedDate { get; private set; }		
 		public string CustomerName { get; private set; }
-		public CPF CustomerDocument {  get; private set; }
+		public Cpf CustomerDocument {  get; private set; }
 		public OrderStatus Status { get; private set; }
 		[NotMapped]
 		public List<Item> Items { get; private set; }
 
-		public Order(string cnpj, string customerName, string customerDocument)
+		public Order(string companyIdentificationNumber, string customerName, string customerDocument)
 		{
 			Id = GenerateOrderCode();
-			Cnpj = new CNPJ(cnpj);
+			CompanyIdentificationNumber = new Cnpj(companyIdentificationNumber);
 			CreatedDate = DateTime.Now;
 			CustomerName = customerName;
-			CustomerDocument = new CPF(customerDocument);
+			CustomerDocument = new Cpf(customerDocument);
 			Status = OrderStatus.Created;
 			Items = new List<Item> { };
 		}

@@ -4,6 +4,7 @@ using Store.Domain.Enum;
 using Store.Domain.Extensions;
 using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork.Searchable;
+using Store.Domain.ValueObject;
 
 namespace Store.Infra.Data.EF.Repositories
 {
@@ -44,7 +45,10 @@ namespace Store.Infra.Data.EF.Repositories
 				);
 			}
 
-			query = query.Where(x => x.Cnpj == input.Cnpj);
+			var inputCompanyIdentFormatted = Cnpj.RemoveNonDigits(input.CompanyIdentificationNumber);
+			query = query.Where(x => 
+				x.CompanyIdentificationNumber.Value
+				.Equals(inputCompanyIdentFormatted));
 
 			var total = await query.CountAsync();
 			var items = await query

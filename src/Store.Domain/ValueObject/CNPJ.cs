@@ -3,16 +3,16 @@ using Store.Domain.Validation;
 using System.Text.RegularExpressions;
 namespace Store.Domain.ValueObject
 {
-	public class CNPJ
+	public class Cnpj
 	{
 		public string Value { get; private set; }
 
-		public CNPJ(string cnpj) 
+		public Cnpj(string companyIdentificationNumber) 
 		{
-			Value = cnpj;
-			DomainValidation.Throw(isValid(), "CNPJ is invalid");
+			Value = companyIdentificationNumber;
+			DomainValidation.Throw(isValid(), "companyIdentificationNumber is invalid");
 		}
-		public CNPJ() { }
+		public Cnpj() { }
 		public bool isValid()
 		{
 			int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -66,9 +66,9 @@ namespace Store.Domain.ValueObject
 			return Regex.Replace(input, @"\D", "");
 		}
 
-		public bool isCNPJMatching(string newCnpj)
+		public bool isMatch(string newcompanyIdentificationNumber)
 		{
-			return Value.Equals(RemoveNonDigits(newCnpj), StringComparison.Ordinal);
+			return Value.Equals(RemoveNonDigits(newcompanyIdentificationNumber), StringComparison.Ordinal);
 			
 		}
 	}

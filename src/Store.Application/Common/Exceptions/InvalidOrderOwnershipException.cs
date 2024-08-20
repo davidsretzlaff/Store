@@ -1,5 +1,5 @@
 ﻿using Store.Domain.Entity;
-using Store.Domain.ValueObject;
+using DomainValueObject = Store.Domain.ValueObject;
 
 namespace Store.Application.Common.Exceptions
 {
@@ -12,12 +12,8 @@ namespace Store.Application.Common.Exceptions
 		{
 			if (@object is Order order)
 			{
-				if (order.Cnpj.Value != CNPJ.RemoveNonDigits(Cnpj)) throw new InvalidOrderOwnershipException(exceptionMessage);
+				if (order.CompanyIdentificationNumber.Value != DomainValueObject.Cnpj.RemoveNonDigits(Cnpj)) throw new InvalidOrderOwnershipException(exceptionMessage);
 			}
-			//if (@object is CANCELEDorder)
-			//{
-			//	if (order.Cnpj != Cnpj) throw new DuplicateException(exceptionMessage);
-			//}
 		}
 	}
 }

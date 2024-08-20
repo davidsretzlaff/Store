@@ -2,7 +2,7 @@
 {
     public interface IJwtUtils
     {
-        string GenerateToken(string username, string role, string Cnpj);
+        string GenerateToken(string username, string role, string companyIdentificationNumber);
         List<string> ValidateToken(string token);
     }
 }
