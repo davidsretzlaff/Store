@@ -45,6 +45,18 @@ Este projeto é uma API desenvolvida em .NET Core para a gestão de pedidos de v
 - **Health Check:** Implementação de um endpoint de health check para verificar o estado da aplicação.
 - **Autenticação:** o usuário autenticado só ira conseguir gerenciar os seus pedidos. (isso significa que só vai mostrar os pedidos / envios para o usuário que fez o pedido.)
 - **Validações:** Foi implementado diversas validações de input, como cpf , cnpj, nome etc. será avisado na api quando algum input for invalido.
+
+## Observações
+- **CPF:** Precisa gerar um CPF valido para inserir no input, indico usar https://www.4devs.com.br/gerador_de_cpf
+- **CNPJ:** Igualmente ao item anterior, usar indico usar (https://www.4devs.com.br/gerador_de_cnpj)
+- **Utilização dos filtros** No params tem Search, ele busca por diversos campos username, corporatename, email, cnpj, e no order a mesma ideia.
+![image](https://github.com/user-attachments/assets/012256e7-66f1-4b2e-a013-787008913dfc)
+- **Paginação** Foi implementado paginação, também no params você indica 
+  - Page - pagina que voce quer que retorne
+  - PerPage - quantos itens por página.
+  - OrderBy - ordernar por 
+  - Order - ordernação
+ 
 ## Arquitetura
 
 Este projeto foi desenvolvido seguindo os princípios de **Clean Architecture**, com uma organização clara e separação de responsabilidades em diferentes camadas:
