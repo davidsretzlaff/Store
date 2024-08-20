@@ -23,7 +23,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				var input = _fixture.getExampleInput();
 
 				// Act
-				var (response, output) = await _fixture.ApiClient.Post<Response<UserOutput>>("/users", input);
+				var (response, output) = await _fixture.ApiClient.Post<Response<UserOutput>>("/users/create", input);
 
 				// Assert
 				response.Should().NotBeNull();
@@ -40,7 +40,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				dbCategory.Should().NotBeNull();
 				dbCategory!.UserName.Should().Be(input.UserName);
 				dbCategory.CorporateName.Should().Be(input.CorporateName);
-				dbCategory.CompanyIdentificationNumber.Should().Be(input.Cnpj);
+				dbCategory.CompanyIdentificationNumber.Value.Should().Be(input.Cnpj);
 			}
 		}
 
@@ -52,7 +52,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 			var invalidInput = _fixture.getInvalidInput();
 			
 			// Act
-			var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users", invalidInput);
+			var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users/create", invalidInput);
 
 
 			// Assert

@@ -38,7 +38,7 @@ namespace Store.UnitTest.Entity
 			user.Email.Should().Be(validUser.Email);
 			user.SiteUrl.Should().Be(validUser.SiteUrl);
 			user.Phone.Should().Be(validUser.Phone);
-			user.CompanyIdentificationNumber.Should().Be(validUser.CompanyIdentificationNumber);
+			user.CompanyIdentificationNumber.Value.Should().Be(validUser.CompanyIdentificationNumber.Value);
 			user.Address.Should().NotBeNull();
 			user.Address.Street.Should().Be(validUser.Address.Street);
 			user.Address.City.Should().Be(validUser.Address.City);
@@ -287,7 +287,7 @@ namespace Store.UnitTest.Entity
 			 );
 
 			// Assert
-			action.Should().Throw<EntityValidationException>().WithMessage($"Cnpj should not be empty or null");
+			action.Should().Throw<EntityValidationException>().WithMessage($"Cnpj is invalid");
 		}
 
 		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]

@@ -34,7 +34,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			userFromDb.Should().NotBeNull();
 			userFromDb!.BusinessName.Should().Be(user.BusinessName);
 			userFromDb.Status.Should().Be(user.Status);
-			userFromDb.CompanyIdentificationNumber.Should().Be(user.CompanyIdentificationNumber);
+			userFromDb.CompanyIdentificationNumber.Value.Should().Be(user.CompanyIdentificationNumber.Value);
 			userFromDb.CorporateName.Should().Be(user.CorporateName);
 			userFromDb.Email.Should().Be(user.Email);
 			userFromDb.Phone.Should().Be(user.Phone);
@@ -112,7 +112,7 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 			userFromRepository.Should().NotBeNull();
 			userFromRepository!.BusinessName.Should().Be(user.BusinessName);
 			userFromRepository.Status.Should().Be(user.Status);
-			userFromRepository.CompanyIdentificationNumber.Should().Be(user.CompanyIdentificationNumber);
+			userFromRepository.CompanyIdentificationNumber.Value.Should().Be(user.CompanyIdentificationNumber.Value);
 			userFromRepository.CorporateName.Should().Be(user.CorporateName);
 			userFromRepository.Email.Should().Be(user.Email);
 			userFromRepository.Phone.Should().Be(user.Phone);

@@ -9,7 +9,6 @@ namespace Store.Infra.Data.EF.Configurations
 		public void Configure(EntityTypeBuilder<Delivery> builder)
 		{
 			builder.HasKey(e => e.OrderId);
-			builder.Property(u => u.CompanyIdentificationNumber).IsRequired().HasMaxLength(50);
 			builder.Property(u => u.Status).HasConversion<string>().IsRequired();
 			builder.Ignore(d => d.Order);
 			builder.OwnsOne(u => u.Address, a =>
@@ -29,6 +28,12 @@ namespace Store.Infra.Data.EF.Configurations
 				a.Property(ad => ad.ZipCode)
 					.IsRequired()
 					.HasMaxLength(10);
+			});
+
+			builder.OwnsOne(u => u.CompanyIdentificationNumber, a =>
+			{
+				a.Property(ad => ad.Value)
+					.IsRequired();
 			});
 		}
 	}

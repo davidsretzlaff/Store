@@ -48,8 +48,7 @@ namespace Store.EndToEndTest.Api.Auth.CreateAuth
             var invalidInput = _fixture.DataGenerator.GetCreateUserInput();
 
             // Act
-            var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users", invalidInput);
-
+            var (response, output) = await _fixture.ApiClient.Post<ProblemDetails>("/users/create", invalidInput);
 
             // Assert
             response.Should().NotBeNull();

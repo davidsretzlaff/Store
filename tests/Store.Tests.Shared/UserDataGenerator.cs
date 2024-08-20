@@ -68,7 +68,7 @@ namespace Store.Tests.Shared
 				("username", SearchOrder.Asc) => listClone.OrderBy(x => x.UserName).ThenBy(x => x.Id),
 				("username", SearchOrder.Desc) => listClone.OrderByDescending(x => x.UserName).ThenByDescending(x => x.Id),
 				("businessname", SearchOrder.Asc) => listClone.OrderBy(x => x.BusinessName).ThenBy(x => x.Id),
-				("bussinesname", SearchOrder.Desc) => listClone.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
+				("businessname", SearchOrder.Desc) => listClone.OrderByDescending(x => x.BusinessName).ThenByDescending(x => x.Id),
 				("corporatename", SearchOrder.Asc) => listClone.OrderBy(x => x.CorporateName).ThenBy(x => x.Id),
 				("corporatename", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CorporateName).ThenByDescending(x => x.Id),
 				("email", SearchOrder.Asc) => listClone.OrderBy(x => x.Email).ThenBy(x => x.Id),

@@ -10,11 +10,15 @@ namespace Store.Domain.ValueObject
 		public Cnpj(string companyIdentificationNumber) 
 		{
 			Value = companyIdentificationNumber;
-			DomainValidation.Throw(isValid(), "companyIdentificationNumber is invalid");
+			DomainValidation.Throw(isValid(), "Cnpj is invalid");
 		}
 		public Cnpj() { }
 		public bool isValid()
 		{
+			if(string.IsNullOrEmpty(Value))
+			{
+				return false; 
+			}
 			int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 			int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 			int soma;
