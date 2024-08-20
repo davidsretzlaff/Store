@@ -108,5 +108,11 @@ namespace Store.Domain.Validation
 					$"{fieldName} is invalid. Only {Category.Jewelery.ToCategoryString()} and " +
 					$"{Category.Electronics.ToCategoryString()} are allowed.");
 		}
+
+		public static void Throw(bool isValid, string message)
+		{
+			if(!isValid)
+				throw new EntityValidationException(message);
+		}
 	}
 }

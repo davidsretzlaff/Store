@@ -6,7 +6,7 @@ namespace Store.Application.UseCases.Order.ApproveOrder
 {
 	public record class ApproveOrderInput(
 		string id,
-		string CompanyRegisterNumber
+		string Cnpj
 	) : IRequest<UpdateOrderOutput>
 	{
 	}

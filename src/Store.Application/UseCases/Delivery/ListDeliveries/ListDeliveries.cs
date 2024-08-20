@@ -35,7 +35,7 @@ namespace Store.Application.UseCases.Delivery.ListDeliveries
 						input.Search,
 						input.OrderBy,
 						input.Order,
-						input.CompanyRegisterNumber
+						input.Cnpj
 					),
 					cancellationToken
 				);

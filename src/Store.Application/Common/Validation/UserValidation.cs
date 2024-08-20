@@ -14,13 +14,13 @@ namespace Store.Application.Common.UserValidation
             _user = user;
         }
 
-		public async Task IsUserActive(string companyRegisterNumber, CancellationToken cancellationToken)
+		public async Task IsUserActive(string Cnpj, CancellationToken cancellationToken)
         {
-            var user = await _user.GetByUserNameOrCompanyRegNumber(null, companyRegisterNumber, cancellationToken);
+            var user = await _user.GetByUserNameOrCnpj(null, Cnpj, cancellationToken);
 
             if (user is null || !user.IsActive())
             {
-                throw new UserInactiveException($"User with CompanyRegisterNumber '{companyRegisterNumber}' is not active. Only Active users can create an order.");
+                throw new UserInactiveException($"User with Cnpj '{Cnpj}' is not active. Only Active users can create an order.");
             }
         }
 	}

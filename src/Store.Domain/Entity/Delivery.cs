@@ -12,17 +12,17 @@ namespace Store.Domain.Entity
 		public DateTime DeliveredDate { get; private set; }
 		public Address Address { get; private set; }
 		public DeliveryStatus Status { get; private set; }
-		public string CompanyRegisterNumber { get; private set; }
+		public string Cnpj { get; private set; }
 		[NotMapped]
 		public Order Order { get; private set; }
 
-		public Delivery(string orderId, Address adddress, Order? order, string companyRegisterNumber)
+		public Delivery(string orderId, Address adddress, Order? order, string Cnpj)
 		{
 			OrderId = orderId;
 			DeliveredDate = new DateTime();
 			Address = adddress;
 			Status = DeliveryStatus.Pending;
-			CompanyRegisterNumber =	companyRegisterNumber;
+			Cnpj =	Cnpj;
 			AddOrder(order);
 			Validate();
 		}
@@ -32,13 +32,13 @@ namespace Store.Domain.Entity
 			DomainValidation.NotFound(order, $"Order with id {OrderId}");
 			order.Validate();
 			Order = order;
-			CompanyRegisterNumber = order.CompanyRegisterNumber;
+			Cnpj = order.Cnpj.Value;
 		}
 		private void Validate() 
 		{
 			DomainValidation.OrderIsNotApprove(Order);
 			DomainValidation.NotNullOrEmpty(OrderId, nameof(OrderId));
-			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
+			DomainValidation.NotNullOrEmpty(Cnpj, nameof(Cnpj));
 		}
 
 		public void StartDelivery()

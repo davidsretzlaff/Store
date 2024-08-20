@@ -44,7 +44,7 @@ namespace Store.Infra.Data.EF.Repositories
 				);
 			}
 
-			query = query.Where(x => x.CompanyRegisterNumber == input.companyRegisterNumber);
+			query = query.Where(x => x.Cnpj == input.Cnpj);
 
 			var total = await query.CountAsync();
 			var items = await query

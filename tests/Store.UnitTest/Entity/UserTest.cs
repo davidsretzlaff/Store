@@ -26,7 +26,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -38,7 +38,7 @@ namespace Store.UnitTest.Entity
 			user.Email.Should().Be(validUser.Email);
 			user.SiteUrl.Should().Be(validUser.SiteUrl);
 			user.Phone.Should().Be(validUser.Phone);
-			user.CompanyRegistrationNumber.Should().Be(validUser.CompanyRegistrationNumber);
+			user.Cnpj.Should().Be(validUser.Cnpj);
 			user.Address.Should().NotBeNull();
 			user.Address.Street.Should().Be(validUser.Address.Street);
 			user.Address.City.Should().Be(validUser.Address.City);
@@ -108,7 +108,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -134,7 +134,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -159,7 +159,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -183,7 +183,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -209,7 +209,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -234,7 +234,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -258,7 +258,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				"",
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -268,7 +268,7 @@ namespace Store.UnitTest.Entity
 
 		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]
 		[Trait("Domain", "User - Entity")]
-		public void ThrowError_When_CompanyRegistrationNumberIsInvalid()
+		public void ThrowError_When_CnpjIsInvalid()
 		{
 			// Arrange
 			var validUser = _fixture.GetValidUser();
@@ -287,7 +287,7 @@ namespace Store.UnitTest.Entity
 			 );
 
 			// Assert
-			action.Should().Throw<EntityValidationException>().WithMessage($"CompanyRegistrationNumber should not be empty or null");
+			action.Should().Throw<EntityValidationException>().WithMessage($"Cnpj should not be empty or null");
 		}
 
 		[Fact(DisplayName = nameof(ThrowError_When_URLIsInvalid))]
@@ -306,7 +306,7 @@ namespace Store.UnitTest.Entity
 				"invalid",
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -330,7 +330,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				"invalid",
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -354,7 +354,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -380,7 +380,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -405,7 +405,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 
@@ -429,7 +429,7 @@ namespace Store.UnitTest.Entity
 				validUser.Email,
 				validUser.SiteUrl,
 				validUser.Phone,
-				validUser.CompanyRegistrationNumber,
+				validUser.Cnpj.Value,
 				validUser.Address
 			 );
 

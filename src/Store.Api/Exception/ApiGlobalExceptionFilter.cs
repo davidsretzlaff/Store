@@ -40,7 +40,7 @@ namespace Store.Api.Exception
 				details.Type = "NotCreated";
 				details.Detail = exception!.Message;
 			}
-			else if (exception is CompanyRegistrationNumberExistsException)
+			else if (exception is CnpjExistsException)
 			{
 				details.Title = "CompanyRegistrationRumber already exist";
 				details.Status = StatusCodes.Status409Conflict;

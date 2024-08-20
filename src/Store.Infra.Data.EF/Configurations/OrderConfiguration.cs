@@ -8,8 +8,11 @@ namespace Store.Infra.Data.EF.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Order> builder)
 		{
-			builder.Property(u => u.CompanyRegisterNumber).IsRequired().HasMaxLength(50);
 			builder.Property(u => u.Status).HasConversion<string>().IsRequired();
+			builder.OwnsOne(u => u.Cnpj, a =>
+			{
+				a.Property(ad => ad.Value).IsRequired();
+			});
 		}
 	}
 }

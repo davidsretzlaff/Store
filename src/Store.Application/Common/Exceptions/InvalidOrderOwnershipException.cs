@@ -1,4 +1,5 @@
 ﻿using Store.Domain.Entity;
+using Store.Domain.ValueObject;
 
 namespace Store.Application.Common.Exceptions
 {
@@ -7,15 +8,15 @@ namespace Store.Application.Common.Exceptions
 		public InvalidOrderOwnershipException(string message) : base(message)
 		{ }
 
-		public static void ThrowIfNotOwnership(object? @object, string companyRegisterNumber , string exceptionMessage)
+		public static void ThrowIfNotOwnership(object? @object, string Cnpj , string exceptionMessage)
 		{
 			if (@object is Order order)
 			{
-				if (order.CompanyRegisterNumber != companyRegisterNumber) throw new InvalidOrderOwnershipException(exceptionMessage);
+				if (order.Cnpj.Value != CNPJ.RemoveNonDigits(Cnpj)) throw new InvalidOrderOwnershipException(exceptionMessage);
 			}
 			//if (@object is CANCELEDorder)
 			//{
-			//	if (order.CompanyRegisterNumber != companyRegisterNumber) throw new DuplicateException(exceptionMessage);
+			//	if (order.Cnpj != Cnpj) throw new DuplicateException(exceptionMessage);
 			//}
 		}
 	}

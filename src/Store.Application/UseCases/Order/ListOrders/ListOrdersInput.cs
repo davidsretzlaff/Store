@@ -8,12 +8,12 @@ namespace Store.Application.UseCases.Order.ListOrders
 	public class ListOrdersInput : PaginatedListInput, IRequest<ListOrdersOutput>
 	{
 
-		public ListOrdersInput(int page, int perPage, string search, string orderBy, SearchOrder dir, string companyRegisterNumber)
-			: base(page, perPage, search, orderBy, dir, companyRegisterNumber)
+		public ListOrdersInput(int page, int perPage, string search, string orderBy, SearchOrder dir, string Cnpj)
+			: base(page, perPage, search, orderBy, dir, Cnpj)
 		{
 		}
 
-		public ListOrdersInput(string companyRegisterNumber) : base(1, 10, "", "", SearchOrder.Asc, companyRegisterNumber)
+		public ListOrdersInput(string cnpj) : base(1, 10, "", "", SearchOrder.Asc, cnpj)
 		{
 		}
 	}

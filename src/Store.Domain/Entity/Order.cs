@@ -12,7 +12,7 @@ namespace Store.Domain.Entity
 	public class Order : AggregateRoot
 	{	
 		public string Id { get; private set; }
-		public string CompanyRegisterNumber { get; private set; }
+		public CNPJ Cnpj { get; private set; }
         public DateTime CreatedDate { get; private set; }		
 		public string CustomerName { get; private set; }
 		public string CustomerDocument {  get; private set; }
@@ -20,15 +20,19 @@ namespace Store.Domain.Entity
 		[NotMapped]
 		public List<Item> Items { get; private set; }
 
-		public Order(string companyRegisterNumber, string customerName, string customerDocument)
+		public Order(string cnpj, string customerName, string customerDocument)
 		{
 			Id = GenerateOrderCode();
-			CompanyRegisterNumber = companyRegisterNumber;
+			Cnpj = new CNPJ(cnpj);
 			CreatedDate = DateTime.Now;
 			CustomerName = customerName;
 			CustomerDocument = customerDocument;
 			Status = OrderStatus.Created;
 			Items = new List<Item> { };
+		}
+		public Order() 
+		{
+			Items = new List<Item>();
 		}
 
 		public int GetProductCount()
@@ -55,7 +59,6 @@ namespace Store.Domain.Entity
 		public void Validate()
 		{
 			Items.ForEach(p => DomainValidation.MaxQuantity(p.Quantity, 3, $"Product with ID {p.ProductId} has a quantity of {p.Quantity}, but it"));
-			DomainValidation.NotNullOrEmpty(CompanyRegisterNumber, nameof(CompanyRegisterNumber));
 			DomainValidation.NotNullOrEmpty(CustomerName, nameof(CustomerName));
 			DomainValidation.MaxLength(CustomerName, 100, nameof(CustomerName));
 			DomainValidation.MinLength(CustomerName, 4, nameof(CustomerName));

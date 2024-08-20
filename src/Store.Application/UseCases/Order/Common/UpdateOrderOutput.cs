@@ -6,7 +6,7 @@ namespace Store.Application.UseCases.Order.Common
 	public record UpdateOrderOutput
 	(
 		string Id,
-		string CompanyRegisterNumber,
+		string Cnpj,
 		string CreatedData,
 		string CustomerName,
 		string CustomerDocument,
@@ -17,7 +17,7 @@ namespace Store.Application.UseCases.Order.Common
 		{
 			return new UpdateOrderOutput(
 				order.Id,
-				order.CompanyRegisterNumber,
+				order.Cnpj.Value,
 				order.FormattedDate(),
 				order.CustomerName,
 				order.CustomerDocument,

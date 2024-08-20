@@ -19,11 +19,11 @@ namespace Store.Application.UseCases.Order.CancelOrder
 		}
 		public async Task<UpdateOrderOutput> Handle(CancelOrderInput input, CancellationToken cancellationToken)
 		{
-			await _uservaValidation.IsUserActive(input.CompanyRegisterNumber, cancellationToken);
+			await _uservaValidation.IsUserActive(input.Cnpj, cancellationToken);
 			var order = await _orderRepository.Get(input.id, cancellationToken);
 			
 			AggregateDomainException.ThrowIfNull(order, $"Order with ID {input.id} not found");
-			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.CompanyRegisterNumber, $"Operation failed: The user is not the owner of this order");
+			InvalidOrderOwnershipException.ThrowIfNotOwnership(order, input.Cnpj, $"Operation failed: The user is not the owner of this order");
 			
 			order!.Cancel();
 			await _orderRepository.Update(order, cancellationToken);

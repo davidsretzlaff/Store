@@ -5,6 +5,6 @@ namespace Store.Application.UseCases.Delivery.CompleteDelivery
 {
 	public record CompleteDeliveryInput(
 		string OrderId, 
-		string CompanyRegisterNumber
+		string Cnpj
 	) : IRequest<DeliveryOutput>;
 }

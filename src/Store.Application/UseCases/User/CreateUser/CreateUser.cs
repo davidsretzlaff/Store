@@ -1,6 +1,7 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Interface.Infra.Repository;
+using Store.Domain.Validation;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
@@ -25,7 +26,7 @@ namespace Store.Application.UseCases.User.CreateUser
 				input.Email,
 				input.SiteUrl,
 				input.Phone,
-				input.CompanyRegistrationNumber,
+				input.Cnpj,
 				input.Address.ToDomainAddress()
 			);
 
@@ -37,28 +38,20 @@ namespace Store.Application.UseCases.User.CreateUser
 
 		private async Task VerifyUserExistence(CreateUserInput input , CancellationToken cancellationToken)
 		{
-			var existingUser = await _userRepository.GetByUserNameOrCompanyRegNumber(input.UserName, input.CompanyRegistrationNumber, cancellationToken);
+			var existingUser = await _userRepository.GetByUserNameOrCnpj(input.UserName, input.Cnpj, cancellationToken);
 			
 			if (existingUser is null) 
 			{
 				return;
 			}
 
-			ValidateUserName(existingUser.UserName, input.UserName);
-			ValidateCompanyRegistrationNumber(existingUser.CompanyRegistrationNumber, input.CompanyRegistrationNumber);
-		}
-		private void ValidateUserName(string existingUserName, string newUserName)
-		{
-			if (existingUserName.Equals(newUserName))
+			if (existingUser.IsUserNameMatching(input.UserName))
 			{
-				UserNameExistsException.ThrowIfNull($"'{newUserName}' already exists.");
+				UserNameExistsException.ThrowIfNull($"'{input.UserName}' already exists.");
 			}
-		}
-		private void ValidateCompanyRegistrationNumber(string existingCompanyRegNumber, string newCompanyRegNumber)
-		{
-			if (existingCompanyRegNumber.Equals(newCompanyRegNumber))
+			if (existingUser.Cnpj.isCNPJMatching(input.Cnpj))
 			{
-				CompanyRegistrationNumberExistsException.ThrowIfNull($"'{newCompanyRegNumber}' already exists.");
+				CnpjExistsException.ThrowIfNull($"'{input.Cnpj}' already exists.");
 			}
 		}
 	}

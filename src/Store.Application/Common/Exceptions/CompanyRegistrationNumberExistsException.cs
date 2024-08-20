@@ -1,13 +1,13 @@
 ﻿namespace Store.Application.Common.Exceptions
 {
-    public class CompanyRegistrationNumberExistsException : ApplicationException
+    public class CnpjExistsException : ApplicationException
     {
-        public CompanyRegistrationNumberExistsException(string message) : base(message)
+        public CnpjExistsException(string message) : base(message)
         {}
 
 		public static void ThrowIfNull(string exceptionMessage)
 		{
-			throw new CompanyRegistrationNumberExistsException(exceptionMessage);
+			throw new CnpjExistsException(exceptionMessage);
 		}
 	}
 }

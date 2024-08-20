@@ -52,14 +52,14 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
 			var inputApplication = new CreateProductInput(
 				input.Id,
 				input.Title,
 				input.Price,
 				input.Description,
 				input.Category,
-				companyRegisterNumber!
+				Cnpj!
 			);
 			var output = await _mediator.Send(inputApplication, cancellationToken);
 			return CreatedAtAction(
@@ -90,8 +90,8 @@ namespace Store.Api.Controllers
 		   CancellationToken cancellationToken
 	    )
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			await _mediator.Send(new DeleteProductInput(id, companyRegisterNumber!), cancellationToken);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			await _mediator.Send(new DeleteProductInput(id, Cnpj!), cancellationToken);
 			return NoContent();
 		}
 	}

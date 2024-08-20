@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Store.Application.Common.Exceptions;
 using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Extensions;
 using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork.Searchable;
+using Store.Domain.ValueObject;
 using Store.Infra.Data.EF.Models;
 
 namespace Store.Infra.Data.EF.Repositories
@@ -55,7 +55,7 @@ namespace Store.Infra.Data.EF.Repositories
 				);
 			}
 
-			query = query.Where(x => x.CompanyRegisterNumber == input.companyRegisterNumber);
+			query = query.Where(x => x.Cnpj.Value.Equals(CNPJ.RemoveNonDigits(input.Cnpj)));
 
 			var total = await query.CountAsync();
 			var items = await query

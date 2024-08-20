@@ -12,7 +12,7 @@ namespace Store.Application.UseCases.User.Common
         string Email,
         string SiteUrl,
         string Phone,
-        string CompanyRegistrationNumber,
+        string Cnpj,
         string Status,
         AddressOutput Address
     )
@@ -27,7 +27,7 @@ namespace Store.Application.UseCases.User.Common
                    user.Email,
                    user.SiteUrl,
                    user.Phone,
-                   user.CompanyRegistrationNumber,
+                   user.Cnpj.Value,
                    user.Status.ToUserStatusString(),
                    new AddressOutput(user.Address.Street, user.Address.City, user.Address.State, user.Address.Country, user.Address.ZipCode)
                );

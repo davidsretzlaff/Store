@@ -4,6 +4,7 @@ using Store.Domain.Entity;
 using Store.Domain.Enum;
 using Store.Domain.Interface.Infra.Repository;
 using Store.Domain.SeedWork.Searchable;
+using Store.Domain.ValueObject;
 
 namespace Store.Infra.Data.EF.Repositories
 {
@@ -48,7 +49,7 @@ namespace Store.Infra.Data.EF.Repositories
 					x.UserName.ToLower().Contains(searchToLower) ||
 					x.BusinessName.ToLower().StartsWith(searchToLower) ||
 					x.CorporateName.ToLower().Contains(searchToLower) ||
-					x.CompanyRegistrationNumber.ToLower().Contains(searchToLower)
+					x.Cnpj.Value.ToLower().Contains(searchToLower)
 				);
 			}
 
@@ -79,11 +80,11 @@ namespace Store.Infra.Data.EF.Repositories
 		}
 
 		//david criar test
-		public async Task<User?> GetByUserNameOrCompanyRegNumber(string userName, string? companyRegNumber, CancellationToken cancellationToken)
+		public async Task<User?> GetByUserNameOrCnpj(string userName, string? Cnpj, CancellationToken cancellationToken)
 		{
 			var user = await _users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(x => x.UserName == userName || x.CompanyRegistrationNumber == companyRegNumber, cancellationToken);
+				.FirstOrDefaultAsync(x => x.UserName == userName || x.Cnpj.Value == CNPJ.RemoveNonDigits(Cnpj), cancellationToken);
 			return user;
 		}
 

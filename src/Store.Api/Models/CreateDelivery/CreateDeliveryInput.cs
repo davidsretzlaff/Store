@@ -10,9 +10,9 @@ namespace Store.Api.Models.CreateDelivery
 		AddressInput AddressCustomer
 	)
 	{
-		public CreateDeliveryInput ToInput(string? companyRegisterNumber) 
+		public CreateDeliveryInput ToInput(string? Cnpj) 
 		{
-			return new CreateDeliveryInput(OrderId, DeliveryType, AddressCustomer, companyRegisterNumber);
+			return new CreateDeliveryInput(OrderId, DeliveryType, AddressCustomer, Cnpj);
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace Store.Application.UseCases.Order.Common
 	public record OrderOutput
 	(
 		string Id,
-		string CompanyRegisterNumber,
+		string Cnpj,
 		string CreatedDate,
 		string CustomerName,
 		string CustomerDocument,
@@ -22,7 +22,7 @@ namespace Store.Application.UseCases.Order.Common
 		{
 			return new OrderOutput(
 				order.Id,
-				order.CompanyRegisterNumber,
+				order.Cnpj.Value,
 				order.FormattedDate(),
 				order.CustomerName,
 				order.CustomerDocument,

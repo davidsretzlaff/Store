@@ -11,7 +11,7 @@ namespace Store.Application.UseCases.User.CreateUser
 		string Email,
 		string SiteUrl,
 		string Phone,
-		string CompanyRegistrationNumber,
+		string Cnpj,
 		AddressInput Address
 	): IRequest<UserOutput>;
 }

@@ -17,7 +17,8 @@ namespace Store.Domain.Entity
 		public string Email { get; private set; }
 		public string SiteUrl { get; private set; }
 		public string Phone {  get; private set; }
-		public string CompanyRegistrationNumber {  get; private set; }
+		//public string Cnpj {  get; private set; }
+		public CNPJ Cnpj { get; set; }
 		public Address Address { get; private set; }
 
 		public User(
@@ -28,7 +29,7 @@ namespace Store.Domain.Entity
 			string email,
 			string siteUrl,
 			string phone,
-			string companyRegistrationNumber,
+			string cnpj,
 			Address address
 		   )
 		{
@@ -40,7 +41,7 @@ namespace Store.Domain.Entity
 			Email = email;
 			SiteUrl = siteUrl;
 			Phone = phone;
-			CompanyRegistrationNumber = companyRegistrationNumber;
+			Cnpj = new CNPJ(cnpj);
 			Address = address;
 			Validate();
 		}
@@ -62,7 +63,6 @@ namespace Store.Domain.Entity
 			DomainValidation.MinLength(CorporateName, 3, nameof(CorporateName));
 
 			DomainValidation.NotNullOrEmpty(SiteUrl, nameof(SiteUrl));
-			DomainValidation.NotNullOrEmpty(CompanyRegistrationNumber, nameof(CompanyRegistrationNumber));
 
 			DomainValidation.ValidateEmail(Email, nameof(Email));
 			DomainValidation.ValidatePhone(Phone, nameof(Phone));
@@ -81,6 +81,11 @@ namespace Store.Domain.Entity
 		public bool IsActive() 
 		{ 
 			return Status == UserStatus.Active;
+		}
+
+		public bool IsUserNameMatching(string newUserName)
+		{
+			return UserName.Equals(newUserName, StringComparison.Ordinal);
 		}
 	}
 }

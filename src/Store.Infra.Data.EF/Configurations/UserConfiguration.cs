@@ -16,7 +16,6 @@ namespace Store.Infra.Data.EF.Configurations
 			builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
 			builder.Property(u => u.SiteUrl).HasMaxLength(100);
 			builder.Property(u => u.Phone).HasMaxLength(20);
-			builder.Property(u => u.CompanyRegistrationNumber).IsRequired().HasMaxLength(50);
 			builder.Property(u => u.Status).HasConversion<string>().IsRequired();
 
 			builder.OwnsOne(u => u.Address, a =>
@@ -36,6 +35,12 @@ namespace Store.Infra.Data.EF.Configurations
 				a.Property(ad => ad.ZipCode)
 					.IsRequired()
 					.HasMaxLength(10);
+			});
+
+			builder.OwnsOne(u => u.Cnpj, a =>
+			{
+				a.Property(ad => ad.Value)
+					.IsRequired();
 			});
 		}
 	}

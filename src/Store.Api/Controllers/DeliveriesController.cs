@@ -40,8 +40,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var CreateOrderInputApplication = input.ToInput(companyRegisterNumber);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var CreateOrderInputApplication = input.ToInput(Cnpj);
 			
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
@@ -61,8 +61,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var output = await _mediator.Send(new StartDeliveryInput(id, companyRegisterNumber), cancellationToken);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new StartDeliveryInput(id, Cnpj), cancellationToken);
 			return Ok(new Response<DeliveryOutput>(output));
 		}
 
@@ -76,8 +76,8 @@ namespace Store.Api.Controllers
 			CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var output = await _mediator.Send(new CompleteDeliveryInput(id, companyRegisterNumber), cancellationToken);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new CompleteDeliveryInput(id, Cnpj), cancellationToken);
 			return Ok(new Response<DeliveryOutput>(output));
 		}
 
@@ -93,8 +93,8 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var input = new ListDeliveriesInput(companyRegisterNumber);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var input = new ListDeliveriesInput(Cnpj);
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;

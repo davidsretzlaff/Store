@@ -40,7 +40,7 @@ namespace Store.EndToEndTest.Api.User.CreateUser
 				dbCategory.Should().NotBeNull();
 				dbCategory!.UserName.Should().Be(input.UserName);
 				dbCategory.CorporateName.Should().Be(input.CorporateName);
-				dbCategory.CompanyRegistrationNumber.Should().Be(input.CompanyRegistrationNumber);
+				dbCategory.Cnpj.Should().Be(input.Cnpj);
 			}
 		}
 

@@ -36,8 +36,8 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var CreateOrderInputApplication = new CreateOrderInput(companyRegisterNumber!, input.CustomerName, input.CustomerDocument, input.ProductIds);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var CreateOrderInputApplication = new CreateOrderInput(Cnpj!, input.CustomerName, input.CustomerDocument, input.ProductIds);
 			var output = await _mediator.Send(CreateOrderInputApplication, cancellationToken);
 			return CreatedAtAction(
 				nameof(Create),
@@ -55,8 +55,8 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var output = await _mediator.Send(new ApproveOrderInput(id, companyRegisterNumber), cancellationToken);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new ApproveOrderInput(id, Cnpj), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
@@ -69,8 +69,8 @@ namespace Store.Api.Controllers
 		  CancellationToken cancellationToken
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var output = await _mediator.Send(new CancelOrderInput(id, companyRegisterNumber!), cancellationToken);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var output = await _mediator.Send(new CancelOrderInput(id, Cnpj!), cancellationToken);
 			return Ok(new Response<UpdateOrderOutput>(output));
 		}
 
@@ -85,8 +85,8 @@ namespace Store.Api.Controllers
 			[FromQuery] SearchOrder? Order = null
 		)
 		{
-			var companyRegisterNumber = User.Claims.FirstOrDefault(c => c.Type == "CompanyRegisterNumber")?.Value;
-			var input = new ListOrdersInput(companyRegisterNumber!);
+			var Cnpj = User.Claims.FirstOrDefault(c => c.Type == "Cnpj")?.Value;
+			var input = new ListOrdersInput(Cnpj!);
 			if (Page is not null) input.Page = Page.Value;
 			if (PerPage is not null) input.PerPage = PerPage.Value;
 			if (!String.IsNullOrWhiteSpace(Search)) input.Search = Search;

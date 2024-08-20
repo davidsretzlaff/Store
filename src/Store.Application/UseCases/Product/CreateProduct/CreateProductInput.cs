@@ -10,6 +10,6 @@ namespace Store.Application.UseCases.Product.CreateProduct
 		decimal Price,
 		string Description,
 		string Category,
-		string CompanyRegisterNumber
+		string Cnpj
 	) : IRequest<ProductOutput>;
 }
