@@ -11,17 +11,17 @@ namespace Store.IntegrationTest.Infra.Data.EF.Repositories.UserRepository
 
 	public class UserRepositoryTestFixture : BaseFixture
 	{
-		public UserDataGenerator DataGenerator { get; }
-		public UserRepositoryTestFixture() => DataGenerator = new UserDataGenerator();
-		public Domain.Entity.User GetValidUser() => DataGenerator.GetValidUser();
-		public List<Domain.Entity.User> GetUserValidList(int quantity) => DataGenerator.GetUserValidList(quantity);
+		public UserDataGenerator _dataGenerator { get; }
+		public UserRepositoryTestFixture() => _dataGenerator = new UserDataGenerator();
+		public Domain.Entity.User GetValidUser() => _dataGenerator.GetValidUser();
+		public List<Domain.Entity.User> GetUserValidList(int quantity) => _dataGenerator.GetUserValidList(quantity);
 		public List<Domain.Entity.User> GetExampleListUsersByNames(List<string[]> inputs)
-			=> DataGenerator.GetExampleListUsersByNames(inputs);
+			=> _dataGenerator.GetExampleListUsersByNames(inputs);
 
 		public List<Domain.Entity.User> CloneUserListOrdered(
 			List<Domain.Entity.User> userList, 
 			string orderBy, 
 			SearchOrder order
-		) => DataGenerator.CloneUserListOrdered(userList, orderBy, order);
+		) => _dataGenerator.CloneUserListOrdered(userList, orderBy, order);
 	}
 }

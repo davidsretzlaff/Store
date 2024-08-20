@@ -15,20 +15,43 @@ namespace Store.Tests.Shared
 
 			return new Domain.Entity.User(
 				Faker.Person.UserName,
-				Faker.Hashids.ToString()!,
+				Faker.Random.ToString(),
 				Faker.Company.CompanyName(),
 				Faker.Company.CompanyName(),
 				Faker.Person.Email,
 				Faker.Internet.Locale,
 				"55 992364499",
 				Faker.Company.Cnpj(),
-				GetEmail()
+				GetAddress()
 			);
 		}
-
-		private Domain.ValueObject.Address GetEmail()
+		public CreateUserInput CreateUserInput() 
+		{
+			return new CreateUserInput(
+				Faker.Person.UserName,
+				Faker.Random.ToString(),
+				Faker.Company.CompanyName(),
+				Faker.Company.CompanyName(),
+				Faker.Person.Email,
+				Faker.Internet.Locale,
+				"55 992364499",
+				Faker.Company.Cnpj(),
+				GetAddressInput()
+			);
+		}
+		private Domain.ValueObject.Address GetAddress()
 		{
 			return new Domain.ValueObject.Address(
+				Faker.Address.StreetName(),
+				Faker.Address.City(),
+				Faker.Address.State(),
+				Faker.Address.Country(),
+				Faker.Address.ZipCode()
+			);
+		}
+		private AddressInput GetAddressInput()
+		{
+			return new  AddressInput(
 				Faker.Address.StreetName(),
 				Faker.Address.City(),
 				Faker.Address.State(),

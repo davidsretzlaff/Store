@@ -1,7 +1,6 @@
 ﻿using Store.Application.Common.Exceptions;
 using Store.Application.UseCases.User.Common;
 using Store.Domain.Interface.Infra.Repository;
-using Store.Domain.Validation;
 using DomainEntity = Store.Domain.Entity;
 
 namespace Store.Application.UseCases.User.CreateUser
@@ -45,13 +44,23 @@ namespace Store.Application.UseCases.User.CreateUser
 				return;
 			}
 
-			if (existingUser.IsUserNameMatching(input.UserName))
+			VerifyUserName(input.UserName, existingUser);
+			VerifyCompanyIdentificationNumber(input.Cnpj, existingUser);
+		}
+
+		private void VerifyUserName(string userName, DomainEntity.User existingUser)
+		{
+			if (existingUser.IsUserNameMatching(userName))
 			{
-				UserNameExistsException.ThrowIfNull($"'{input.UserName}' already exists.");
+				UserNameExistsException.ThrowIfNull($"'{userName}' already exists.");
 			}
-			if (existingUser.CompanyIdentificationNumber.isMatch(input.Cnpj))
+		}
+
+		private void VerifyCompanyIdentificationNumber(string cnpj, DomainEntity.User existingUser)
+		{
+			if (existingUser.CompanyIdentificationNumber.isMatch(cnpj))
 			{
-				CnpjExistsException.ThrowIfNull($"'{input.Cnpj}' already exists.");
+				CnpjExistsException.ThrowIfNull($"'{cnpj}' already exists.");
 			}
 		}
 	}
